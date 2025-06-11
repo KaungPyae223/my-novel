@@ -2,7 +2,7 @@ import React from "react";
 import TrendingCard from "./components/TrendingCard";
 import AuthorCard from "./components/AuthorCard";
 
-const LeftSideBar = () => {
+const RightSideBar = () => {
   return (
     <div
       style={{ height: "calc(100vh - 4rem)" }}
@@ -69,4 +69,4 @@ const LeftSideBar = () => {
   );
 };
 
-export default LeftSideBar;
+export default RightSideBar;

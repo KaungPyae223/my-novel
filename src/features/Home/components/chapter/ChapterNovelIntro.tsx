@@ -20,7 +20,7 @@ const ChapterNovelIntro = () => {
         <p className="mt-2 font-medium text-gray-800">
           Chapter 15: The main Major of Hello
         </p>
-        <p className="mt-3 text-gray-500 line-clamp-4 text-justify text-sm">
+        <p className="mt-3 text-gray-600 line-clamp-4 text-justify text-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
           autem quasi repellat. Odit, neque placeat architecto facere atque
           temporibus saepe libero doloremque! Maiores numquam veniam saepe

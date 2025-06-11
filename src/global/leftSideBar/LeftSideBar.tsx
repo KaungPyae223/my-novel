@@ -4,7 +4,10 @@ import CommunityCard from "./components/CommunityCard";
 
 const LeftSideBar = () => {
   return (
-    <div style={{ height: "calc(100vh - 4rem)" }} className=" overflow-y-auto w-80 px-4 py-1 bg-white border-r border-r-gray-300">
+    <div
+      style={{ height: "calc(100vh - 4rem)" }}
+      className=" overflow-y-auto w-80 px-4 py-1 bg-white border-r border-r-gray-300"
+    >
       <div className="py-2 mt-1 space-y-2">
         <NavCard
           icon={
@@ -24,6 +27,7 @@ const LeftSideBar = () => {
             </svg>
           }
           title="Home"
+          href="/"
         />
         <NavCard
           icon={
@@ -43,6 +47,7 @@ const LeftSideBar = () => {
             </svg>
           }
           title="Library"
+          href="/library"
         />
         <NavCard
           icon={
@@ -62,6 +67,7 @@ const LeftSideBar = () => {
             </svg>
           }
           title="My Novels"
+          href="/my-novels"
         />
         <NavCard
           icon={
@@ -81,6 +87,7 @@ const LeftSideBar = () => {
             </svg>
           }
           title="Followings"
+          href="/followings"
         />
         <NavCard
           icon={
@@ -100,6 +107,7 @@ const LeftSideBar = () => {
             </svg>
           }
           title="Favorites"
+          href="/favorites"
         />
 
         <NavCard
@@ -120,6 +128,27 @@ const LeftSideBar = () => {
             </svg>
           }
           title="Recently Read"
+          href="/recently-read"
+        />
+        <NavCard
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941"
+              />
+            </svg>
+          }
+          title="Trending"
+          href="/trending"
         />
       </div>
       <p className="font-medium text-sm my-4 text-slate-700">

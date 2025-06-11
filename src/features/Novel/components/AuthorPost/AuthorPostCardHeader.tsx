@@ -1,6 +1,6 @@
 import React from "react";
 
-const NovelCardHeader = () => {
+const AuthorPostCardHeader = () => {
   return (
     <div className="flex items-center gap-3">
       <img
@@ -26,11 +26,11 @@ const NovelCardHeader = () => {
             />
           </svg>
 
-          <p>3 months ago</p>
+          <p>4h ago</p>
         </div>
       </div>
     </div>
   );
 };
 
-export default NovelCardHeader;
+export default AuthorPostCardHeader;

@@ -1,5 +1,5 @@
 import React from "react";
-import ChapterCard from "../components/chapter/ChapterCard";
+import ChapterCard from "../chapter/ChapterCard";
 
 const ChapterContainer = () => {
   return (

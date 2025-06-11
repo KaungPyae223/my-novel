@@ -3,7 +3,7 @@ import ChapterCardHeader from "./ChapterCardHeader";
 import ChapterNovelIntro from "./ChapterNovelIntro";
 import ChapterCardView from "./ChapterCardView";
 import ChapterPreview from "./ChapterPreview";
-import LoveShare from "./LoveShare";
+import ChapterLoveShare from "./ChapterLoveShare";
 
 const ChapterCard = () => {
   return (
@@ -13,7 +13,7 @@ const ChapterCard = () => {
       <ChapterPreview />
       <ChapterCardView />
       <hr className="border-gray-200 my-3" />
-      <LoveShare />
+      <ChapterLoveShare />
     </div>
   );
 };

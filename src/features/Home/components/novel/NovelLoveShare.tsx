@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoveShare = () => {
+const NovelLoveShare = () => {
   return (
     <div className="grid grid-cols-2 text-sm  gap-3">
       <div className="flex w-full hover:bg-gray-100 py-2 rounded-lg cursor-pointer gap-3 flex-row items-center justify-center">
@@ -42,4 +42,4 @@ const LoveShare = () => {
   );
 };
 
-export default LoveShare;
+export default NovelLoveShare;

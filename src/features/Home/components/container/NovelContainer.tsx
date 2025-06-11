@@ -1,5 +1,5 @@
 import React from "react";
-import NovelCard from "../components/novel/NovelCard";
+import NovelCard from "../novel/NovelCard";
 
 const NovelContainer = () => {
   return (

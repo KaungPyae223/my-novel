@@ -1,4 +1,4 @@
-import PostCard from "../components/posts/PostCard";
+import PostCard from "../posts/PostCard";
 
 const PostsContainer = () => {
   return (

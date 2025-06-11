@@ -1,9 +1,9 @@
 import React from "react";
-import LoveShare from "./LoveShare";
+import NovelLoveShare from "./NovelLoveShare";
 import NovelCardHeader from "./NovelCardHeader";
 import NovelIntro from "./NovelIntro";
-import Synopsis from "./Synopsis";
-import ReadAddButton from "./ReadAddButton";
+import NovelSynopsis from "./NovelSynopsis";
+import NovelReadAddButton from "./NovelReadAddButton";
 import NovelView from "./NovelView";
 
 const NovelCard = () => {
@@ -12,11 +12,11 @@ const NovelCard = () => {
       <div className="py-5 px-6 bg-white rounded-lg shadow">
         <NovelCardHeader />
         <NovelIntro />
-        <Synopsis />
-        <ReadAddButton />
+        <NovelSynopsis />
+        <NovelReadAddButton />
         <NovelView />
         <hr className="border-gray-200 my-3" />
-        <LoveShare />
+        <NovelLoveShare />
       </div>
     </div>
   );

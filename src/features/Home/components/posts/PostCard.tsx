@@ -1,7 +1,7 @@
 import React from "react";
-import LoveShare from "./LoveShare";
+import PostLoveShare from "./PostLoveShare";
 import PostCardHeader from "./PostCardHeader";
-import NovelReference from "./NovelReference";
+import PostNovelReference from "./PostNovelReference";
 import PostView from "./PostView";
 
 const PostCard = () => {
@@ -17,10 +17,10 @@ const PostCard = () => {
           numquam illum omnis, porro esse sit velit ipsa natus odio non tempore
           quisquam architecto saepe.
         </p>
-        <NovelReference />
+        <PostNovelReference />
         <PostView />    
         <hr className="border-gray-200 my-3" />
-        <LoveShare />
+        <PostLoveShare />
       </div>
     </div>
   );
