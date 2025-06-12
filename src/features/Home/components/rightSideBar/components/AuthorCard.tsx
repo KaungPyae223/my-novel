@@ -17,7 +17,7 @@ const AuthorCard = () => {
         </div>
       </div>
 
-      <div className="border border-gray-400 text-sm  text-gray-600 px-2.5 py-1 rounded-lg">
+      <div className="border border-gray-400 text-sm  text-gray-600 px-2.5 py-1 rounded-md">
         Follow
       </div>
     </div>

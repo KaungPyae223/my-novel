@@ -1,4 +1,5 @@
 import { Progress } from "@/components/ui/progress";
+import { Bookmark, BookMarked, Clock } from "lucide-react";
 import React from "react";
 
 const RecentlyCard = () => {
@@ -8,7 +9,7 @@ const RecentlyCard = () => {
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=300&h=400&fit=crop')",
-        }} 
+        }}
         className="h-full bg-cover bg-center"
       ></div>
 
@@ -21,21 +22,7 @@ const RecentlyCard = () => {
             Sci-Fi
           </div>
           <div className="flex flex-row items-center text-xs text-gray-600 gap-1 font-medium">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-3"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            3 hours ago
+            <Clock className="size-3" />3 hours ago
           </div>
         </div>
         <p className="text-sm text-justify text-gray-600 mt-4 line-clamp-4">
@@ -58,20 +45,7 @@ const RecentlyCard = () => {
         </div>
         <Progress value={30} className="w-full mt-3" />
         <div className="flex flex-row items-center gap-2 text-sm text-gray-600 mt-5">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-4 text-amber-400"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-            />
-          </svg>
+          <Bookmark className="size-4 text-amber-400" />
           <p>Chapter 31: The main Major of Hello</p>
         </div>
         <div className="flex flex-row items-center gap-2 mt-5">
