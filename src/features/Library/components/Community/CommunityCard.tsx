@@ -47,7 +47,7 @@ const CommunityCard = () => {
       </div>
 
       <div className="bg-gray-800 text-center text-sm text-white px-3 py-2 rounded font-medium cursor-pointer">
-        Join Community
+        View
       </div>
     </div>
   );

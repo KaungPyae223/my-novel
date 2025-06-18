@@ -21,8 +21,8 @@ const NovelCard = () => {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="p-3 flex-1">
-          <p className="font-semibold">The Digital Nomad</p>
+        <div className="p-3 py-5 flex-1">
+          <p className="font-medium text-lg">The Digital Nomad</p>
 
           <p className="text-sm text-blue-600 font-medium mt-1">
             By Kaung Pyae
@@ -35,7 +35,7 @@ const NovelCard = () => {
               Ongoing
             </p>
           </div>
-          <p className="text-sm text-justify text-gray-700 mt-3 line-clamp-5">
+          <p className="text-sm text-justify text-gray-700 mt-3 line-clamp-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae,
             earum! Minus, animi. Repudiandae non earum saepe rem ipsa modi
             magnam libero culpa assumenda soluta, maiores obcaecati tempora quo

@@ -2,7 +2,7 @@ import { BookOpen } from "lucide-react";
 
 const NovelReference = () => {
   return (
-    <div className="p-3 h-48 flex flex-row items-start gap-4 mb-6 rounded-lg bg-amber-50 border border-amber-300">
+    <div className="p-3 h-52 flex flex-row items-start gap-4 mb-6 rounded-lg bg-amber-50 border border-amber-300">
       <img
         className="w-32 h-full object-cover rounded-lg items-center"
         src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=400&fit=crop"
@@ -33,7 +33,7 @@ const NovelReference = () => {
             <p>24 Chapters</p>
           </div>
 
-          <div className="mt-2 text-center bg-amber-600 py-2 rounded-lg text-sm text-white font-medium cursor-pointer">
+          <div className="mt-2 text-center bg-amber-600 py-2.5 rounded-md text-sm text-white font-medium cursor-pointer">
             Read Novel{" "}
           </div>
         </div>

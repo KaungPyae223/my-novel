@@ -21,7 +21,7 @@ const CommunitySearch = () => {
 
   return (
     <div>
-      <div className="bg-white flex flex-col p-6 rounded-lg shadow border border-gray-200 gap-6">
+      <div className="bg-white flex flex-col p-5 rounded-lg shadow border border-gray-200 gap-6">
         <div className="relative flex-1">
           <input
             type="text"

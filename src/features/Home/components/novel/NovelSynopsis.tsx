@@ -3,7 +3,7 @@ import React from "react";
 const Synopsis = () => {
   return <div>
     <p className="font-semibold text-gray-800">Synopsis:</p>
-    <p className="mt-2 text-gray-800 text-justify text-sm">
+    <p className="mt-2 text-gray-800 text-justify font-serif">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
       autem quasi repellat. Odit, neque placeat architecto facere atque
       temporibus saepe libero doloremque! Maiores numquam veniam saepe

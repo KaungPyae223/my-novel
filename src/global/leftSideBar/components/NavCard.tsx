@@ -9,7 +9,7 @@ const NavCard = ({ icon, href, title }: { icon: React.ReactNode; href: string; t
   const pathName = usePathname();
 
   return (
-    <Link href={href} className={` ${(href !== "/" && pathName.startsWith(href)) || (href === "/" && pathName == "/") ? "bg-blue-100 text-blue-800 font-medium" : "text-gray-500"} flex cursor-pointer flex-row  p-2 justify-between rounded-lg items-center gap-3`}>
+    <Link href={href} className={` ${(href !== "/" && pathName.startsWith(href)) || (href === "/" && pathName == "/") ? "bg-blue-100 text-blue-800 font-medium" : "text-gray-600"} flex cursor-pointer flex-row  p-2 justify-between rounded-lg items-center gap-3`}>
       <div className="flex flex-row items-center gap-3">
         {icon}
         <p className="font-medium">{title}</p>

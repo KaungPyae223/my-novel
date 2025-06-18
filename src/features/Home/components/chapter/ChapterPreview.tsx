@@ -4,7 +4,7 @@ const ChapterPreview = () => {
   return (
     <>
       <p className="mt-1 font-medium">Chapter Preview : </p>
-      <p className="mt-2 text-gray-800 line-clamp-3 text-justify text-sm">
+      <p className="mt-2 text-gray-800 line-clamp-3 text-justify font-serif">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
         autem quasi repellat. Odit, neque placeat architecto facere atque
         temporibus saepe libero doloremque! Maiores numquam veniam saepe
@@ -12,7 +12,7 @@ const ChapterPreview = () => {
         incidunt, culpa deserunt. Maxime rem officia voluptate dicta. Ex
         distinctio, dolorem dolore natus aspernatur dolorum aliquam.
       </p>
-      <div className=" w-full text-center bg-blue-700 py-2 rounded-lg text-sm my-6 text-white font-medium cursor-pointer">
+      <div className=" w-full text-center bg-blue-700 py-2.5 rounded-md text-sm my-6 text-white font-medium cursor-pointer">
         Read Full Chapter
       </div>
     </>
