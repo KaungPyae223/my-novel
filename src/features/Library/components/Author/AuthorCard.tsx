@@ -1,4 +1,5 @@
 import { Heart } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 const AuthorCard = () => {
@@ -31,9 +32,9 @@ const AuthorCard = () => {
         <AuthorProperties label="Followers" value="1.2k" />
         <AuthorProperties label="Views" value="1.2M" />
       </div>
-      <div className="w-full rounded-sm border text-sm font-medium text-center py-2 cursor-pointer border-gray-300">
+      <Link href={`/authors/1` } className="w-full rounded-sm border text-sm font-medium text-center py-2 cursor-pointer border-gray-300">
         View Profile
-      </div>
+      </Link>
     </div>
   );
 };

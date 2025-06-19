@@ -1,3 +1,5 @@
+import { Heart, MessageCircle } from "lucide-react";
+
 const CommunityPostCard = () => {
   return (
     <div className="w-full p-6 bg-white border border-gray-200 shadow-xs rounded-lg">
@@ -8,7 +10,9 @@ const CommunityPostCard = () => {
           className="size-10 rounded-full"
         />
         <p className="font-medium text-lg">Lourics Chan</p>
-        <div className="border border-gray-300 rounded-full px-3 py-0.5 text-xs font-semibold items-center ">Member</div>
+        <div className="border border-gray-300 rounded-full px-3 py-0.5 text-xs font-semibold items-center ">
+          Member
+        </div>
         <p className="text-sm text-gray-500">2h ago</p>
       </div>
       <p className=" text-gray-700  mt-5 text-justify line-clamp-5">
@@ -19,6 +23,12 @@ const CommunityPostCard = () => {
         voluptates quibusdam, obcaecati, quis quod saepe itaque corrupti
         distinctio amet illum.
       </p>
+      <img
+        src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop"
+        alt=""
+        className="rounded-lg object-cover mt-5"
+      />
+      
     </div>
   );
 };

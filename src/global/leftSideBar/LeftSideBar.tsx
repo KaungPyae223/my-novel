@@ -32,8 +32,8 @@ const LeftSideBar = () => {
     },
     {
       icon: <Users className="size-5" />,
-      title: "Followings",
-      href: "/followings",
+      title: "Authors",
+      href: "/authors",
     },
     {
       icon: <Heart className="size-5" />,
