@@ -4,7 +4,7 @@ import ReviewWrite from "../Review/ReviewWrite";
 
 const ReviewContainer = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <ReviewWrite />
       <ReviewList />
     </div>

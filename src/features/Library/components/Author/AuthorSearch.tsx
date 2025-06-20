@@ -17,7 +17,7 @@ const AuthorSearch = () => {
             placeholder="Search author"
           />
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <Search className="size-5 text-gray-400" />
+            <Search className="size-4 text-gray-400" />
           </div>
         </div>
       </div>

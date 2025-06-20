@@ -1,5 +1,5 @@
 "use client";
-import Container from "@/global/Container/Container";
+import Container from "@/features/Components/Container/Container";
 import React from "react";
 import NovelHeader from "../components/NovelHeader";
 import NovelIntro from "../components/NovelIntro";
@@ -7,7 +7,13 @@ import ChapterContainer from "../components/Container/ChapterContainer";
 import AuthorPostContainer from "../components/Container/AuthorPostContainer";
 import SimilarNovelContainer from "../components/Container/SimilarNovelContainer";
 import ReviewContainer from "../components/Container/ReviewContainer";
-import { BookOpen, GalleryHorizontal, MessageCircle, Star, User } from "lucide-react";
+import {
+  BookOpen,
+  GalleryHorizontal,
+  MessageCircle,
+  Star,
+  User,
+} from "lucide-react";
 
 const NovelPage = () => {
   const [activeTab, setActiveTab] = React.useState<
@@ -19,9 +25,21 @@ const NovelPage = () => {
   };
 
   const tabs = [
-    { label: "Chapters", value: "Chapters", icon: <BookOpen className="size-3.5" /> },
-    { label: "Similar", value: "Similar", icon: <GalleryHorizontal className="size-3.5" /> },
-    { label: "Posts", value: "Posts", icon: <MessageCircle className="size-3.5" /> },
+    {
+      label: "Chapters",
+      value: "Chapters",
+      icon: <BookOpen className="size-3.5" />,
+    },
+    {
+      label: "Similar",
+      value: "Similar",
+      icon: <GalleryHorizontal className="size-3.5" />,
+    },
+    {
+      label: "Posts",
+      value: "Posts",
+      icon: <MessageCircle className="size-3.5" />,
+    },
     { label: "Reviews", value: "Reviews", icon: <Star className="size-3.5" /> },
   ];
 

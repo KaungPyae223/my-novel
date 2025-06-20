@@ -4,7 +4,7 @@ import React from "react";
 
 const FavoritesCard = () => {
   return (
-    <div className="w-full border border-gray-200 rounded-md shadow overflow-hidden">
+    <div className="w-full border bg-white border-gray-200 rounded-md shadow overflow-hidden">
       <div className="relative">
         <img
           src={

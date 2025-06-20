@@ -1,9 +1,10 @@
 import { ChevronRight, Clock } from "lucide-react";
 import React from "react";
+import Link from "next/link";
 
 const ChapterCard = ({chapterNumber}: {chapterNumber: number}) => {
   return (
-    <div className="p-4 group bg-gray-50 hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6">
+    <Link href={`/novel/3/chapter/1`} className="p-4 group bg-gray-50 hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6">
       <div className="bg-blue-100 text-blue-800 w-12 h-12 font-medium flex items-center justify-center rounded-full">
         {chapterNumber}
       </div>
@@ -15,7 +16,7 @@ const ChapterCard = ({chapterNumber}: {chapterNumber: number}) => {
         </div>
       </div>
       <ChevronRight className="size-6 ms-auto text-gray-500" />
-    </div>
+    </Link>
   );
 };
 

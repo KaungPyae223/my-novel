@@ -3,7 +3,7 @@ import React from "react";
 
 const ReviewWrite = () => {
   return (
-    <div className="p-7 shadow border border-gray-200 rounded-lg">
+    <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
       <div className="flex flex-row items-center gap-3 text-2xl font-semibold">
         <MessageCircle className="size-6" />
         Write Review

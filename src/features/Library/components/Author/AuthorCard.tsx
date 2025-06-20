@@ -4,7 +4,7 @@ import React from "react";
 
 const AuthorCard = () => {
   return (
-    <div className="w-full p-4 py-6 flex flex-col items-center justify-center overflow-hidden bg-white rounded-md shadow border border-gray-200">
+    <div className="w-full  p-4 py-6 flex flex-col items-center justify-center overflow-hidden bg-white rounded-md shadow border border-gray-200">
       <div>
         <img
           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"

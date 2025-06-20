@@ -15,7 +15,7 @@ import Trending from "./Trending";
 const NovelCard = () => {
   return (
     <Dialog>
-      <div className="w-full rounded-lg overflow-hidden shadow border border-gray-200">
+      <div className="w-full bg-white rounded-lg overflow-hidden shadow border border-gray-200">
         <div className="relative">
           <img
             src={

@@ -3,7 +3,7 @@ import React from "react";
 
 const NovelIntro = () => {
   return (
-    <div className="p-6 flex flex-row gap-6 shadow border border-gray-200 rounded-lg">
+    <div className="p-6 flex flex-row gap-6 bg-white shadow border border-gray-200 rounded-lg">
       <div>
         <img
           src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=300&h=400&fit=crop"

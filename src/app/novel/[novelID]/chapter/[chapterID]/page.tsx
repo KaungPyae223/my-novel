@@ -1,10 +1,10 @@
-import NovelPage from "@/features/Novel/pages/NovelPage";
+import ChapterPage from "@/features/Chapters/pages/ChapterPage";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      <NovelPage />
+      <ChapterPage />
     </div>
   );
 };

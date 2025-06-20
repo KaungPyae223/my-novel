@@ -4,7 +4,7 @@ import Trending from "../Novels/Trending";
 
 const CommunityCard = () => {
   return (
-    <div className="w-full rounded-lg overflow-hidden shadow border p-4 border-gray-200">
+    <div className="w-full bg-white rounded-lg overflow-hidden shadow border p-4 border-gray-200">
       <p className="font-medium text-lg">Horror Fans</p>
       <div className="text-xs px-2  py-0.5 rounded-full text-gray-800 border w-fit font-medium border-gray-300 mt-2">
         Genre Discussion

@@ -4,7 +4,7 @@ import Trending from "../Novels/Trending";
 
 const AuthorCard = () => {
   return (
-    <div className="w-full rounded-lg overflow-hidden shadow border p-4 border-gray-200">
+    <div className="w-full bg-white rounded-lg overflow-hidden shadow border p-4 border-gray-200">
       <img
         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
         alt=""

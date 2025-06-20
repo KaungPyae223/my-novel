@@ -38,7 +38,7 @@ const KPIItem = ({
   label: string;
 }) => {
   return (
-    <div className="flex flex-col items-center w-full py-5 border border-gray-200 bg-white shadow-sm rounded justify-center gap-1">
+    <div className="flex  flex-col items-center w-full py-5 border border-gray-200 bg-white shadow-sm rounded justify-center gap-1">
       {icon}
       <p className="text-xl font-medium mt-1">{value}</p>
       <p className="text-sm text-gray-500">{label}</p>

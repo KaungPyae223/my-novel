@@ -3,7 +3,7 @@ import AuthorPostCardHeader from "./AuthorPostCardHeader";
 
 const AuthorPostCard = () => {
   return (
-    <div className="py-5 px-6 border border-gray-200 bg-white rounded-lg shadow">
+    <div className="py-5  px-6 border border-gray-200 bg-white rounded-lg shadow">
       <AuthorPostCardHeader />
       <p className="text-justify mt-5 text-gray-800">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus

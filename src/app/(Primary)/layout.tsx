@@ -1,7 +1,7 @@
-import Header from "@/global/header/Header";
+import Header from "@/features/Components/header/Header";
 
 import type { Metadata } from "next";
-import LeftSideBar from "@/global/leftSideBar/LeftSideBar";
+import LeftSideBar from "@/features/Components/leftSideBar/LeftSideBar";
 
 export const metadata: Metadata = {
   title: "My Novel | Read and Explore Captivating Stories",

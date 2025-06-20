@@ -3,7 +3,7 @@ import React from "react";
 
 const SimilarNovelCard = () => {
   return (
-    <div className="p-4 shadow rounded-lg border border-gray-200">
+    <div className="p-4 shadow bg-white rounded-lg border border-gray-200">
       <img
         src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=400&fit=crop"
         alt=""
