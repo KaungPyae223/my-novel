@@ -11,7 +11,7 @@ const ChapterCard = ({chapterNumber}: {chapterNumber: number}) => {
       <div>
         <p className="font-medium text-lg group-hover:text-blue-600">The Discovery</p>
         <div className="flex flex-row items-center text-sm mt-1 text-gray-500 gap-1">
-          <Clock className="size-4" />
+          <Clock className="size-3.5" />
           23 June 2024
         </div>
       </div>

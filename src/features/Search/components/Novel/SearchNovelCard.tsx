@@ -8,11 +8,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { BookOpen, Eye, Heart, MessageCircle } from "lucide-react";
+import { Book, BookOpen, Eye, Heart, MessageCircle } from "lucide-react";
 import React from "react";
-import Trending from "./Trending";
 
-const NovelCard = () => {
+const SearchNovelCard = () => {
   return (
     <Dialog>
       <div className="w-full bg-white rounded-lg overflow-hidden shadow border border-gray-200">
@@ -34,6 +33,10 @@ const NovelCard = () => {
         </div>
         <div className="p-4">
           <p className="font-medium text-lg">The Willing</p>
+          <p className="text-xs font-mono my-1.5 text-gray-600">
+            @TheKingOfFire
+          </p>
+
           <p className="text-sm text-blue-600 font-medium mt-1">
             By Kaung Pyae
           </p>
@@ -58,8 +61,6 @@ const NovelCard = () => {
               Sci-Fi
             </div>
           </div>
-
-          <Trending />
 
           <div className="grid grid-cols-3 mt-5 mb-4 text-gray-600 text-sm gap-2">
             <div className="flex flex-row items-center gap-1.5">
@@ -122,4 +123,4 @@ const NovelCard = () => {
   );
 };
 
-export default NovelCard;
+export default SearchNovelCard;

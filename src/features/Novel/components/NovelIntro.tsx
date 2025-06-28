@@ -1,4 +1,4 @@
-import { BookOpen, Eye, Heart, Save, Share } from "lucide-react";
+import { BookHeart, BookOpen, Eye, Heart, Save, Share, Star } from "lucide-react";
 import React from "react";
 
 const NovelIntro = () => {
@@ -22,15 +22,15 @@ const NovelIntro = () => {
           <div className="flex flex-row gap-8">
             <ActionButton
               icon={<Heart className="size-4" />}
-              text="Like"
+              text="Love"
             />
             <ActionButton
               icon={<Share className="size-4" />}
               text="Share"
             />
             <ActionButton
-              icon={<Save className="size-4" />}
-              text="Save"
+              icon={<Star className="size-4" />}
+              text="Favorite"
             />
           </div>
         </div>

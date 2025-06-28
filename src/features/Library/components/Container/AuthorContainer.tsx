@@ -6,7 +6,7 @@ const AuthorContainer = () => {
   return (
     <div className="mt-6 space-y-6">
       <AuthorSearch />
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-5">
         <AuthorCard />
         <AuthorCard />
         <AuthorCard />

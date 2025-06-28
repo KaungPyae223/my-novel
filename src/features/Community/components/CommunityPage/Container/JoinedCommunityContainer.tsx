@@ -9,7 +9,7 @@ const JoinedCommunityContainer = () => {
         <p className="text-gray-600  mt-2">Stay connected with your favorite communities</p>
 
       </div>
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-5">
         <JoinedCommunityCard />
         <JoinedCommunityCard />
         <JoinedCommunityCard />

@@ -59,8 +59,8 @@ const LeftSideBar = () => {
 
   return (
     <div className="w-80 bg-white border-r border-r-gray-300">
-      <ScrollArea style={{ height: "calc(100vh - 4rem)" }} className="px-4 py-1">
-        <div className="py-2 mt-1 space-y-2">
+      <ScrollArea style={{ height: "calc(100vh - 4rem)" }} className="px-4">
+        <div className="py-2 mt-2 space-y-2">
           {navItem.map((item) => (
             <NavCard key={item.title} {...item} />
           ))}

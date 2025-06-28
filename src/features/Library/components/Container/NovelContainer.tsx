@@ -6,7 +6,7 @@ const NovelContainer = () => {
   return (
     <div className="mt-6 space-y-6">
       <NovelSearch />
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-5">
         <NovelCard />
         <NovelCard />
         <NovelCard />

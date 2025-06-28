@@ -55,15 +55,15 @@ const CommunityPostCard = () => {
       <hr className="mt-5 mb-3 border-gray-200" />
 
       {/* Actions */}
-      <div className="grid grid-cols-2 gap-3 text-sm text-gray-700 font-medium ">
-        <button className="flex py-2 items-center cursor-pointer w-full rounded active:bg-gray-100 justify-center gap-2 hover:text-red-500 transition-colors duration-150">
-          <Heart className="w-5 h-5" />
-          Love
-        </button>
-        <button className="flex py-2 items-center cursor-pointer w-full rounded active:bg-gray-100 justify-center gap-2 hover:text-blue-500 transition-colors duration-150">
-          <MessageCircle className="w-5 h-5" />
-          Comment
-        </button>
+      <div className="grid grid-cols-2 text-sm  gap-3">
+        <div className="flex w-full hover:bg-gray-100 py-2 rounded-lg cursor-pointer gap-3 flex-row items-center justify-center">
+          <Heart className="size-4" />
+          <p>Love</p>
+        </div>
+        <div className="flex w-full hover:bg-gray-100 py-2 rounded-lg cursor-pointer gap-3 flex-row items-center justify-center">
+          <MessageCircle className="size-4" />
+          <p>Comment</p>
+        </div>
       </div>
     </div>
   );
