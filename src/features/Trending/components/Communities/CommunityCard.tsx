@@ -1,12 +1,27 @@
 import { Book, Eye, MessageCircle, Users } from "lucide-react";
 import React from "react";
 import Trending from "../Novels/Trending";
+import Image from "next/image";
 
 const CommunityCard = () => {
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden shadow border p-4 border-gray-200">
-      <p className="font-medium text-lg">Horror Fans</p>
-      <div className="text-xs px-2  py-0.5 rounded-full text-gray-800 border w-fit font-medium border-gray-300 mt-2">
+      <div className="flex flex-row items-center gap-4">
+        <Image
+          src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
+          alt="My Novel Fans"
+          width={50}
+          height={50}
+          className="rounded-lg size-11"
+        />
+        <div>
+          <p className="font-semibold  text-xl">The King of Fire</p>
+          <p className="text-xs font-mono mt-1.5 text-gray-600">
+            @TheKingOfFire
+          </p>
+        </div>
+      </div>
+      <div className="text-xs my-3 px-2  py-0.5 rounded-full text-gray-800 border w-fit font-medium border-gray-300">
         Genre Discussion
       </div>
       <p className="text-gray-700 text-sm mt-3 line-clamp-3 text-justify">

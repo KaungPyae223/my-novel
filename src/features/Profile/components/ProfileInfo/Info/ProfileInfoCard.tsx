@@ -9,7 +9,7 @@ import {
   Phone,
 } from "lucide-react";
 
-const AuthorDetailsInfoCard = () => {
+const ProfileInfoCard = () => {
   return (
     <div className="w-full p-6 bg-white border border-gray-200 shadow rounded-lg mx-auto">
       <p className="text-xl font-semibold text-gray-800">About Jolley Roger </p>
@@ -73,18 +73,8 @@ const AuthorDetailsInfoCard = () => {
           <LucideTwitter className="size-6 text-blue-600" />
         </div>
       </div>
-      <div className="mt-7 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
-        <p className="font-semibold mb-2">Important Notice:</p>
-        <p className="text-justify">
-          Please respect the author&apos;s privacy. Do not use their personal
-          information for any unauthorized purposes, including contacting them
-          outside of appropriate channels or engaging in any form of harassment
-          or attack. Misuse of this information may result in legal action or
-          prosecution.
-        </p>
-      </div>
     </div>
   );
 };
 
-export default AuthorDetailsInfoCard;
+export default ProfileInfoCard;

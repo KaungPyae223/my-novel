@@ -1,11 +1,25 @@
 import { Clock, Crown } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const SearchCommunityCard = () => {
   return (
     <div className="w-full p-4 py-6 bg-white rounded-md shadow border border-gray-200">
-      <p className="font-semibold  text-xl">The King of Fire</p>
-      <p className="text-xs font-mono mt-1.5 text-gray-600">@TheKingOfFire</p>
+      <div className="flex flex-row items-center gap-4">
+        <Image
+          src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
+          alt="My Novel Fans"
+          width={50}
+          height={50}
+          className="rounded-lg size-11"
+        />
+        <div>
+          <p className="font-semibold  text-xl">The King of Fire</p>
+          <p className="text-xs font-mono mt-1.5 text-gray-600">
+            @TheKingOfFire
+          </p>
+        </div>
+      </div>
       <div className=" font-medium rounded-full border border-gray-300 px-3 my-3 py-0.5 w-fit text-xs text-gray-900">
         Book Club
       </div>

@@ -1,11 +1,24 @@
 import { MessageCircle, Share2, Users } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
 const CommunityDetailsHeader = () => {
   return (
     <div className="p-6 bg-white shadow rounded-md">
-      <div className="flex flex-row justify-between items-center gap-2">
-        <p className="font-semibold text-2xl">Fantasy Lovers</p>
+      <div className="flex flex-row justify-between items-start gap-2">
+        <div className="flex flex-row items-center gap-3">
+          <Image
+            src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
+            alt="My Novel Fans"
+            width={50}
+            height={50}
+            className="rounded-lg size-13"
+          />
+          <div>
+            <p className="font-semibold text-2xl">Fantasy Lovers</p>
+            <p className="text-sm font-mono text-gray-500 mt-1">@FantasyLovers</p>
+          </div>
+        </div>
         <div className="flex flex-row items-center gap-2.5">
           <div className="flex flex-row items-center gap-3 font-medium hover:bg-gray-100 cursor-pointer rounded-sm border border-gray-300 px-4 py-1.5">
             <Share2 className="size-4" />
@@ -16,8 +29,7 @@ const CommunityDetailsHeader = () => {
           </div>
         </div>
       </div>
-      <p className="text-sm font-mono text-gray-500 mt-1">@FantasyLovers</p>
-      <p className=" text-gray-700 mt-3 text-justify">
+      <p className=" text-gray-700 mt-4 text-justify">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem,
         vero. Commodi, eaque nostrum voluptatem consequuntur sapiente odio
         reiciendis voluptates expedita recusandae temporibus quia laborum
