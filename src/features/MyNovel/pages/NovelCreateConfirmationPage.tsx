@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import useStoreNovel from "@/store/NovelStore";
+import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 
 const NovelCreateConfirmationPage = () => {

@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import useAccountStore from "@/store/useAccountStore";
 
 const formSchema = z
   .object({
@@ -38,6 +39,8 @@ const formSchema = z
   });
 
 export const useRegister = () => {
+  const { setAccount, setToken } = useAccountStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -64,6 +67,9 @@ export const useRegister = () => {
       if (!response.ok) {
         throw new Error(json.message || "Registration failed");
       }
+
+      setToken(json.token);
+      setAccount(json.user);
 
       toast.success("Register Successfully");
       form.reset();

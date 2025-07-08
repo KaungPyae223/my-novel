@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import NovelCreateForm from "../components/NovelCreate/NovelCreateForm";
 import { useRouter } from "next/navigation";
-import useStoreNovel from "@/store/NovelStore";
+import useStoreNovel from "@/store/useNovelStore";
 
 const NovelCreatePage = () => {
   const router = useRouter();

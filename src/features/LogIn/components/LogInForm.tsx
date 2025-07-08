@@ -50,8 +50,9 @@ const LogInForm = () => {
           <FormField
             control={form.control}
             name="password"
+
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="mb-3">
                 <FormLabel>
                   <div className="flex items-center gap-2">
                     <Lock className="size-4" />
@@ -72,6 +73,13 @@ const LogInForm = () => {
               </FormItem>
             )}
           />
+
+          <div className="flex items-center justify-between mb-5 text-sm text-gray-700">
+            
+            <Link href="/register" className="text-blue-600">
+              Forgot your password?
+            </Link>
+          </div>
 
           <Button type="submit" className="flex items-center gap-2 w-full">
             <LogIn className="size-4" /> Log In

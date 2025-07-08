@@ -25,7 +25,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Upload } from "lucide-react";
-import useStoreNovel from "@/store/NovelStore";
+import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "./NovelTagManage";
 import { novelGenres } from "@/lib/novelData";

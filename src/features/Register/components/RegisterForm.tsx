@@ -14,7 +14,6 @@ import Link from "next/link";
 import { Toaster } from "sonner";
 import { useRegister } from "../hooks/useRegister";
 
-
 const RegisterForm = () => {
   
   const {form, onSubmit} = useRegister();
