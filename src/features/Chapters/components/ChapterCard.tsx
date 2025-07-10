@@ -1,14 +1,6 @@
-import {
-  Heart,
-  Languages,
-  Pause,
-  Play,
-  Share2,
-  X,
-  ZoomIn,
-  ZoomOut,
-} from "lucide-react";
-import React from "react";
+import { Heart, Pause, Play, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
+import React, { useEffect } from "react";
+import { languagesList } from "@/lib/languageData";
 
 import {
   Select,
@@ -19,9 +11,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import ChapterTranslateLoading from "./ChapterTranslateLoading";
 
 const ChapterCard = () => {
   const [fontSize, setFontSize] = React.useState<number>(16);
+
+  const OriginalText = `In a distant coastal village where the fog never cleared and the stars rarely shone, stood an old lighthouse. It had long been abandoned by sailors and maps, but not by its keeper — Elias, a man who hadn’t left in thirty years.
+
+Every night, Elias climbed the spiral stairs, lit the lantern, and watched the sea. No ships came anymore, but he said it wasn’t for them.
+
+“It’s for the ones who are lost,” he whispered to the wind.
+
+One stormy evening, the light flickered and went out. Elias, trembling, descended to fix it — but as he reached the base, there was a knock at the heavy door.
+
+A girl, soaked to the bone, stood there. “I saw your light,” she said. “I was walking in the dark... I didn’t know where I was going.”
+
+Elias gave her shelter, warmth, and tea. The next morning, the fog had lifted for the first time in years.
+
+She left with a smile. “Thank you,” she said, “for lighting the way.”
+
+That night, Elias lit the lamp again — not for ships, but for the lost souls still wandering, waiting for someone to show them the way home.`;
+
+  const [translatedText, setTranslatedText] = React.useState<string>("");
+
+  useEffect(() => {
+    setTranslatedText(OriginalText);
+  }, []);
 
   const handleZoomIn = () => {
     setFontSize((prevFontSize) => prevFontSize + 1);
@@ -35,9 +50,7 @@ const ChapterCard = () => {
 
   const playVoice = () => {
     if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(
-        " Go for the Tekos or Rohit Medium tutorials—both show how to call ElevenLabs via Next.js API routes and play back high-quality speech.If you'd like, I can summarize the code, help pick one based on your needs (e.g., TypeScript, simple UI control), or even outline a custom blog post yourself. Want me to do that?"
-      );
+      const utterance = new SpeechSynthesisUtterance(OriginalText);
       window.speechSynthesis.speak(utterance);
     } else {
       alert("Sorry, your browser does not support text-to-speech.");
@@ -68,6 +81,36 @@ const ChapterCard = () => {
       window.speechSynthesis.resume();
     }
     setIsPlaying("pause");
+  };
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const translateText = async (language: string) => {
+    setLoading(true);
+    const response = await fetch(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer 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",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "deepseek/deepseek-r1-0528:free",
+          messages: [
+            {
+              role: "user",
+              content: `Please translate the following text to ${language}: ${OriginalText}. In there Please give only translated text.`,
+            },
+          ],
+        }),
+      }
+    );
+
+    const data = await response.json();
+    setLoading(false);
+    setTranslatedText(data.choices[0].message.content);
   };
 
   return (
@@ -111,16 +154,18 @@ const ChapterCard = () => {
           </div>
           <div>
             <p className="text-xs mb-0.5 text-gray-800">Translation</p>
-            <Select defaultValue="">
+            <Select onValueChange={translateText}>
               <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                 <SelectValue placeholder="Select a language" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Languages</SelectLabel>
-                  <SelectItem value="original">Original Language</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="burmese">Burmese</SelectItem>
+                  {languagesList.map((language) => (
+                    <SelectItem key={language} value={language}>
+                      {language}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -140,61 +185,7 @@ const ChapterCard = () => {
         style={{ fontSize: `${fontSize}px` }}
         className="text-justify text-gray-800 mt-6 leading-relaxed"
       >
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam rem,
-        necessitatibus molestiae architecto aspernatur a, obcaecati, corporis
-        inventore saepe debitis delectus minus? Itaque dicta sint expedita, et
-        perferendis debitis, quae corrupti sed unde distinctio odio sequi rerum
-        quam labore tempora? Deserunt, optio beatae nemo accusantium dolorum
-        natus iste perspiciatis. Temporibus ipsam, amet quis earum praesentium,
-        suscipit sed tempora accusantium nesciunt dignissimos sequi, officiis
-        labore hic debitis! Obcaecati, animi atque veniam neque, repellat
-        possimus exercitationem, necessitatibus minus nobis esse laboriosam ea!
-        Distinctio dolor expedita itaque similique, fugit, repudiandae alias
-        unde corrupti consequatur ab nemo magnam. Cum illo accusamus quisquam et
-        dolor dicta enim, in nobis eos fugit asperiores laborum quasi.
-        Asperiores quae eos sequi eveniet tenetur recusandae, veritatis quasi
-        accusantium amet et laudantium incidunt id soluta, ut mollitia suscipit
-        nostrum maxime, perspiciatis odio fuga illum rerum debitis? Doloribus
-        temporibus, fugit laboriosam voluptas necessitatibus quidem odit
-        consequatur, assumenda sequi nisi odio, mollitia omnis dignissimos!
-        Voluptatem error praesentium, nostrum vitae deserunt odio debitis a
-        obcaecati cum iusto eius, natus necessitatibus sequi est. Hic fugiat
-        expedita, inventore maiores doloribus voluptatibus similique possimus
-        nemo ea maxime in at error! Magnam, obcaecati? Ratione, consequatur
-        vitae molestiae enim maiores tempore saepe porro quisquam labore,
-        corrupti explicabo. Explicabo, alias magnam. Ut praesentium sed facere
-        quis et aut eius saepe consequuntur perferendis, odio dignissimos ipsa
-        asperiores, ratione voluptatibus. Velit, sit. Perspiciatis voluptatibus
-        quia repudiandae consequuntur, tempora est itaque enim qui eligendi. Hic
-        amet reprehenderit doloremque dolorem voluptatibus eaque quas aliquid
-        nemo quae, eveniet alias laborum suscipit libero perspiciatis odit
-        quaerat saepe deserunt quos, aliquam consequatur praesentium tempore?
-        Facere rerum architecto temporibus voluptates! Quas sequi voluptate
-        maiores quo repellat fugit dicta id aut alias eligendi culpa temporibus
-        sunt quod, voluptatem sapiente quam eveniet est tenetur ad adipisci
-        tempore voluptates! Illum architecto quis repellendus, laudantium sunt
-        doloribus modi dolores inventore nulla, ea dolorem aut velit et, qui
-        deleniti! Neque sapiente, placeat quod libero dolores quas autem
-        consequatur quidem fugiat facere fuga reiciendis quia ab ea. In, dolores
-        tempora cumque inventore fugit fuga architecto dolor, illo et officia
-        enim non! Nihil blanditiis totam repellendus quidem aut magni eligendi
-        pariatur, culpa atque necessitatibus perspiciatis ipsa rem laudantium,
-        voluptatibus ipsum veritatis in recusandae voluptates iure quia placeat
-        minus fuga. Adipisci possimus repellendus vero sunt quibusdam a nesciunt
-        ea eos debitis omnis, hic impedit ab quae eaque ut quam voluptate
-        veritatis fugit praesentium. Officiis laborum dicta, molestiae adipisci
-        aperiam culpa nihil sunt ipsa est cupiditate aut facilis quis accusamus
-        perspiciatis! Unde, corporis placeat, corrupti molestias dolorem qui
-        ipsum explicabo sapiente ullam veritatis dolorum perspiciatis in minus?
-        Aperiam accusamus dolorum labore blanditiis vel odit earum corrupti
-        debitis? Molestias minus nisi corrupti, ad accusamus modi iure,
-        inventore harum in rerum quidem! Ad nam quam autem deleniti? Ratione
-        minus vitae nostrum asperiores omnis explicabo sunt accusamus quae
-        magnam nulla alias repellat nesciunt veritatis amet voluptas quidem
-        eveniet, totam et, aliquam animi magni voluptatem ipsa ducimus suscipit?
-        Repudiandae consequuntur aspernatur labore cupiditate, recusandae
-        pariatur molestiae omnis libero reiciendis illo ullam dolor aliquam sit
-        ad tempora modi tempore sapiente distinctio.
+        {loading ? <ChapterTranslateLoading /> : translatedText}
       </div>
     </div>
   );
