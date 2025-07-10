@@ -1,7 +1,29 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import useAccountStore from "@/store/useAccountStore";
+import { logout } from "@/services/auth";
+import { toast, Toaster } from "sonner";
+import { notFound, useRouter } from "next/navigation";
 
-const header = () => {
+const Header = () => {
+  const { setLogOut } = useAccountStore();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      console.log(response);
+      setLogOut();
+      toast.success("Logout Successfully");
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
+
+    
+  };
+
   return (
     <div className="fixed flex justify-between items-center px-16 top-0 left-0 right-0 h-16 bg-white shadow w-full">
       <div className="flex flex-row items-center gap-9">
@@ -43,6 +65,7 @@ const header = () => {
             />
           </svg>
         </div>
+        <Toaster position="top-center" richColors />
       </div>
       <div className="flex flex-row gap-6 items-center">
         <Link href="/notifications">
@@ -61,6 +84,7 @@ const header = () => {
             />
           </svg>
         </Link>
+
         <Link href="/profile">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,10 +101,25 @@ const header = () => {
             />
           </svg>
         </Link>
-       
+        <div onClick={handleLogout}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5 text-gray-800 cursor-pointer"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
 };
 
-export default header;
+export default Header;

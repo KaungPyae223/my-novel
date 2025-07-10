@@ -1,7 +1,75 @@
-import { Heart, Languages, Share2, Speaker } from "lucide-react";
+import {
+  Heart,
+  Languages,
+  Pause,
+  Play,
+  Share2,
+  X,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 import React from "react";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const ChapterCard = () => {
+  const [fontSize, setFontSize] = React.useState<number>(16);
+
+  const handleZoomIn = () => {
+    setFontSize((prevFontSize) => prevFontSize + 1);
+  };
+
+  const handleZoomOut = () => {
+    if (fontSize > 16) {
+      setFontSize((prevFontSize) => prevFontSize - 1);
+    }
+  };
+
+  const playVoice = () => {
+    if ("speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(
+        " Go for the Tekos or Rohit Medium tutorials—both show how to call ElevenLabs via Next.js API routes and play back high-quality speech.If you'd like, I can summarize the code, help pick one based on your needs (e.g., TypeScript, simple UI control), or even outline a custom blog post yourself. Want me to do that?"
+      );
+      window.speechSynthesis.speak(utterance);
+    } else {
+      alert("Sorry, your browser does not support text-to-speech.");
+    }
+    setIsPlaying("pause");
+  };
+
+  const stopVoice = () => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsPlaying("play");
+  };
+
+  const [isPlaying, setIsPlaying] = React.useState<"play" | "pause" | "resume">(
+    "play"
+  );
+
+  const pauseVoice = () => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.pause();
+    }
+    setIsPlaying("resume");
+  };
+
+  const resumeVoice = () => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.resume();
+    }
+    setIsPlaying("pause");
+  };
+
   return (
     <div className="p-6 bg-white border border-gray-200 rounded-md shadow-sm">
       <div className="flex items-center justify-between">
@@ -9,15 +77,69 @@ const ChapterCard = () => {
           <p className="font-medium text-xl">Chapter 1: The Discovery</p>
           <p className="text-sm text-gray-500 mt-1.5">Chapter 1 of 21</p>
         </div>
-        <div className="flex items-center gap-6">
-          <Speaker className="size-4" />
-          <Languages className="size-4" />
-          <Heart className="size-4" />
-          <Share2 className="size-4" />
+        <div className="flex items-center gap-4">
+          <div>
+            <p className="text-xs mb-0.5 text-gray-800">Font Size</p>
+            <div className="flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
+              <ZoomOut
+                className="size-4 cursor-pointer"
+                onClick={handleZoomOut}
+              />
+              <div className="border-l border-gray-300 h-4"></div>
+              <p className="text-sm pointer-events-none">{fontSize}</p>
+              <div className="border-l border-gray-300 h-4"></div>
+              <ZoomIn
+                className="size-4 cursor-pointer"
+                onClick={handleZoomIn}
+              />
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs mb-0.5 text-gray-800">Voice</p>
+            <div className="flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
+              {isPlaying === "pause" ? (
+                <Pause onClick={pauseVoice} className="size-4 cursor-pointer" />
+              ) : isPlaying === "resume" ? (
+                <Play onClick={resumeVoice} className="size-4 cursor-pointer" />
+              ) : (
+                <Play onClick={playVoice} className="size-4 cursor-pointer" />
+              )}
+              <div className="border-l border-gray-300 h-4"></div>
+              <X onClick={stopVoice} className="size-4 cursor-pointer" />
+            </div>
+          </div>
+          <div>
+            <p className="text-xs mb-0.5 text-gray-800">Translation</p>
+            <Select defaultValue="">
+              <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
+                <SelectValue placeholder="Select a language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Languages</SelectLabel>
+                  <SelectItem value="original">Original Language</SelectItem>
+                  <SelectItem value="english">English</SelectItem>
+                  <SelectItem value="burmese">Burmese</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <p className="text-xs mb-0.5 text-gray-800">{"General"}</p>
+            <div className="flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
+              <Heart className="size-4 cursor-pointer" />
+              <div className="border-l border-gray-300 h-4"></div>
+              <Share2 className="size-4 cursor-pointer" />
+            </div>
+          </div>
         </div>
       </div>
       <hr className="my-4" />
-      <div className="text-justify text-gray-800 mt-6 leading-relaxed">
+      <div
+        style={{ fontSize: `${fontSize}px` }}
+        className="text-justify text-gray-800 mt-6 leading-relaxed"
+      >
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam rem,
         necessitatibus molestiae architecto aspernatur a, obcaecati, corporis
         inventore saepe debitis delectus minus? Itaque dicta sint expedita, et

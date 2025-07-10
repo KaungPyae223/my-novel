@@ -12,7 +12,6 @@ import {
   GalleryHorizontal,
   MessageCircle,
   Star,
-  User,
 } from "lucide-react";
 
 const NovelPage = () => {

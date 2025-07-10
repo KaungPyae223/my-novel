@@ -12,7 +12,6 @@ const CommunityCard = ({
 }) => {
   const avatarUrl = `https://api.dicebear.com/8.x/initials/png?seed=${name}`;
 
-  console.log(avatarUrl);
 
   return (
     <div className="flex cursor-pointer flex-row items-center gap-3">

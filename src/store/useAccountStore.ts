@@ -17,9 +17,9 @@ type InitialState = {
 };
 
 type Action = {
-  setAccount: (account: AccountData["account"]) => void;
+  setAccount: (account: AccountData) => void;
   setToken: (token: string) => void;
-  logout: () => void;
+  setLogOut: () => void;
 };
 
 const initialState: InitialState = {
@@ -39,7 +39,7 @@ const useAccountStore = create<InitialState & Action>()(
       ...initialState,
       setAccount: (account) => set({ account }),
       setToken: (token) => set({ token }),
-      logout: () => set({ ...initialState }),
+      setLogOut: () => set({ ...initialState }),
     })),
     {
       name: "account-storage",

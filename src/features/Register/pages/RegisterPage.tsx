@@ -1,5 +1,5 @@
 "use client";
-import { Book, BookOpen } from "lucide-react";
+import { Book } from "lucide-react";
 import React from "react";
 import RegisterForm from "../components/RegisterForm";
 import Banner from "@/features/Components/RegisterLogin/Banner";

@@ -5,6 +5,7 @@ import NovelContainer from "../components/container/NovelContainer";
 import PostsContainer from "../components/container/PostsContainer";
 import RightSideBar from "@/features/Home/components/rightSideBar/RightSideBar";
 
+
 const HomePage = () => {
   const [activeTab, setActiveTab] = React.useState<
     "Novels" | "Chapters" | "Posts"

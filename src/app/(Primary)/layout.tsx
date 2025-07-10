@@ -52,21 +52,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="h-screen overflow-y-hidden">
-        <header>
-          <Header />
-        </header>
-        <div className="flex pt-16">
-          <LeftSideBar />
-          <main
-            style={{ height: "calc(100vh - 4rem)" }}
-            className="flex-1 scrollbar-hide overflow-y-auto bg-gray-50"
-          >
-            {children}
-          </main>
-        </div>
-      </body>
-    </html>
+    <div className="h-screen overflow-y-hidden">
+      <header>
+        <Header />
+      </header>
+      <section className="flex pt-16">
+        <LeftSideBar />
+        <main
+          style={{ height: "calc(100vh - 4rem)" }}
+          className="flex-1 scrollbar-hide overflow-y-auto bg-gray-50"
+        >
+          {children}
+        </main>
+      </section>
+    </div>
   );
 }

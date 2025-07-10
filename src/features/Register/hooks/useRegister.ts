@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
 import useAccountStore from "@/store/useAccountStore";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -40,6 +41,7 @@ const formSchema = z
 
 export const useRegister = () => {
   const { setAccount, setToken } = useAccountStore();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,6 +75,7 @@ export const useRegister = () => {
 
       toast.success("Register Successfully");
       form.reset();
+      router.push("/");
     } catch (error: any) {
       toast.error(
         error.message || "An unexpected error occurred during registration"

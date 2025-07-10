@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import useAccountStore from "@/store/useAccountStore";
 import z from "zod";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -14,6 +15,8 @@ const formSchema = z.object({
 
 export const useLogIn = () => {
   const { setAccount, setToken } = useAccountStore();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -41,6 +44,7 @@ export const useLogIn = () => {
 
       toast.success("Login Successfully");
       form.reset();
+      router.push("/");
     } catch (error: any) {
       toast.error(error.message || "An unexpected error occurred during login");
     }

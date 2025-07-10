@@ -1,3 +1,5 @@
+import api from "./api";
+
 export const login = (data: { email: string; password: string }) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/login", {
     method: "POST",
@@ -24,4 +26,8 @@ export const register = (data: {
       Accept: "application/json",
     },
   });
+};
+
+export const logout = () => {
+  return api.post("/logout");
 };
