@@ -1,4 +1,4 @@
-import api from "./api";
+import {api} from "./api";
 
 export const login = (data: { email: string; password: string }) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/login", {

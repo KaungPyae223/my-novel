@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Save, X } from "lucide-react";
+import { useUpdateProfile } from "@/services/profile";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -31,28 +32,41 @@ const formSchema = z.object({
   youtube: z.string().optional(),
 });
 
-const ProfileEditForm = () => {
+const ProfileEditForm = ({ data }: { data: any }) => {
+  
+  const { mutate } = useUpdateProfile();
+
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullName: "",
-      userName: "",
-      emailAddress: "",
-      phoneNumber: "",
-      about: "",
-      location: "",
-      facebook: "",
-      twitter: "",
-      instagram: "",
-      youtube: "",
+      fullName: data?.full_name,
+      userName: data?.username,
+      emailAddress: data?.email,
+      phoneNumber: data?.phone || "",
+      about: data?.about || "",
+      location: data?.location || "",
+      facebook: data?.facebook || "",
+      twitter: data?.twitter || "",
+      instagram: data?.instagram || "",
+      youtube: data?.youtube || "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    mutate({
+      full_name: values.fullName,
+      username: values.userName,
+      email: values.emailAddress,
+      phone: values.phoneNumber,
+      about: values.about,
+      location: values.location,
+      facebook: values.facebook,
+      twitter: values.twitter,
+      instagram: values.instagram,
+      youtube: values.youtube,
+    });
   }
 
   return (

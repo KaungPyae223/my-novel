@@ -20,8 +20,6 @@ const Header = () => {
     } catch (error) {
       console.log(error);
     }
-
-    
   };
 
   return (
@@ -65,7 +63,7 @@ const Header = () => {
             />
           </svg>
         </div>
-        <Toaster position="top-center" richColors />
+        <Toaster position="top-center" richColors className="z-[9999]" />
       </div>
       <div className="flex flex-row gap-6 items-center">
         <Link href="/notifications">
