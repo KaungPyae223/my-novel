@@ -1,3 +1,4 @@
+
 import { api, formApi } from "./api"; 
 import { useMutate } from "./mutate";
 
@@ -9,7 +10,12 @@ const updateCoverImage = (formData: FormData) => {
   return formApi.post("/profile/upload-cover-image", formData);
 };
 
+const updateProfileImage = (formData: FormData) => {
+  return formApi.post("/profile/upload-profile-image", formData);
+};
+
 export const useUpdateProfile = () => {
+  
   return useMutate({
     mutationFn: updateProfile,
     queryKey: ["/profile"],
@@ -23,6 +29,13 @@ export const useUpdateCoverImage = () => {
     mutationFn: updateCoverImage,
     queryKey: ["/profile"],
     successMessage: "Successfully update cover image",
-    pushPath: "/profile",
+  });
+};
+
+export const useUpdateProfileImage = () => {
+  return useMutate({
+    mutationFn: updateProfileImage,
+    queryKey: ["/profile"],
+    successMessage: "Successfully update profile image",
   });
 };

@@ -11,7 +11,7 @@ const ProfileHeader = ({ data }: { data: any }) => {
         <div className="flex flex-row items-center gap-4">
           <Image
             src={
-              data?.user?.profileImage ||
+              data?.profile_image ||
               `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
                 data?.full_name
               )}`

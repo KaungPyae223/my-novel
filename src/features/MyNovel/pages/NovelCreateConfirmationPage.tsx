@@ -3,21 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import useStoreNovel from "@/store/useNovelStore";
-import { useRouter } from "next/navigation";
+
+import { useNovelCreateConfirm } from "../hooks/useNovelCreateConfirm";
 
 const NovelCreateConfirmationPage = () => {
-  const { novelData }: any = useStoreNovel();
-  const router = useRouter();
-
-  const novelTag = novelData.tags
-    .split("/")
-    .map((t: string) => t.trim())
-    .filter((t: string) => t.length > 0);
-
-  const handleBack = () => {
-    router.push("/my-novels/create");
-  };
+  const { handleBack, handleCreate, novelData, novelTag, genre } =
+    useNovelCreateConfirm();
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white rounded-md shadow border border-gray-200 my-10">
@@ -35,7 +26,7 @@ const NovelCreateConfirmationPage = () => {
 
           <div>
             <h2 className="text-lg font-semibold">Genre</h2>
-            <p className="text-gray-700 capitalize">{novelData.genre}</p>
+            <p className="text-gray-700 capitalize">{genre.genre}</p>
           </div>
 
           <div>
@@ -87,7 +78,7 @@ const NovelCreateConfirmationPage = () => {
         <Button onClick={handleBack} variant="outline">
           Edit Novel
         </Button>
-        <Button>Create Another Novel</Button>
+        <Button onClick={handleCreate}>Create Another Novel</Button>
       </div>
     </div>
   );

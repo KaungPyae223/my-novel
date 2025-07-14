@@ -22,7 +22,9 @@ export const useMutate = ({
     mutationFn: mutationFn,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKey });
+      toast.dismiss();
       toast.success(successMessage);
+
       if (pushPath) {
         router.push(pushPath);
       }
@@ -30,6 +32,8 @@ export const useMutate = ({
     onError: (error) => {
       const message =
         error?.response?.data?.message || "Failed to update profile.";
+
+      toast.dismiss();
       toast.error(message);
     },
   });

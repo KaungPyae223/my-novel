@@ -18,6 +18,8 @@ const ProfileCoverPhotoEdit = ({ coverImage }: { coverImage: string }) => {
     const formData = new FormData();
     formData.append("image", file);
 
+    toast.loading("Updating cover image...");
+
     mutate(formData);
 
   }

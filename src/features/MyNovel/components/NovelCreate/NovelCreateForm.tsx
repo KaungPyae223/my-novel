@@ -28,7 +28,7 @@ import { Upload } from "lucide-react";
 import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "./NovelTagManage";
-import { novelGenres } from "@/lib/novelData";
+import useFetchData from "@/services/fetcher";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -82,6 +82,8 @@ const NovelCreateForm = () => {
     router.push("/my-novels/create/confirm");
   }
 
+  const { data, isLoading } = useFetchData("/genres");
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -111,37 +113,39 @@ const NovelCreateForm = () => {
               />
 
               <div className="grid grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="genre"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Genre</FormLabel>
-                      <FormControl>
-                        <Select
-                          {...field}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a genre" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Genres</SelectLabel>
-                              {novelGenres.map((genre) => (
-                                <SelectItem key={genre} value={genre}>
-                                  {genre}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {!isLoading && (
+                  <FormField
+                    control={form.control}
+                    name="genre"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Genre</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a genre" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Genres</SelectLabel>
+                                {data?.map((genre: any) => (
+                                  <SelectItem key={genre.id} value={JSON.stringify(genre)}>
+                                    {genre.genre}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
 
                 <FormField
                   control={form.control}

@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Save, X } from "lucide-react";
 import { useUpdateProfile } from "@/services/profile";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   fullName: z.string().min(2).max(50),
@@ -55,6 +56,9 @@ const ProfileEditForm = ({ data }: { data: any }) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    
+    toast.loading("Updating profile...");
+
     mutate({
       full_name: values.fullName,
       username: values.userName,
@@ -69,6 +73,8 @@ const ProfileEditForm = ({ data }: { data: any }) => {
     });
   }
 
+  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -79,7 +85,7 @@ const ProfileEditForm = ({ data }: { data: any }) => {
           </p>
 
           <div className="flex flex-row gap-12 mt-9">
-            <ProfileImageEdit />
+            <ProfileImageEdit profileImage={data?.profile_image} fullName={data?.full_name} />
             <div className="flex-1 space-y-6">
               <div className="grid grid-cols-2 gap-3">
                 <FormField
