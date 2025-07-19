@@ -1,10 +1,10 @@
 import React from "react";
 import ProfileInfoCard from "../Info/ProfileInfoCard";
 
-const ProfileInfoContainer = () => {
+const ProfileInfoContainer = ({ data }: { data: any }) => {
   return (
     <div className="my-6">
-      <ProfileInfoCard />
+      <ProfileInfoCard data={data} />
     </div>
   );
 };

@@ -25,7 +25,7 @@ const ProfileHeader = ({ data }: { data: any }) => {
           <div>
             <p className="font-semibold text-2xl">{data?.full_name}</p>
             <p className="text-sm font-mono text-gray-500 mt-1">
-              @{data?.username}
+              {data?.username}
             </p>
           </div>
         </div>

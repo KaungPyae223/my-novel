@@ -1,23 +1,14 @@
 "use client";
-import {
-  BookOpen,
-  Calendar,
-  Eye,
-  Heart,
-  Plus,
-  Search,
-  Users,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
-import MyNovelKPICard from "../components/MyNovel/MyNovelKPICard";
-import MyNovelNovelCard from "../components/MyNovel/MyNovelNovelCard";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Middleware from "@/features/Components/Middleware/Middleware";
 import useStoreNovel from "@/store/useNovelStore";
+import MyNovelSearch from "../components/MyNovel/MyNovelSearch";
+import MyNovelList from "../components/MyNovel/MyNovelList";
+import MyNovelKPIContainer from "../components/MyNovel/MyNovelKPIContainer";
+import { Plus } from "lucide-react";
 
 const MyNovelPage = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
   const { resetNovelData }: any = useStoreNovel();
 
   useEffect(() => {
@@ -41,49 +32,10 @@ const MyNovelPage = () => {
             <Plus className="size-4" /> Create New Novel
           </Link>
         </div>
-        <div className="grid grid-cols-3 my-6">
-          <div className="relative flex-1">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full border border-gray-300 rounded-md p-2 px-3 text-sm pr-3 pl-10"
-              placeholder="Search your novels"
-            />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <Search className="size-4 text-gray-400" />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-4 gap-3">
-          <MyNovelKPICard
-            icon={<BookOpen className="size-5 text-green-700" />}
-            title="Total Novels"
-            value="500000"
-          />
-          <MyNovelKPICard
-            icon={<Eye className="size-5 text-blue-700" />}
-            title="Total Views"
-            value="500000"
-          />
-          <MyNovelKPICard
-            icon={<Heart className="size-5 text-red-700" />}
-            title="Total Loves"
-            value="500000"
-          />
-          <MyNovelKPICard
-            icon={<Calendar className="size-5 text-emerald-700" />}
-            title="Total Published"
-            value="500000"
-          />
-        </div>
-        <div className="grid grid-cols-3 gap-5 mt-6">
-          <MyNovelNovelCard />
-          <MyNovelNovelCard />
-          <MyNovelNovelCard />
-          <MyNovelNovelCard />
-          <MyNovelNovelCard />
-        </div>
+
+        <MyNovelSearch />
+        <MyNovelKPIContainer />
+        <MyNovelList />
       </div>
     </Middleware>
   );

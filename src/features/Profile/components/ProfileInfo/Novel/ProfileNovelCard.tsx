@@ -1,37 +1,45 @@
+import { formatDate } from "@/utils/formatDate";
 import { BookOpen, Clock, Edit2, Eye } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 
-const ProfileNovelCard = () => {
+const ProfileNovelCard = ({ novel }: { novel: any }) => {
   return (
     <div className="w-full bg-white shadow border border-gray-200 rounded-md overflow-hidden">
       <div className="relative">
-        <img
-          src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1000&h=1000&fit=crop"
+        <Image
+          src={novel.image}
           alt=""
           className="h-64 w-full object-cover"
+          width={1920}
+          height={1080}
         />
-        <div className="absolute top-3 left-3">
-          <p className="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-medium">
-            Sci-Fi
-          </p>
-        </div>
+        
         <div className="absolute top-3 right-3">
           <p className="bg-white text-gray-800 px-2 py-0.5 rounded-full text-xs font-medium">
-            Ongoing
+            {novel.progress}
           </p>
+        </div>
+        <div className="absolute top-3 left-3">
+          {novel.status === "published" ? (
+            <div className="px-2 bg-green-300 text-green-800 py-0.5 rounded-full text-xs font-medium">
+              Published
+            </div>
+          ) : (
+            <div className="px-2 bg-gray-300 text-gray-800 py-0.5 rounded-full text-xs font-medium">
+              Draft
+            </div>
+          )}
         </div>
       </div>
       <div className="p-4">
-        <p className="font-semibold text-xl">The Arrow and the Green</p>
-        <p className="text-sm font-mono mt-1 text-gray-500">@arrow_and_green</p>
+        <p className="font-semibold text-xl">{novel.title}</p>
+        <p className="text-sm font-mono mt-1 text-gray-500">
+          {novel.unique_name}
+        </p>
 
         <p className="text-sm text-justify text-gray-700 mt-3 line-clamp-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          excepturi dicta, aliquid facilis id iure natus voluptate unde eos qui
-          eius porro! Blanditiis inventore veniam, temporibus a vitae dolorem
-          aperiam ipsam laudantium dolores consequatur non. Omnis amet eius
-          debitis facilis quae, veritatis placeat dolor, illum quidem velit
-          consequuntur at minus.
+          {novel.description}
         </p>
 
         <div className="grid grid-cols-2 text-gray-600 text-xs gap-2 my-6">
@@ -44,34 +52,30 @@ const ProfileNovelCard = () => {
             >
               <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
             </svg>
-            12.5k
+            {novel.love_count}
           </div>
           <div className="flex items-center gap-1.5">
             <Eye className="size-3.5" />
-            12.5k
+            {novel.views}
           </div>
           <div className="flex flex-row items-center gap-1.5">
             <BookOpen className="size-3.5" />
-            23 Chapters
+            {novel.total_chapters} Chapters
           </div>
           <div className="flex items-center gap-1.5">
             <Clock className="size-3.5" />
-            23 June 2025
+            {formatDate(novel.created_at)}
           </div>
         </div>
         <div className="flex items-center mt-4 gap-1.5">
-          <p className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium">
-            Sci-Fi
-          </p>
-          <p className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium">
-            Comedy
-          </p>
-          <p className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium">
-            English
-          </p>
-          <p className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium">
-            Dark
-          </p>
+          {novel.tags?.split("/").map((tag: any) => (
+            <p
+              key={tag}
+              className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium"
+            >
+              {tag}
+            </p>
+          ))}
         </div>
         <hr className="mt-4 border-gray-200" />
         <div className="mt-4">

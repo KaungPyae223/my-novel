@@ -24,8 +24,7 @@ const ProfilePage = () => {
 
   const { data, isLoading, isError } = useFetchData("/profile");
 
-  console.log(data);
-
+  
   useEffect(() => {
     if (headerRef.current) {
       const height = headerRef.current.getBoundingClientRect().height;
@@ -48,7 +47,6 @@ const ProfilePage = () => {
   ];
 
   
-
   return isLoading ? (
     <Loading />
   ) : isError ? (
@@ -103,7 +101,7 @@ const ProfilePage = () => {
           </div>
           {activeTab === "Novels" && <ProfileNovelsContainer />}
           {activeTab === "Communities" && <ProfileCommunityContainer />}
-          {activeTab === "Info" && <ProfileInfoContainer />}
+          {activeTab === "Info" && <ProfileInfoContainer data={data?.user} />}
         </div>
       </div>
     </Middleware>
