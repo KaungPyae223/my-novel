@@ -4,11 +4,7 @@ import SearchPage from '@/features/Search/pages/SearchPage'
 
 const page = () => {
 
-  return (
-    <div>
-        <SearchPage />
-    </div>
-  )
+  return <SearchPage />
 }
 
 export default page

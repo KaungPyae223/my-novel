@@ -1,10 +1,9 @@
-import NotFoundPage from '@/features/NotFound/NotFoundPage'
+import NotFoundPage from "@/features/NotFound/NotFoundPage";
 
- 
 export default function NotFound() {
   return (
-    <div>
+    <div className="h-screen">
       <NotFoundPage />
     </div>
-  )
+  );
 }

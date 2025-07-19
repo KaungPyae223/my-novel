@@ -12,7 +12,7 @@ const NotFoundPage = () => {
         router.back();
     };
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
+    <div className="flex flex-col items-center justify-center h-full w-full">
       <Lottie animationData={Lighthouse} className="size-80" />
       <p className="text-4xl font-serif font-bold">404 Not Found</p>
       <Button className="mt-5 cursor-pointer" onClick={handleBack}>Back</Button>

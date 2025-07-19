@@ -15,9 +15,13 @@ const MyNovelList = () => {
 
   const url = useGenerateQuery("/my-novels");
 
-  const { data, isLoading } = useFetchData(url);
+  const { data, isLoading, error } = useFetchData(url);
 
   if (isLoading) return <Loading />;
+
+  if (error) {
+    throw error;
+  }
 
   if (data?.data?.length == 0) return <EmptyState title="No novels found" link="/my-novels/create" linkText="Create Novel" />;
 

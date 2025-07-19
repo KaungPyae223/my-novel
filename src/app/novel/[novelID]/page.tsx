@@ -1,16 +1,7 @@
 import NovelPage from "@/features/Novel/pages/NovelPage";
-import React from "react";
-
 
 const Page = () => {
-
-  
-
-  return (
-    <div>
-      <NovelPage />
-    </div>
-  );
+  return <NovelPage />;
 };
 
 export default Page;

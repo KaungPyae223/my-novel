@@ -2,11 +2,7 @@ import NovelCreateConfirmationPage from '@/features/MyNovel/pages/NovelCreateCon
 import React from 'react'
 
 const page = () => {
-  return (
-    <div>
-        <NovelCreateConfirmationPage />
-    </div>
-  )
+  return <NovelCreateConfirmationPage />
 }
 
 export default page

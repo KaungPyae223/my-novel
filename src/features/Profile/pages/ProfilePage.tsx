@@ -22,9 +22,8 @@ const ProfilePage = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
 
-  const { data, isLoading, isError } = useFetchData("/profile");
+  const { data, isLoading, error } = useFetchData("/profile");
 
-  
   useEffect(() => {
     if (headerRef.current) {
       const height = headerRef.current.getBoundingClientRect().height;
@@ -46,12 +45,13 @@ const ProfilePage = () => {
     { label: "Info", icon: <Text className="size-3.5" /> },
   ];
 
-  
-  return isLoading ? (
-    <Loading />
-  ) : isError ? (
-    <p>Error</p>
-  ) : (
+  if (isLoading) return <Loading />;
+
+  if (error) {
+    throw error;
+  }
+
+  return (
     <Middleware>
       <div className="bg-gray-50">
         {/* Header image and floating card */}

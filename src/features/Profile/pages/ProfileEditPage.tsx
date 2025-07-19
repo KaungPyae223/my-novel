@@ -7,12 +7,17 @@ import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 
 const ProfileEditPage = () => {
-
-  const { data, isLoading } = useFetchData("/profile");
+  const { data, isLoading, error } = useFetchData("/profile");
 
   if (isLoading) {
     return <Loading />;
   }
+
+  if (error) {
+    throw error;
+  }
+
+  
 
   return (
     <Middleware>

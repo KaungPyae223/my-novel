@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "My Novel Team", url: "https://mynovel.com" }],
   creator: "My Novel Team",
-  themeColor: "#ffffff",
   openGraph: {
     title: "My Novel | Read and Explore Captivating Stories",
     description:
@@ -45,6 +44,10 @@ export const metadata: Metadata = {
     images: ["https://mynovel.com/twitter-image.jpg"],
     creator: "@mynovel",
   },
+};
+
+export const viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({

@@ -1,12 +1,7 @@
 import CommunityPage from "@/features/Community/pages/CommunityPage";
-import React from "react";
 
 const page = () => {
-  return (
-    <div>
-      <CommunityPage />
-    </div>
-  );
+  return <CommunityPage />;
 };
 
 export default page;

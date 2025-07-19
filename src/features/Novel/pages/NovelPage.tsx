@@ -23,6 +23,7 @@ const NovelPage = () => {
     setActiveTab(tab);
   };
 
+
   const tabs = [
     {
       label: "Chapters",
@@ -42,6 +43,7 @@ const NovelPage = () => {
     { label: "Reviews", value: "Reviews", icon: <Star className="size-3.5" /> },
   ];
 
+  
   return (
     <div>
       <NovelHeader />

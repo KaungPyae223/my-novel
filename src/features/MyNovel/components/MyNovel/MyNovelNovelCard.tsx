@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useDeleteNovel } from "@/services/novel";
+import Link from "next/link";
 
 const MyNovelNovelCard = ({ novel }: { novel: any }) => {
   const tags = novel.tags.split("/").map((t: string) => t.trim());
@@ -87,9 +88,9 @@ const MyNovelNovelCard = ({ novel }: { novel: any }) => {
             <button className="bg-gray-800 w-full flex flex-row items-center justify-center gap-2 cursor-pointer text-white px-3 py-1.5 rounded-md text-sm font-medium">
               <Eye className="size-3.5" /> View
             </button>
-            <button className="text-gray-800 border border-gray-200 flex flex-row items-center justify-center gap-2 cursor-pointer px-3 py-1.5 rounded-md text-sm font-medium">
+            <Link href={`/my-novels/edit/${novel.id}`} className="text-gray-800 border border-gray-200 flex flex-row items-center justify-center gap-2 cursor-pointer px-3 py-1.5 rounded-md text-sm font-medium">
               <Edit className="size-3.5" /> Edit
-            </button>
+            </Link>
             <DialogTrigger asChild>
               <div className="text-red-600 border border-red-200 flex flex-row items-center justify-center gap-2 cursor-pointer px-3 py-1.5 rounded-md text-sm font-medium hover:bg-red-50">
                 <Trash className="size-3.5" /> Delete

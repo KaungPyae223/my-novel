@@ -27,7 +27,7 @@ import {
 import { Upload } from "lucide-react";
 import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
-import NovelTagManage from "./NovelTagManage";
+import NovelTagManage from "../NovelCreate/NovelTagManage";
 import useFetchData from "@/services/fetcher";
 
 const formSchema = z.object({
@@ -66,7 +66,8 @@ const formSchema = z.object({
     ),
 });
 
-const NovelCreateForm = () => {
+const NovelEditForm = () => {
+  
   const router = useRouter();
 
   const { novelData, setNovelData }: any = useStoreNovel();
@@ -76,10 +77,14 @@ const NovelCreateForm = () => {
     defaultValues: novelData,
   });
 
+  
+
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     setNovelData(values);
     router.push("/my-novels/create/confirm");
+
   }
 
   const { data, isLoading } = useFetchData("/genres");
@@ -285,4 +290,4 @@ const NovelCreateForm = () => {
   );
 };
 
-export default NovelCreateForm;
+export default NovelEditForm;

@@ -4,15 +4,12 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import NovelCreateForm from "../components/NovelCreate/NovelCreateForm";
 import { useRouter } from "next/navigation";
-import useStoreNovel from "@/store/useNovelStore";
 import Middleware from "@/features/Components/Middleware/Middleware";
 
 const NovelCreatePage = () => {
   const router = useRouter();
-  const { resetNovelData }: any = useStoreNovel();
 
   const handleBack = () => {
-    resetNovelData();
     router.push("/my-novels");
   };
 

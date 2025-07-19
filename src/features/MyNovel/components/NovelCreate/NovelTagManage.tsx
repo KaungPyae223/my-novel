@@ -24,14 +24,11 @@ const NovelTagManage = ({ form }: { form: any }) => {
         const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
         // Current tags in the form field, split by '/'
-        const currentTags = field.value
-          .split("/")
-          .map((t: string) => t.trim())
-          .filter((t: string) => t.length > 0);
+        const currentTags = field.value?.split("/")?.map((t: string) => t.trim())?.filter((t: string) => t.length > 0);
 
         const addTag = (tagToAdd: string) => {
           const newTag = tagToAdd.trim();
-          if (newTag.length < 2) {
+          if (newTag?.length < 2) {
             // Minimum tag length validation
             form.setError("tags", {
               type: "manual",
@@ -50,7 +47,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
             });
             return;
           }
-          if (newTag.length > 10) {
+          if (newTag?.length > 10) {
             form.setError("tags", {
               type: "manual",
               message: "Tag cannot exceed 10 characters.",
@@ -68,7 +65,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
           }
 
           if (newTag && !currentTags.includes(newTag)) {
-            if (currentTags.length >= 10) {
+            if (currentTags?.length >= 10) {
               // Max 10 tags
               form.setError("tags", {
                 type: "manual",
@@ -111,7 +108,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           const value = e.target.value;
           setInputValue(value);
-          if (value.length > 0) {
+          if (value?.length > 0) {
             const filteredSuggestions = availableTags
               .filter(
                 (tag) =>
@@ -120,7 +117,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
               )
               .slice(0, 5); // Limit to 5 suggestions
             setSuggestions(filteredSuggestions);
-            setShowSuggestions(filteredSuggestions.length > 0);
+            setShowSuggestions(filteredSuggestions?.length > 0);
           } else {
             setSuggestions([]);
             setShowSuggestions(false);
@@ -134,7 +131,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
         };
 
         const handleInputFocus = () => {
-          if (inputValue.length > 0 && suggestions.length > 0) {
+          if (inputValue?.length > 0 && suggestions?.length > 0) {
             setShowSuggestions(true);
           }
         };
@@ -188,9 +185,9 @@ const NovelTagManage = ({ form }: { form: any }) => {
                 </div>
               )}
             </div>
-            {currentTags.length > 0 && (
+            {currentTags?.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
-                {currentTags.map((tag: string, index: number) => (
+                {currentTags?.map((tag: string, index: number) => (
                   <div
                     key={index}
                     className="flex items-center px-3 py-1 rounded-full bg-blue-100 text-sm text-blue-800"
