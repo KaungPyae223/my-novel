@@ -4,17 +4,17 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-import { useNovelCreateConfirm } from "../hooks/useNovelCreateConfirm";
+import { useNovelEditConfirm } from "../hooks/useNovelEditConfirm";
 
-const NovelCreateConfirmationPage = () => {
-  const { handleBack, handleCreate, novelData, novelTag, genre } =
-    useNovelCreateConfirm();
+const NovelEditConfirmationPage = () => {
+  const { handleBack, handleEdit, novelData, novelTag, genre } =
+    useNovelEditConfirm();
 
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white rounded-md shadow border border-gray-200 my-10">
       <h1 className="text-3xl font-bold mb-4">Confirm Novel Details</h1>
       <p className="text-gray-600 mb-8">
-        Here are the details of your new novel:
+        Here are the details of your novel:
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -32,6 +32,11 @@ const NovelCreateConfirmationPage = () => {
           <div>
             <h2 className="text-lg font-semibold">Status</h2>
             <p className="text-gray-700 capitalize">{novelData.status}</p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-semibold">Progress</h2>
+            <p className="text-gray-700 capitalize">{novelData.progress}</p>
           </div>
 
           <div>
@@ -64,15 +69,24 @@ const NovelCreateConfirmationPage = () => {
         </div>
 
         <div className="flex justify-center items-start">
-          {novelData.coverImage && (
-            <Image
-              src={URL.createObjectURL(novelData.coverImage)}
-              alt="Cover Image"
-              width={300}
-              height={400}
-              className="rounded-md object-contain border"
-            />
-          )}
+          {novelData.coverImage &&
+            (typeof novelData.coverImage === "string" ? (
+              <Image
+                src={novelData.coverImage}
+                alt="Cover Image"
+                width={300}
+                height={400}
+                className="rounded-md object-contain border"
+              />
+            ) : (
+              <Image
+                src={URL.createObjectURL(novelData.coverImage)}
+                alt="Cover Image"
+                width={300}
+                height={400}
+                className="rounded-md object-contain border"
+              />
+            ))}
         </div>
       </div>
 
@@ -80,10 +94,10 @@ const NovelCreateConfirmationPage = () => {
         <Button onClick={handleBack} variant="outline">
           Edit Novel
         </Button>
-        <Button onClick={handleCreate}>Create Another Novel</Button>
+        <Button onClick={handleEdit}>Edit Novel</Button>
       </div>
     </div>
   );
 };
 
-export default NovelCreateConfirmationPage;
+export default NovelEditConfirmationPage;

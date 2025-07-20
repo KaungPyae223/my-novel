@@ -29,6 +29,7 @@ import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "./NovelTagManage";
 import useFetchData from "@/services/fetcher";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -232,9 +233,11 @@ const NovelCreateForm = () => {
                   <FormItem>
                     <FormLabel>
                       {field.value ? (
-                        <img
+                        <Image
                           src={URL.createObjectURL(field.value)}
                           alt="Preview"
+                          width={300}
+                          height={400}
                           className="max-h-60 w-full max-w-[300px] mt-6 rounded-md object-contain"
                         />
                       ) : (

@@ -1,6 +1,6 @@
 // services/useFetchData.ts
 import { useQuery } from "@tanstack/react-query";
-import {api} from "./api";
+import { api } from "./api";
 
 const fetcher = async (url: string) => {
   const response = await api.get(url);
@@ -13,3 +13,5 @@ export default function useFetchData(url: string) {
     queryFn: () => fetcher(url),
   });
 }
+
+

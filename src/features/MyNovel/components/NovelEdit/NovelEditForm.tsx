@@ -29,6 +29,7 @@ import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "../NovelCreate/NovelTagManage";
 import useFetchData from "@/services/fetcher";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -38,6 +39,9 @@ const formSchema = z.object({
     .min(10, { message: "Description must be at least 10 characters long." }),
   genre: z.string().min(1, {
     message: "Genre is required.",
+  }),
+  progress: z.string().min(1, {
+    message: "Progress is required.",
   }),
   synopsis: z
     .string()
@@ -55,11 +59,11 @@ const formSchema = z.object({
   }),
   coverImage: z
     .any()
-    .refine((file) => file instanceof File || (file && file.length > 0), {
-      message: "Cover image is required.",
-    })
+    .optional()
     .refine(
-      (file) => !file || (file instanceof File && file.size <= 5 * 1024 * 1024),
+      (file) =>
+        typeof file === "string" ||
+        (file instanceof File && file.size <= 5 * 1024 * 1024),
       {
         message: "File size must be less than 5MB.",
       }
@@ -67,7 +71,6 @@ const formSchema = z.object({
 });
 
 const NovelEditForm = () => {
-  
   const router = useRouter();
 
   const { novelData, setNovelData }: any = useStoreNovel();
@@ -77,14 +80,10 @@ const NovelEditForm = () => {
     defaultValues: novelData,
   });
 
-  
-
-
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setNovelData(values);
-    router.push("/my-novels/create/confirm");
-
+    setNovelData({ ...novelData, ...values });
+    router.push(`/my-novels/edit/${novelData.id}/confirm`);
   }
 
   const { data, isLoading } = useFetchData("/genres");
@@ -117,7 +116,7 @@ const NovelEditForm = () => {
                 )}
               />
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-3 gap-6">
                 {!isLoading && (
                   <FormField
                     control={form.control}
@@ -138,7 +137,10 @@ const NovelEditForm = () => {
                               <SelectGroup>
                                 <SelectLabel>Genres</SelectLabel>
                                 {data?.map((genre: any) => (
-                                  <SelectItem key={genre.id} value={JSON.stringify(genre)}>
+                                  <SelectItem
+                                    key={genre.id}
+                                    value={JSON.stringify(genre)}
+                                  >
                                     {genre.genre}
                                   </SelectItem>
                                 ))}
@@ -174,6 +176,34 @@ const NovelEditForm = () => {
                               <SelectItem value="published">
                                 Published
                               </SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="progress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Progress</FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a progress" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Progress</SelectLabel>
+                              <SelectItem value="ongoing">Ongoing</SelectItem>
+                              <SelectItem value="complete">Complete</SelectItem>
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -236,10 +266,20 @@ const NovelEditForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {field.value ? (
-                        <img
+                      {typeof field.value === "string" ? (
+                        <Image
+                          src={field.value}
+                          alt="Preview"
+                          width={300}
+                          height={300}
+                          className="max-h-60 w-full max-w-[300px] mt-6 rounded-md object-contain"
+                        />
+                      ) : field.value instanceof File ? (
+                        <Image
                           src={URL.createObjectURL(field.value)}
                           alt="Preview"
+                          width={300}
+                          height={300}
                           className="max-h-60 w-full max-w-[300px] mt-6 rounded-md object-contain"
                         />
                       ) : (

@@ -1,4 +1,4 @@
-import { formApi } from "./api";
+import { api, formApi } from "./api";
 import { useMutate } from "./mutate";
 
 const createNovel = (formData: FormData) => {
@@ -7,6 +7,14 @@ const createNovel = (formData: FormData) => {
 
 const deleteNovel = (id: string) => {
   return formApi.delete(`/novels/${id}`);
+};
+
+const updateNovel = (novelData: any) => {
+  return api.put(`/novels/${novelData.id}`, novelData);
+};
+
+const updateNovelCoverImage = (formData: FormData) => {
+  return formApi.post(`/novels/upload-image/${formData.get("id")}`, formData);
 };
 
 export const useCreateNovel = () => {
@@ -18,6 +26,22 @@ export const useCreateNovel = () => {
   });
 };
 
+export const useUpdateNovel = () => {
+  return useMutate({
+    mutationFn: updateNovel,
+    queryKey: ["/novels"],
+    successMessage: "Successfully updated novel data",
+  });
+};
+
+export const useUpdateNovelCoverImage = () => {
+  return useMutate({
+    mutationFn: updateNovelCoverImage,
+    queryKey: ["/novels"],
+    successMessage: "Successfully updated novel cover image",
+  });
+};
+
 export const useDeleteNovel = () => {
   return useMutate({
     mutationFn: deleteNovel,
@@ -26,3 +50,6 @@ export const useDeleteNovel = () => {
     pushPath: "/my-novels",
   });
 };
+
+
+  

@@ -9,15 +9,16 @@ export const useNovelCreateConfirm = () => {
 
   const router = useRouter();
 
+
   useEffect(() => {
     if (!novelData.title) {
       router.push("/my-novels/create");
     }
-  }, [novelData.title]);
+  }, [novelData.title, router]);
 
-  const genre = novelData.genre ? JSON.parse(novelData.genre) : null;
+  const genre = novelData?.genre ? JSON.parse(novelData.genre) : {};
 
-  const novelTag = novelData.tags
+  const novelTag = novelData?.tags
     .split("/")
     .map((t: string) => t.trim())
     .filter((t: string) => t.length > 0);

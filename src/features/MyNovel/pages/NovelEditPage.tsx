@@ -1,49 +1,51 @@
 "use client";
 import Loading from "@/features/Components/Loading/Loading";
-import useFetchData from "@/services/fetcher";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NovelEditForm from "../components/NovelEdit/NovelEditForm";
 import { ArrowLeft } from "lucide-react";
 import Middleware from "@/features/Components/Middleware/Middleware";
 import { useRouter } from "next/navigation";
 import useStoreNovel from "@/store/useNovelStore";
+import useNormalFetcher from "@/services/normalFetcher";
 
 const NovelEditPage = ({ id }: { id: string }) => {
   const router = useRouter();
-  const { setNovelData } = useStoreNovel();
+  const { setNovelData, novelData } = useStoreNovel();
 
   const handleBack = () => {
     router.push("/my-novels");
   };
 
-  const { data, isLoading, error } = useFetchData(`/novels/${id}`);
+  const { isLoading, data, error } = useNormalFetcher(`/novels/${id}`);
+
+  
 
   const [defaultValues, setDefaultValues] = React.useState<boolean>(false);
 
   useEffect(() => {
     if (isLoading) return;
-    const novelData = data?.data;
-    setNovelData({
-      title: novelData?.title,
-      description: novelData?.description,
-      genre: JSON.stringify({ id: novelData?.genre_id, genre: novelData?.genre }),
-      synopsis: novelData?.synopsis,
-      tags: novelData?.tags,
-      status: novelData?.status,
-      coverImage: novelData?.cover_image,
-    }); 
-    setDefaultValues(true);
+    const fetchedNovelData = data?.data;
 
-   
-    
+    if (!novelData.id) {
+      setNovelData({
+        id: fetchedNovelData?.id,
+        progress: fetchedNovelData?.progress,
+        title: fetchedNovelData?.title,
+        description: fetchedNovelData?.description,
+        genre: JSON.stringify({
+          id: fetchedNovelData?.genre_id,
+          genre: fetchedNovelData?.genre,
+        }),
+        synopsis: fetchedNovelData?.synopsis,
+        tags: fetchedNovelData?.tags,
+        status: fetchedNovelData?.status,
+        coverImage: fetchedNovelData?.image,
+      });
+    }
+    setDefaultValues(true);
   }, [isLoading]);
 
-  
-
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   if (error) {
     throw error;
