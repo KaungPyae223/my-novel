@@ -57,7 +57,7 @@ const NovelEditPage = ({ id }: { id: string }) => {
         <div>
           <div
             onClick={handleBack}
-            className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm text-gray-800 w-fit"
+            className="flex flex-row cursor-pointer items-center gap-3 py-3 font-medium rounded-md text-sm text-gray-800 w-fit"
           >
             <ArrowLeft className="size-4" /> Back to My Novels
           </div>

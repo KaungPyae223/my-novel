@@ -20,7 +20,7 @@ const updateNovelCoverImage = (formData: FormData) => {
 export const useCreateNovel = () => {
   return useMutate({
     mutationFn: createNovel,
-    queryKey: ["/novels"],
+    queryKey: ["/my-novels"],
     successMessage: "Successfully created novel",
     pushPath: "/my-novels",
   });
@@ -29,7 +29,7 @@ export const useCreateNovel = () => {
 export const useUpdateNovel = () => {
   return useMutate({
     mutationFn: updateNovel,
-    queryKey: ["/novels"],
+    queryKey: ["/my-novels"],
     successMessage: "Successfully updated novel data",
   });
 };
@@ -37,7 +37,7 @@ export const useUpdateNovel = () => {
 export const useUpdateNovelCoverImage = () => {
   return useMutate({
     mutationFn: updateNovelCoverImage,
-    queryKey: ["/novels"],
+    queryKey: ["/my-novels"],
     successMessage: "Successfully updated novel cover image",
   });
 };
@@ -45,7 +45,7 @@ export const useUpdateNovelCoverImage = () => {
 export const useDeleteNovel = () => {
   return useMutate({
     mutationFn: deleteNovel,
-    queryKey: ["/novels"],
+    queryKey: ["/my-novels"],
     successMessage: "Successfully deleted novel",
     pushPath: "/my-novels",
   });
