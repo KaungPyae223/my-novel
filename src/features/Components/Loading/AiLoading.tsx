@@ -5,14 +5,18 @@ import Image from "next/image";
 import React from "react";
 import Brainstorm from "@/assets/Brainstorm.json";
 
-const ChapterTranslateLoading = () => {
+const AiLoading = ({
+  text,
+}: {
+  text: string;
+}) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 px-4 py-8 text-center">
       <Lottie animationData={Brainstorm} className="w-64 h-64 sm:w-72 sm:h-72" />
 
       <div className="flex items-center gap-2 text-gray-700 text-lg font-medium">
         <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-        <span>Translating content...</span>
+        <span>{text}</span>
       </div>
 
       <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-blue-50 border border-blue-200 shadow-sm">
@@ -29,4 +33,4 @@ const ChapterTranslateLoading = () => {
   );
 };
 
-export default ChapterTranslateLoading;
+export default AiLoading;

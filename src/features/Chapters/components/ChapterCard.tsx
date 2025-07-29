@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ChapterTranslateLoading from "./ChapterTranslateLoading";
+import AiLoading from "@/features/Components/Loading/AiLoading";
 
 const ChapterCard = () => {
   const [fontSize, setFontSize] = React.useState<number>(16);
@@ -93,7 +93,7 @@ That night, Elias lit the lamp again — not for ships, but for the lost souls s
         method: "POST",
         headers: {
           Authorization:
-            "Bearer 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",
+            "Bearer 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",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -185,7 +185,7 @@ That night, Elias lit the lamp again — not for ships, but for the lost souls s
         style={{ fontSize: `${fontSize}px` }}
         className="text-justify text-gray-800 mt-6 leading-relaxed"
       >
-        {loading ? <ChapterTranslateLoading /> : translatedText}
+        {loading ? <AiLoading text="Translating content..." /> : translatedText}
       </div>
     </div>
   );
