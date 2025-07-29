@@ -1,6 +1,7 @@
 import React from "react";
 import { BookOpen, Plus } from "lucide-react";
 import MyNovelDetailsChapterCard from "../MyNovelDetailsChapter/MyNovelDetailsChapterCard";
+import Link from "next/link";
 
 const ChapterContainer = () => {
   return (
@@ -10,10 +11,10 @@ const ChapterContainer = () => {
           <BookOpen className="size-6" />
           Chapters
         </div>
-        <div className="flex bg-gray-800 text-sm text-white px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2">
+        <Link href={`/my-novels/details/1/create-chapter`} className="flex bg-gray-800 text-sm text-white px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2">
           <Plus className="size-4" />
           Add Chapter
-        </div>
+        </Link>
       </div>
 
       <div className="mt-6 space-y-3">
