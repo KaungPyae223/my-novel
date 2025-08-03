@@ -3,7 +3,7 @@ import { BookOpen, Clock, Edit2, Eye } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-const ProfileNovelCard = ({ novel }: { novel: any }) => {
+const ProfileNovelCard = ({ novel }: { novel: {id: number, title: string, unique_name: string, description: string, image: string, progress: string, status: string, love_count: number, views: number, total_chapters: number, created_at: string, tags: string} }) => {
   return (
     <div className="w-full bg-white shadow border border-gray-200 rounded-md overflow-hidden">
       <div className="relative">
@@ -67,8 +67,8 @@ const ProfileNovelCard = ({ novel }: { novel: any }) => {
             {formatDate(novel.created_at)}
           </div>
         </div>
-        <div className="flex items-center mt-4 gap-1.5">
-          {novel.tags?.split("/").map((tag: any) => (
+        <div className="flex flex-wrap items-center mt-4 gap-1.5">
+          {novel.tags?.split("/").map((tag: string) => (
             <p
               key={tag}
               className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium"

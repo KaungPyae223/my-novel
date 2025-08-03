@@ -9,7 +9,7 @@ import {
   Phone,
 } from "lucide-react";
 
-const ProfileInfoCard = ({ data }: { data: any }) => {
+const ProfileInfoCard = ({ data }: { data: {full_name: string, about: string, genres: string[], address: string, phone: string, email: string, facebook: string, instagram: string, youtube: string, twitter: string} }) => {
   
   
   return (

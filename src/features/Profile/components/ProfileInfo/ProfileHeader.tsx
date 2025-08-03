@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const ProfileHeader = ({ data }: { data: any }) => {
+const ProfileHeader = ({ data }: { data: {profile_image: string, full_name: string, username: string, about: string, location: string, created_at: string, email: string} }) => {
   return (
     <div className="p-6 bg-white shadow rounded-md">
       <div className="flex flex-row justify-between items-start gap-2">
