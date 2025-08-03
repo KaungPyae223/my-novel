@@ -148,7 +148,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
               </div>
             ))}
           </div>
-          {activeTab === "Chapters" && <MyNovelDetailsChapterContainer />}
+          {activeTab === "Chapters" && <MyNovelDetailsChapterContainer id={id} />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

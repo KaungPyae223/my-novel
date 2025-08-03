@@ -6,7 +6,7 @@ import Link from "next/link";
 import { formatDate } from "@/utils/formatDate";
 
 const MyNovelNovelCard = ({ novel }: { novel: any }) => {
-  const tags = novel.tags.split("/").map((t: string) => t.trim());
+  const tags = novel.tags.split("/").map((t: string) => t.trim()).slice(0, 5);
 
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden shadow border border-gray-200">
@@ -38,7 +38,7 @@ const MyNovelNovelCard = ({ novel }: { novel: any }) => {
           {novel.description}
         </p>
 
-        <div className="flex flex-row items-center gap-2 mb-2">
+        <div className="flex flex-wrap items-center gap-2 mb-2">
           {tags.map((tag: string, i: number) => (
             <div
               key={i}

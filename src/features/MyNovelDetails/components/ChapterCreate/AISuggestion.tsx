@@ -3,7 +3,7 @@ import { Sparkles, Lightbulb, Users, Zap, Pencil } from "lucide-react";
 import useFetchData from "@/services/fetcher";
 import AiLoading from "@/features/Components/Loading/AiLoading";
 
-const AISuggestion = () => {
+const AISuggestion = ({ novelId }: { novelId: string }) => {
   const icons = {
     chapter_direction: <Lightbulb className="text-yellow-500 w-5 h-5" />,
     character_development: <Users className="text-blue-500 w-5 h-5" />,
@@ -12,7 +12,7 @@ const AISuggestion = () => {
   };
 
   const { isLoading, data, error } = useFetchData(
-    "/chapters/generate-suggestion/1"
+    `/chapters/generate-suggestion/${novelId}`
   );
 
   if (isLoading) {

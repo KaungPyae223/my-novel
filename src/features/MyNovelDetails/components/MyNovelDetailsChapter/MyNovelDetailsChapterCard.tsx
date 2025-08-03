@@ -16,11 +16,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { formatDate } from "@/utils/formatDate";
 
 const MyNovelDetailsChapterCard = ({
   chapterNumber,
+  data,
 }: {
   chapterNumber: number;
+  data: any;
 }) => {
   const router = useRouter();
 
@@ -38,20 +41,20 @@ const MyNovelDetailsChapterCard = ({
       </div>
       <div>
         <p className="font-medium text-lg group-hover:text-blue-600">
-          The Discovery
+          {data.title}
         </p>
         <div className="flex flex-row items-center text-sm mt-1 text-gray-500 gap-2">
           <div className="flex flex-row items-center gap-1.5">
             <Clock className="size-3.5" />
-            23 June 2024
+            {formatDate(data.updated_at)}
           </div>
           <Dot className="size-5" />
           <div className="flex flex-row items-center gap-1.5   ">
             <Eye className="size-3.5" />
-            12
+            {data.view_count}
           </div>
           <Dot className="size-5" />
-          <div className="flex flex-row items-center gap-1.5 ">Public</div>
+          <div className={`flex flex-row items-center gap-1.5 px-2 font-medium text-xs py-0.5 rounded-full ${data.status === "published" ? "text-green-800 bg-green-300 " : "text-red-400 bg-gray-300"}`}>{data.status}</div>
         </div>
       </div>
       <DropdownMenu>

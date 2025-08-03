@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,24 +34,26 @@ import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
 import AISuggestion from "./AISuggestion";
 import { useRouter } from "next/navigation";
-
-
+import useFetchData from "@/services/fetcher";
+import useStoreChapter from "@/store/useChapterStore";
 
 const formSchema = z.object({
-  chapterName: z.string().min(2).max(50),
+  chapterName: z.string().min(2).max(100),
   status: z.enum(["draft", "published", "scheduled"]),
   summary: z.string().optional(),
   scheduledDate: z.date().optional(),
   scheduledTime: z.string().optional(),
+  content: z.string(),
 });
 
-const ChapterCreateForm = () => {
+const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       chapterName: "",
       status: "published",
       summary: "",
+      content: "",
       scheduledDate: new Date(),
       scheduledTime: "",
     },
@@ -58,14 +61,37 @@ const ChapterCreateForm = () => {
 
   const router = useRouter();
 
+  const { setChapterData } = useStoreChapter();
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    router.push(`/my-novels/details/1/create-chapter/confirm`);
+    setChapterData({
+      id: null,
+      chapterName: values.chapterName,
+      status: values.status,
+      summary: values.summary || null,
+      content: values.content,
+      scheduledDate: values.scheduledDate || null,
+      scheduledTime: values.scheduledTime || null,
+    });
+    router.push(`/my-novels/details/${novelId}/create-chapter/confirm`);
   }
 
   const [open, setOpen] = React.useState(false);
+  const [published, setPublished] = React.useState<React.ReactNode>(null);
+
+  const { data, isLoading } = useFetchData(`/chapters/draft-count/${novelId}`);
+
+  React.useEffect(() => {
+    if (!isLoading && data === 0) {
+      setPublished(
+        <>
+          <SelectItem value="published">Published</SelectItem>
+          <SelectItem value="scheduled">Scheduled</SelectItem>
+        </>
+      );
+    }
+  }, [isLoading,data]);
 
   const status = form.watch("status");
 
@@ -105,12 +131,7 @@ const ChapterCreateForm = () => {
                             <SelectGroup>
                               <SelectLabel>Status</SelectLabel>
                               <SelectItem value="draft">Draft</SelectItem>
-                              <SelectItem value="published">
-                                Published
-                              </SelectItem>
-                              <SelectItem value="scheduled">
-                                Scheduled
-                              </SelectItem>
+                              {published}
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -206,13 +227,13 @@ const ChapterCreateForm = () => {
               />
             </div>
           </div>
-          <AISuggestion />
+          <AISuggestion novelId={novelId} />
           <div className="p-6 bg-white shadow border border-gray-200 rounded-lg">
             <p className="font-medium text-2xl">Chapter Content</p>
             <div className="mt-6">
               <FormField
                 control={form.control}
-                name="summary"
+                name="content"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -222,7 +243,7 @@ const ChapterCreateForm = () => {
                         className="min-h-[300px]"
                       />
                     </FormControl>
-                   
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -231,8 +252,12 @@ const ChapterCreateForm = () => {
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="outline" className="">Cancel</Button>
-        <Button type="submit" className="">Review & Confirm</Button>
+          <Button type="button" variant="outline" className="">
+            Cancel
+          </Button>
+          <Button type="submit" className="">
+            Review & Confirm
+          </Button>
         </div>
       </form>
     </Form>

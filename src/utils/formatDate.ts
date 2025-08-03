@@ -1,4 +1,4 @@
-export const formatDate = (dateData: string) => {
+export const formatDate = (dateData: string | Date) => {
   const date = new Date(dateData);
 
   const formatted = `${date.getFullYear()} ${date.toLocaleString("default", {

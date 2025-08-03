@@ -47,32 +47,11 @@ const NovelTagManage = ({ form }: { form: any }) => {
             });
             return;
           }
-          if (newTag?.length > 10) {
-            form.setError("tags", {
-              type: "manual",
-              message: "Tag cannot exceed 10 characters.",
-            });
-            setInputValue("");
-            return;
-          }
-          if (!/^[a-zA-Z0-9\s-]*$/.test(newTag)) {
-            form.setError("tags", {
-              type: "manual",
-              message:
-                "Tag can only contain letters, numbers, spaces, and hyphens.",
-            });
-            return;
-          }
+          
+          
 
           if (newTag && !currentTags.includes(newTag)) {
-            if (currentTags?.length >= 10) {
-              // Max 10 tags
-              form.setError("tags", {
-                type: "manual",
-                message: "Maximum of 10 tags allowed.",
-              });
-              return;
-            }
+            
 
             const availableTag = availableTags.find((tag) =>
               tag.toLowerCase().includes(newTag.toLowerCase())

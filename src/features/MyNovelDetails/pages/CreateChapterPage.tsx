@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ChapterCreateForm from "../components/ChapterCreate/ChapterCreateForm";
 
-const CreateChapterPage = () => {
+const CreateChapterPage = ({ novelId }: { novelId: string }) => {
 
   const router = useRouter();
 
@@ -25,7 +25,7 @@ const CreateChapterPage = () => {
             </div>
             
           </div>
-          <ChapterCreateForm />
+          <ChapterCreateForm novelId={novelId} />
       </div>
     </Middleware>
   );
