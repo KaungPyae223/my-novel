@@ -1,50 +1,53 @@
-import React from "react";
+import AiLoading from "@/features/Components/Loading/AiLoading";
+import { api } from "@/services/api";
+import useStoreChapter from "@/store/useChapterStore";
+import React, { useEffect, useState } from "react";
 
-const suggestions = [
-  {
-    id: 1,
-    icon: "📈",
-    title: "Story Pacing",
-    description:
-      "Your chapter has good pacing with a nice balance of dialogue and narrative. Consider adding a brief pause before the climactic moment to build more tension.",
-    score: 8.5,
+const suggestions = {
+  story_pacing:{
+    icons:"📈",
+    title:"Story Pacing",
   },
-  {
-    id: 2,
-    icon: "🧑‍🎤",
-    title: "Character Development",
-    description:
-      "Great character growth! Your protagonist shows clear internal conflict. You might enhance this by adding a small physical gesture that reflects their emotional state.",
-    score: 9.0,
+  character_development:{
+    icons:"🧑‍🎤",
+    title:"Character Development",
   },
-  {
-    id: 3,
-    icon: "🌍",
-    title: "World Building",
-    description:
-      "Excellent use of sensory details! The digital realm feels vivid and immersive. Consider adding one more detail about how the physical laws differ in this space.",
-    score: 8.8,
+  world_building:{
+    icons:"🌍",
+    title:"World Building",
   },
-  {
-    id: 4,
-    icon: "🔚",
-    title: "Chapter Ending",
-    description:
-      "Strong cliffhanger! The ending creates anticipation for the next chapter. The emotional weight of the decision is well-established and will keep readers engaged.",
-    score: 9.2,
+  chapter_ending:{
+    icons:"🔚",
+    title:"Chapter Ending",
   },
-];
+  overall_assessment:{
+    icons:"⭐",
+    title:"Overall Assessment",
+  },
+}
 
-const overallAssessment = {
-  icon: "⭐",
-  title: "Overall Assessment",
-  description:
-    "This chapter effectively advances your plot while maintaining character development. The emotional core is strong, and the world-building continues to enhance the story. Consider the suggestions above to push it from great to exceptional!",
-  score: 8.9,
-  rating: "Excellent",
-};
+
+
 
 const EnhancementSuggestions = () => {
+
+  const { chapterData } = useStoreChapter();
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await api.post("/chapter-assessment", {
+        content: chapterData.content,
+      });
+      setData(response.data);
+    };
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <AiLoading text="Analyzing chapter..." />;
+  }
+
   return (
     <div className="w-full mt-6 shadow-xs mx-auto bg-blue-50 border border-blue-200 rounded-lg p-6">
       <h2 className="text-xl font-semibold text-purple-800 flex items-center gap-2 mb-6">
@@ -52,37 +55,39 @@ const EnhancementSuggestions = () => {
       </h2>
 
       <div className="grid md:grid-cols-2 gap-4 mb-6">
-        {suggestions.map((item) => (
-          <SuggestionCard key={item.id} item={item} />
-        ))}
+        <SuggestionCard item={data.story_pacing} icon_title={suggestions.story_pacing} />
+        <SuggestionCard item={data.character_development} icon_title={suggestions.character_development} />
+        <SuggestionCard item={data.world_building} icon_title={suggestions.world_building} />
+        <SuggestionCard item={data.chapter_ending} icon_title={suggestions.chapter_ending} />
+        
       </div>
 
       <div className="bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-md p-5">
         <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2 mb-2">
-          <span className="text-xl">{overallAssessment.icon}</span> {overallAssessment.title}
+          <span className="text-xl">{suggestions.overall_assessment.icons}</span> {suggestions.overall_assessment.title}
         </h3>
-        <p className="text-sm text-purple-700 mb-3">{overallAssessment.description}</p>
-        <p className="text-sm font-semibold text-purple-800">
+        <p className="text-sm text-purple-700 mb-3">{data.overall_assessment.suggestion}</p>
+        <p className="font-semibold text-purple-800 mt-auto">
           Overall Score:{" "}
-          <span className="text-lg ms-1">{overallAssessment.score}/10</span>{" "}
-          <span className="text-sm font-medium ms-2 text-purple-600">{overallAssessment.rating}</span>
+          <span className="text-lg ms-1">{data.overall_assessment.score} / 10</span>{" "}
+
         </p>
       </div>
     </div>
   );
 };
 
-const SuggestionCard = ({ item }: { item: any }) => {
+const SuggestionCard = ({ item, icon_title }: { item: any, icon_title: any }) => {
   return (
     <div
       className="bg-white border border-blue-200 rounded-md p-4 shadow-sm"
     >
       <h3 className="text-lg font-semibold text-purple-800 flex items-center gap-2 mb-2">
-        <span className="text-xl">{item.icon}</span> {item.title}
+        <span className="text-xl">{icon_title.icons}</span> {icon_title.title}
       </h3>
-      <p className="text-sm text-purple-700 mb-3">{item.description}</p>
-      <span className="text-xs bg-blue-100 text-blue-800 font-medium px-2 py-1 rounded">
-        Score: {item.score}/10
+      <p className="text-sm text-purple-700 mb-3">{item.suggestion}</p>
+      <span className="text-sm bg-blue-100 text-blue-800 font-medium px-2 py-1 rounded">
+        Score: {item.score} / 10
       </span>
     </div>
   );

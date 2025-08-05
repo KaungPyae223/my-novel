@@ -26,13 +26,14 @@ const CreateChapterConfirmPage = () => {
             <ArrowLeft className="size-4" /> Back to Create Chapter
           </div>
         </div>
-        <GrammarIssues />
+        {/* <GrammarIssues /> */}
         <EnhancementSuggestions />
         <ChapterPreview />
         <div className="flex flex-row justify-between mt-6">
           <Button
             variant="outline"
             className="flex flex-row items-center gap-2 py-5"
+            onClick={handleBack}
           >
             <ArrowLeft className="size-4" /> Go Back to Create Chapter
           </Button>

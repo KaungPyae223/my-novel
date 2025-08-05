@@ -10,8 +10,8 @@ const EmptyState = ({
   linkText,
 }: {
   title: string;
-  link: string | null;
-  linkText: string | null;
+  link?: string | null;
+  linkText?: string | null;
 }) => {
   return (
     <div className="flex flex-col items-center justify-center pb-20 h-full">

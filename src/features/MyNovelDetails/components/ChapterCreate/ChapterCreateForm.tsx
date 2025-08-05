@@ -47,24 +47,43 @@ const formSchema = z.object({
 });
 
 const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
+  
+  const { setChapterData, chapterData } = useStoreChapter();
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      chapterName: "",
-      status: "published",
-      summary: "",
-      content: "",
-      scheduledDate: new Date(),
-      scheduledTime: "",
+      chapterName: chapterData.chapterName,
+      status: chapterData.status,
+      summary: chapterData.summary || "",
+      scheduledDate: chapterData.scheduledDate || new Date(),
+      scheduledTime: chapterData.scheduledTime || "",
+      content: chapterData.content,
     },
   });
 
   const router = useRouter();
 
-  const { setChapterData } = useStoreChapter();
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    
+    if (values.status === "scheduled" && (!values.scheduledDate || !values.scheduledTime)) {
+      if(!values.scheduledDate){
+        form.setError("scheduledDate", {
+          type: "required",
+          message: "Scheduled date is required",
+        });
+      }
+      if(!values.scheduledTime){
+        form.setError("scheduledTime", {
+          type: "required",
+          message: "Scheduled time is required",
+        });
+      }
+      return;
+    }
+    
     setChapterData({
       id: null,
       chapterName: values.chapterName,
