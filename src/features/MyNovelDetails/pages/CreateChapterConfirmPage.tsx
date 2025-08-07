@@ -7,12 +7,37 @@ import GrammarIssues from "../components/ChapterCreateConfirm/GrammarIssues";
 import EnhancementSuggestions from "../components/ChapterCreateConfirm/EnhancementSuggestions";
 import { Button } from "@/components/ui/button";
 import ChapterPreview from "../components/ChapterCreateConfirm/ChapterPreview";
+import { useCreateChapter } from "@/services/chapter";
+import useStoreChapter from "@/store/useChapterStore";
+import { toMySQLDatetime } from "@/utils/formatDate";
 
-const CreateChapterConfirmPage = () => {
+const CreateChapterConfirmPage = ({ novelId }: { novelId: string }) => {
   const router = useRouter();
 
   const handleBack = () => {
     router.back();
+  };
+
+  const { chapterData } = useStoreChapter();
+
+  const { mutate } = useCreateChapter({id: novelId});
+
+  const handleCreateChapter = () => {
+
+    const scheduledDate = new Date(chapterData.scheduledDate || new Date());
+   
+    const scheduledTime = chapterData.scheduledTime || "00:00";
+
+    const scheduledDateTime = toMySQLDatetime(scheduledDate, scheduledTime);
+
+    mutate({
+      title: chapterData.chapterName,
+      summary: chapterData.summary,
+      content: chapterData.content,
+      status: chapterData.status,
+      scheduled_date: chapterData.status === "scheduled" ? scheduledDateTime : null,
+      novel_id: novelId,
+    });
   };
 
   return (
@@ -27,7 +52,7 @@ const CreateChapterConfirmPage = () => {
           </div>
         </div>
         {/* <GrammarIssues /> */}
-        <EnhancementSuggestions />
+        {/* <EnhancementSuggestions /> */}
         <ChapterPreview />
         <div className="flex flex-row justify-between mt-6">
           <Button
@@ -37,7 +62,7 @@ const CreateChapterConfirmPage = () => {
           >
             <ArrowLeft className="size-4" /> Go Back to Create Chapter
           </Button>
-          <Button className="py-5">Create Chapter</Button>
+          <Button onClick={handleCreateChapter} className="py-5">Create Chapter</Button>
         </div>
       </div>
     </Middleware>

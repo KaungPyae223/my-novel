@@ -26,9 +26,6 @@ const suggestions = {
   },
 }
 
-
-
-
 const EnhancementSuggestions = () => {
 
   const { chapterData } = useStoreChapter();

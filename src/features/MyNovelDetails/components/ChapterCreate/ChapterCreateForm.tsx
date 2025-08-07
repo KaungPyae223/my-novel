@@ -68,11 +68,17 @@ const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     
-    if (values.status === "scheduled" && (!values.scheduledDate || !values.scheduledTime)) {
+    if (values.status === "scheduled" && (!values.scheduledDate || !values.scheduledTime || new Date(values.scheduledDate).getTime() <= Date.now())) {
       if(!values.scheduledDate){
         form.setError("scheduledDate", {
           type: "required",
           message: "Scheduled date is required",
+        });
+      }
+      if(values.scheduledDate && new Date(values.scheduledDate).getTime() <= Date.now()){
+        form.setError("scheduledDate", {
+          type: "required",
+          message: "Scheduled date must be in the future",
         });
       }
       if(!values.scheduledTime){
