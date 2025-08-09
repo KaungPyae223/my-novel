@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 type ChapterData = {
-  id: number | null;
+  id: string | null;
   chapterName: string;
   status: "published" | "draft" | "scheduled";
   summary: string | null;
@@ -26,7 +26,7 @@ const ChapterData: ChapterData = {
   chapterName: "",
   status: "draft",
   summary: "",
-  content: "Hello World My Name is Kaung Pyae Aung Hello World",
+  content: "",
   scheduledDate: new Date(),
   scheduledTime: "",
 };

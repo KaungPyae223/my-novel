@@ -11,7 +11,7 @@ import {
   Star,
   Trash,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import MyNovelDetailsHeader from "../components/MyNovelDetails/MyNovelDetailsHeader";
@@ -32,11 +32,12 @@ import Loading from "@/features/Components/Loading/Loading";
 import { useDeleteNovel } from "@/services/novel";
 import { toast } from "sonner";
 import MyNovelDetailsChapterContainer from "../components/Container/MyNovelDetailsChapterContainer";
+import useStoreChapter from "@/store/useChapterStore";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
 
-  const [activeTab,setActiveTab] = useState<string>("Chapters");
+  const [activeTab, setActiveTab] = useState<string>("Chapters");
 
   const handleBack = () => {
     router.push("/my-novels");
@@ -45,6 +46,12 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const handleEdit = () => {
     router.push(`/my-novels/edit/${id}`);
   };
+
+  const { resetChapterData } = useStoreChapter();
+
+  useEffect(() => {
+    resetChapterData();
+  }, []);
 
   const { mutate } = useDeleteNovel();
 
@@ -91,7 +98,6 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
     },
   ];
 
- 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
@@ -148,7 +154,9 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
               </div>
             ))}
           </div>
-          {activeTab === "Chapters" && <MyNovelDetailsChapterContainer id={id} />}
+          {activeTab === "Chapters" && (
+            <MyNovelDetailsChapterContainer id={id} />
+          )}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

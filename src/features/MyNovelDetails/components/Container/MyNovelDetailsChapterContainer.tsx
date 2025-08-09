@@ -35,7 +35,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
             <EmptyState title="No Chapters" />
           ) : (
             data?.data.map((chapter: any, idx: number) => (
-              <MyNovelDetailsChapterCard key={idx} chapterNumber={idx + 1} data={chapter} />
+              <MyNovelDetailsChapterCard key={idx} chapterNumber={idx + 1} novelId={id} data={chapter} />
             ))
           )
         }

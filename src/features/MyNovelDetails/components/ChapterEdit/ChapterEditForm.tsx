@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -24,7 +22,7 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-  SelectItem,
+
   SelectLabel,
   SelectTrigger,
   SelectValue,
@@ -32,16 +30,25 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
-import AISuggestion from "./AISuggestion";
-import { useChapterCreateForm } from "../../hooks/useChapterCreateForm";
+
+import { useChapterEditForm } from "../../hooks/useChapterEditForm";
 
 
 
-const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
+const ChapterEditForm = ({
+  novelId,
+  chapterID,
+  chapterStatus,
+}: {
+  novelId: string;
+  chapterID: string;
+  chapterStatus: {
+    canDraft: boolean;
+    canPublish: boolean;
+  };
+}) => {
+  const { form, onSubmit, open, setOpen, published, status } = useChapterEditForm({ novelId, chapterID, chapterStatus });
   
-  const { form, onSubmit, open, setOpen, published, status } = useChapterCreateForm({ novelId });
-  
-
 
   return (
     <Form {...form}>
@@ -78,8 +85,7 @@ const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
                           <SelectContent>
                             <SelectGroup>
                               <SelectLabel>Status</SelectLabel>
-                              <SelectItem value="draft">Draft</SelectItem>
-                              {published}
+                              {published.map((item) => item)}
                             </SelectGroup>
                           </SelectContent>
                         </Select>
@@ -175,7 +181,7 @@ const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
               />
             </div>
           </div>
-          <AISuggestion novelId={novelId} />
+
           <div className="p-6 bg-white shadow border border-gray-200 rounded-lg">
             <p className="font-medium text-2xl">Chapter Content</p>
             <div className="mt-6">
@@ -212,4 +218,4 @@ const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
   );
 };
 
-export default ChapterCreateForm;
+export default ChapterEditForm;

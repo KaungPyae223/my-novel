@@ -2,12 +2,20 @@
 import Middleware from "@/features/Components/Middleware/Middleware";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
-import { Button } from "@/components/ui/button";
 import ChapterPreview from "../components/ChapterCreateConfirm/ChapterPreview";
-import { useChapterCreateConfirm } from "../hooks/useChapterCreateConfrim";
+import { Button } from "@/components/ui/button";
+import { useChapterEditConfirm } from "../hooks/useChapterEditConfirm";
 
-const CreateChapterConfirmPage = ({ novelId }: { novelId: string }) => {
-  const { handleBack, handleCreateChapter } = useChapterCreateConfirm({ novelId });
+const ChapterEditConfirmPage = ({
+  novelId,
+  chapterID,
+}: {
+  novelId: string;
+  chapterID: string;
+}) => {
+  
+  const { handleBack, handleEditChapter } = useChapterEditConfirm({ novelId, chapterID });
+
 
   return (
     <Middleware>
@@ -17,11 +25,10 @@ const CreateChapterConfirmPage = ({ novelId }: { novelId: string }) => {
             onClick={handleBack}
             className="flex flex-row cursor-pointer items-center gap-3  font-medium rounded-md text-sm text-gray-800 w-fit"
           >
-            <ArrowLeft className="size-4" /> Back to Create Chapter
+            <ArrowLeft className="size-4" /> Back to Edit Chapter
           </div>
         </div>
         {/* <GrammarIssues /> */}
-        {/* <EnhancementSuggestions /> */}
         <ChapterPreview />
         <div className="flex flex-row justify-between mt-6">
           <Button
@@ -29,13 +36,15 @@ const CreateChapterConfirmPage = ({ novelId }: { novelId: string }) => {
             className="flex flex-row items-center gap-2 py-5"
             onClick={handleBack}
           >
-            <ArrowLeft className="size-4" /> Go Back to Create Chapter
+            <ArrowLeft className="size-4" /> Go Back to Edit Chapter
           </Button>
-          <Button onClick={handleCreateChapter} className="py-5">Create Chapter</Button>
+          <Button className="py-5" onClick={handleEditChapter}>
+            Edit Chapter
+          </Button>
         </div>
       </div>
     </Middleware>
   );
 };
 
-export default CreateChapterConfirmPage;
+export default ChapterEditConfirmPage;

@@ -1,12 +1,5 @@
-import {
-  ChevronRight,
-  Clock,
-  Dot,
-  Edit,
-  EllipsisVertical,
-  Eye,
-  Trash,
-} from "lucide-react";
+"use client";
+import { Clock, Dot, Edit, EllipsisVertical, Eye, Trash } from "lucide-react";
 import React from "react";
 import {
   DropdownMenu,
@@ -20,15 +13,22 @@ import { formatDate } from "@/utils/formatDate";
 
 const MyNovelDetailsChapterCard = ({
   chapterNumber,
+  novelId,
   data,
 }: {
   chapterNumber: number;
+  novelId: string;
   data: any;
 }) => {
   const router = useRouter();
 
   const handleView = () => {
     router.push(`/novel/1/chapter/2`);
+  };
+
+  const handleEdit = (e: any) => {
+    e.stopPropagation();
+    router.push(`/my-novels/details/${novelId}/edit-chapter/${data.id}`);
   };
 
   return (
@@ -54,18 +54,31 @@ const MyNovelDetailsChapterCard = ({
             {data.view_count}
           </div>
           <Dot className="size-5" />
-          <div className={`flex flex-row items-center gap-1.5 px-2 font-medium text-xs py-0.5 rounded-full ${data.status === "published" ? "text-green-800 bg-green-300 " : "text-red-400 bg-gray-300"}`}>{data.status}</div>
+          <div
+            className={`flex flex-row items-center gap-1.5 px-2 font-medium text-xs py-0.5 rounded-full ${
+              data.status === "published"
+                ? "text-green-800 bg-green-300 "
+                : "text-red-400 bg-gray-300"
+            }`}
+          >
+            {data.status}
+          </div>
         </div>
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="ms-auto cursor-pointer px-3">
+          <div className="ms-auto cursor-pointer  p-3">
             <EllipsisVertical className="size-4" />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuItem className="p-2 flex flex-row items-center gap-2">
+            <DropdownMenuItem
+              onClick={(e) => {
+                handleEdit(e);
+              }}
+              className="p-2 flex flex-row items-center gap-2"
+            >
               <Edit className="size-4" /> Edit Chapter
             </DropdownMenuItem>
             <DropdownMenuItem className="p-2 text-red-800 flex flex-row items-center gap-2">

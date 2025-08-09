@@ -61,7 +61,7 @@ const SuggestionItem = ({
   title: string;
   text: string;
 }) => {
-  const suggestionList = text.split("//");
+  const suggestionList = text?.split("//");
 
   return (
     <div className="bg-white border border-purple-200 rounded-lg p-4 shadow-sm">
@@ -70,7 +70,7 @@ const SuggestionItem = ({
         <span>{title}</span>
       </div>
       <ol className="space-y-2 mt-4 text-purple-800 text-sm leading-relaxed list-decimal list-inside">
-        {suggestionList.map((item, idx) => (
+        {suggestionList?.map((item, idx) => (
           <li
             key={idx}
             

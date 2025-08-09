@@ -20,9 +20,10 @@ const CreateChapterPage = ({ novelId }: { novelId: string }) => {
             onClick={handleBack}
             className="flex flex-row cursor-pointer items-center gap-3  font-medium rounded-md text-sm text-gray-800 w-fit"
           >
-            <ArrowLeft className="size-4" /> Back to Hello World
+            <ArrowLeft className="size-4" /> Back to Details
           </div>
         </div>
+        <p className="text-2xl mt-6 font-medium">Chapter Create</p>
         <ChapterCreateForm novelId={novelId} />
       </div>
     </Middleware>

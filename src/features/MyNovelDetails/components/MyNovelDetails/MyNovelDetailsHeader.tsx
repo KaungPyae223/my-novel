@@ -5,7 +5,7 @@ import React from "react";
 
 const MyNovelDetailsHeader = ({ novel }: { novel: any }) => {
 
-  console.log(novel)
+ 
 
   return (
     <div className="p-6 flex mt-6 flex-row gap-6 bg-white shadow border border-gray-200 rounded-lg">
