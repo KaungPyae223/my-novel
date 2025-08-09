@@ -13,29 +13,15 @@ import {
 } from "@/components/ui/select";
 import AiLoading from "@/features/Components/Loading/AiLoading";
 
-const ChapterCard = () => {
+const ChapterCard = ({chapter}: {chapter: any}) => {
   const [fontSize, setFontSize] = React.useState<number>(16);
 
-  const OriginalText = `In a distant coastal village where the fog never cleared and the stars rarely shone, stood an old lighthouse. It had long been abandoned by sailors and maps, but not by its keeper — Elias, a man who hadn’t left in thirty years.
-
-Every night, Elias climbed the spiral stairs, lit the lantern, and watched the sea. No ships came anymore, but he said it wasn’t for them.
-
-“It’s for the ones who are lost,” he whispered to the wind.
-
-One stormy evening, the light flickered and went out. Elias, trembling, descended to fix it — but as he reached the base, there was a knock at the heavy door.
-
-A girl, soaked to the bone, stood there. “I saw your light,” she said. “I was walking in the dark... I didn’t know where I was going.”
-
-Elias gave her shelter, warmth, and tea. The next morning, the fog had lifted for the first time in years.
-
-She left with a smile. “Thank you,” she said, “for lighting the way.”
-
-That night, Elias lit the lamp again — not for ships, but for the lost souls still wandering, waiting for someone to show them the way home.`;
+  const OriginalText = chapter.content;
 
   const [translatedText, setTranslatedText] = React.useState<string>("");
 
   useEffect(() => {
-    setTranslatedText(OriginalText);
+    setTranslatedText(chapter.content);
   }, []);
 
   const handleZoomIn = () => {
@@ -117,8 +103,8 @@ That night, Elias lit the lamp again — not for ships, but for the lost souls s
     <div className="p-6 bg-white border border-gray-200 rounded-md shadow-sm">
       <div className="flex items-center justify-between">
         <div>
-          <p className="font-medium text-xl">Chapter 1: The Discovery</p>
-          <p className="text-sm text-gray-500 mt-1.5">Chapter 1 of 21</p>
+          <p className="font-medium text-xl">Chapter {chapter.chapter}: {chapter.title}</p>
+          <p className="text-sm text-gray-500 mt-1.5">Chapter {chapter.chapter} of {chapter.novel.total_chapters}</p>
         </div>
         <div className="flex items-center gap-4">
           <div>

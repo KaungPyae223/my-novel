@@ -4,7 +4,6 @@ import { ArrowLeft } from "lucide-react";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ChapterEditForm from "../components/ChapterEdit/ChapterEditForm";
-import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import useStoreChapter from "@/store/useChapterStore";
 import useNormalFetcher from "@/services/normalFetcher";
@@ -29,6 +28,8 @@ const ChapterEditPage = ({
   const chapterStatus = useNormalFetcher(
     `/chapter-status-check?chapter_id=${chapterID}&novel_id=${novelId}`
   );
+
+ 
 
   const { isLoading, data } = useNormalFetcher(
     `/chapters/update-chapter-show/${chapterID}`

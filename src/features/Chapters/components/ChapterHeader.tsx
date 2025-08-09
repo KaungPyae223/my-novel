@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/features/Components/Container/Container";
-import { ArrowLeft, Heart, Share, Share2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 

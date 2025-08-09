@@ -13,12 +13,12 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       const response = await logout();
-      console.log(response);
+      
       setLogOut();
       toast.success("Logout Successfully");
       router.push("/login");
     } catch (error) {
-      console.log(error);
+      
     }
   };
 

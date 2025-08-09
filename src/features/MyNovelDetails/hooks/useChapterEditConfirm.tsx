@@ -35,7 +35,6 @@ export const useChapterEditConfirm = ({ novelId, chapterID }: { novelId: string;
         chapterData.status === "scheduled" ? scheduledDateTime : null,
     });
 
-    router.push(`/my-novels/details/${novelId}`);
   };
 
   return {

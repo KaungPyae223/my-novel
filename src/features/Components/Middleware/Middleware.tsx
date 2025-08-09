@@ -2,8 +2,7 @@
 import useAccountStore from "@/store/useAccountStore";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {api} from "@/services/api";
-
+import { api } from "@/services/api";
 
 const Middleware = ({ children }: { children: React.ReactNode }) => {
   const { token } = useAccountStore();
@@ -13,7 +12,6 @@ const Middleware = ({ children }: { children: React.ReactNode }) => {
     try {
       await api.get("/check-user");
     } catch (error) {
-      console.log(error);
       router.push("/login");
     }
   };

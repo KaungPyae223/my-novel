@@ -25,7 +25,7 @@ export const useCreateChapter = ({id}: {id: string}) => {
 export const useUpdateChapter = ({id}: {id: string}) => {
   return useMutate({
     mutationFn: updateChapter,
-    queryKey: [`/novel-chapters/${id}`],
+    queryKey: [`/chapters/update-chapter-show/${id}`, `/novel-chapters/${id}`],
     successMessage: "Successfully updated chapter",
     pushPath: `/my-novels/details/${id}`,
   });

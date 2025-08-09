@@ -1,12 +1,13 @@
+// hooks/useMutate.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 type MutateProps = {
   mutationFn: (data: any) => Promise<any>;
-  queryKey: string[];
+  queryKey: string | string[]; 
   successMessage: string;
-  pushPath?: string | undefined;
+  pushPath?: string;
 };
 
 export const useMutate = ({
@@ -19,9 +20,16 @@ export const useMutate = ({
   const router = useRouter();
 
   return useMutation({
-    mutationFn: mutationFn,
+    mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKey });
+      // Normalize to an array
+      const keys = Array.isArray(queryKey) ? queryKey : [queryKey];
+
+      // Invalidate each key so it matches how useFetchData registers it
+      keys.forEach((key) => {
+        queryClient.invalidateQueries({ queryKey: [key] });
+      });
+
       toast.dismiss();
       toast.success(successMessage);
 
@@ -29,10 +37,9 @@ export const useMutate = ({
         router.push(pushPath);
       }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       const message =
-        error?.response?.data?.message || "Failed to update profile.";
-
+        error?.response?.data?.message || "Failed to fetch data";
       toast.dismiss();
       toast.error(message);
     },
