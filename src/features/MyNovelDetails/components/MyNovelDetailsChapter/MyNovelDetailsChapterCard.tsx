@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/utils/formatDate";
+import { useDeleteChapter } from "@/services/chapter";
+import { toast } from "sonner";
 
 const MyNovelDetailsChapterCard = ({
   chapterNumber,
@@ -22,6 +24,8 @@ const MyNovelDetailsChapterCard = ({
 }) => {
   const router = useRouter();
 
+  const { mutate } = useDeleteChapter({id: data.id});
+
   const handleView = () => {
     router.push(`/novel/1/chapter/2`);
   };
@@ -29,6 +33,14 @@ const MyNovelDetailsChapterCard = ({
   const handleEdit = (e: any) => {
     e.stopPropagation();
     router.push(`/my-novels/details/${novelId}/edit-chapter/${data.id}`);
+  };
+
+  const handleDelete = (e: any) => {
+    e.stopPropagation();
+    if (window.confirm(`Are you sure you want to delete this chapter ${data.title}?`)) {
+      mutate(data.id);
+    }
+    router.push(`/my-novels/details/${novelId}`);
   };
 
   return (
@@ -81,7 +93,7 @@ const MyNovelDetailsChapterCard = ({
             >
               <Edit className="size-4" /> Edit Chapter
             </DropdownMenuItem>
-            <DropdownMenuItem className="p-2 text-red-800 flex flex-row items-center gap-2">
+            <DropdownMenuItem onClick={handleDelete} className="p-2 text-red-800 flex flex-row items-center gap-2">
               <Trash className="size-4 text-red-800" /> Delete Chapter
             </DropdownMenuItem>
           </DropdownMenuGroup>

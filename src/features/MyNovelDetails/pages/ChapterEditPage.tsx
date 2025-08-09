@@ -26,7 +26,7 @@ const ChapterEditPage = ({
 
   const { setChapterData, chapterData } = useStoreChapter();
 
-  const chapterStatus = useFetchData(
+  const chapterStatus = useNormalFetcher(
     `/chapter-status-check?chapter_id=${chapterID}&novel_id=${novelId}`
   );
 
@@ -47,7 +47,7 @@ const ChapterEditPage = ({
         status: fetchedChapterData?.status,
         summary: fetchedChapterData?.summary,
         content: fetchedChapterData?.content,
-        scheduledDate: fetchedChapterData?.scheduled_date,
+        scheduledDate: new Date(fetchedChapterData?.scheduled_date),
         scheduledTime: fetchedChapterData?.scheduled_time,
       });
     }

@@ -43,16 +43,14 @@ export const useChapterEditForm = ({
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (
-      values.status === "scheduled" &&
-      (!values.scheduledDate ||
-        !values.scheduledTime ||
-        new Date(values.scheduledDate).getTime() <= Date.now())
+      values.status === "scheduled"
     ) {
       if (!values.scheduledDate) {
         form.setError("scheduledDate", {
           type: "required",
           message: "Scheduled date is required",
         });
+        
       }
       if (
         values.scheduledDate &&
@@ -62,14 +60,15 @@ export const useChapterEditForm = ({
           type: "required",
           message: "Scheduled date must be in the future",
         });
+        
       }
       if (!values.scheduledTime) {
         form.setError("scheduledTime", {
           type: "required",
           message: "Scheduled time is required",
         });
+        
       }
-      return;
     }
 
     setChapterData({
