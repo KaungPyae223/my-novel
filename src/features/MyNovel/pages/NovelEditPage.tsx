@@ -18,10 +18,6 @@ const NovelEditPage = ({ id }: { id: string }) => {
 
   const { isLoading, data, error } = useNormalFetcher(`/novels/${id}`);
 
-  
-
-  const [defaultValues, setDefaultValues] = React.useState<boolean>(false);
-
   useEffect(() => {
     if (isLoading) return;
     const fetchedNovelData = data?.data;
@@ -42,7 +38,7 @@ const NovelEditPage = ({ id }: { id: string }) => {
         coverImage: fetchedNovelData?.image,
       });
     }
-    setDefaultValues(true);
+    
   }, [isLoading]);
 
   if (isLoading) return <Loading />;
@@ -63,10 +59,10 @@ const NovelEditPage = ({ id }: { id: string }) => {
           </div>
           <div className="mt-6">
             <p className="font-semibold text-3xl">Edit Novel</p>
-            <p className="text-gray-600 mt-3">Edit your novel's information</p>
+            <p className="text-gray-600 mt-3">Edit your novel&apos;s information</p>
           </div>
 
-          {defaultValues && <NovelEditForm />}
+           <NovelEditForm />
         </div>
       </div>
     </Middleware>

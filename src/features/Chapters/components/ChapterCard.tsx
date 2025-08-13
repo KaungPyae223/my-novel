@@ -171,7 +171,7 @@ const ChapterCard = ({chapter}: {chapter: any}) => {
         style={{ fontSize: `${fontSize}px` }}
         className="text-justify text-gray-800 mt-6 leading-relaxed"
       >
-        {loading ? <AiLoading text="Translating content..." /> : translatedText}
+        {loading ? <AiLoading text="Translating content..." /> : OriginalText}
       </div>
     </div>
   );

@@ -7,15 +7,22 @@ import ChapterPrevNext from '../components/ChapterPrevNext';
 import ChapterHeader from '../components/ChapterHeader';
 import useNormalFetcher from '@/services/normalFetcher';
 import Loading from '@/features/Components/Loading/Loading';
+import { notFound } from 'next/navigation';
 
 const ChapterPage = ({chapterID}: {chapterID: string}) => {
 
-  const {data, isLoading} = useNormalFetcher(`/chapters/${chapterID}`);
+  const {data, isLoading, error} = useNormalFetcher(`/chapters/${chapterID}`);
 
   if (isLoading) {
     return <Loading />;
   }
 
+  if (error) {
+    if (error.status === 404) {
+        return notFound();
+    }
+    throw error;
+  }
 
 
   return (

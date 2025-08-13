@@ -29,14 +29,25 @@ export const useChapterEditForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      chapterName: "",
+      status: "draft",
+      summary: "",
+      scheduledDate: new Date(),
+      scheduledTime: "",
+      content: "",
+    },
+  });
+
+  useEffect(() => {
+    form.reset({
       chapterName: chapterData.chapterName,
       status: chapterData.status,
       summary: chapterData.summary || "",
       scheduledDate: chapterData.scheduledDate || new Date(),
       scheduledTime: chapterData.scheduledTime || "",
       content: chapterData.content,
-    },
-  });
+    });
+  }, [chapterData]);
 
   const router = useRouter();
 

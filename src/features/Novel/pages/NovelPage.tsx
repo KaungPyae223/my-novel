@@ -13,8 +13,11 @@ import {
   MessageCircle,
   Star,
 } from "lucide-react";
+import useFetchData from "@/services/fetcher";
+import Loading from "@/features/Components/Loading/Loading";
+import { notFound } from "next/navigation";
 
-const NovelPage = () => {
+const NovelPage = ({novelID}: {novelID: string}) => {
   const [activeTab, setActiveTab] = React.useState<
     "Chapters" | "Similar" | "Posts" | "Reviews"
   >("Chapters");
@@ -43,12 +46,25 @@ const NovelPage = () => {
     { label: "Reviews", value: "Reviews", icon: <Star className="size-3.5" /> },
   ];
 
+  const {data, isLoading, error} = useFetchData(`/user/novels/${novelID}`);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    if(error.status === 404) {
+      return notFound();
+    }
+    throw error;
+  }
+
   
   return (
     <div>
       <NovelHeader />
       <Container className="mt-16 py-6">
-        <NovelIntro />
+        <NovelIntro novel={data.data}/>
         <div className="grid grid-cols-4 my-9 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
           {tabs.map((tab) => (
             <div

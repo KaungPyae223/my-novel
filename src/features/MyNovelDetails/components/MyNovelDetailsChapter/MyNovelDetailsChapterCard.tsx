@@ -27,7 +27,7 @@ const MyNovelDetailsChapterCard = ({
   const { mutate } = useDeleteChapter({id: data.id});
 
   const handleView = () => {
-    router.push(`/novel/1/chapter/2`);
+    router.push(`/novel/${novelId}/chapter/${data.id}`);
   };
 
   const handleEdit = (e: any) => {

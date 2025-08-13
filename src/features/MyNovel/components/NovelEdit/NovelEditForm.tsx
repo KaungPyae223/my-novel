@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -80,6 +80,23 @@ const NovelEditForm = () => {
     defaultValues: novelData,
   });
 
+  useEffect(() => {
+    if (!novelData.id) return;
+
+    console.log(novelData);
+
+    form.reset({
+      title: novelData.title,
+      description: novelData.description,
+      genre: novelData.genre,
+      progress: novelData.progress,
+      synopsis: novelData.synopsis,
+      tags: novelData.tags,
+      status: novelData.status,
+      coverImage: novelData.coverImage,
+    });
+  }, [novelData]);
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     setNovelData({ ...novelData, ...values });
@@ -116,8 +133,8 @@ const NovelEditForm = () => {
                 )}
               />
 
-              <div className="grid grid-cols-3 gap-6">
-                {!isLoading && (
+              {!isLoading && (
+                <div className="grid grid-cols-3 gap-6">
                   <FormField
                     control={form.control}
                     name="genre"
@@ -152,67 +169,69 @@ const NovelEditForm = () => {
                       </FormItem>
                     )}
                   />
-                )}
 
-                <FormField
-                  control={form.control}
-                  name="status"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Status</FormLabel>
-                      <FormControl>
-                        <Select
-                          {...field}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Status</SelectLabel>
-                              <SelectItem value="draft">Draft</SelectItem>
-                              <SelectItem value="published">
-                                Published
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="progress"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Progress</FormLabel>
-                      <FormControl>
-                        <Select
-                          {...field}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a progress" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Progress</SelectLabel>
-                              <SelectItem value="ongoing">Ongoing</SelectItem>
-                              <SelectItem value="complete">Complete</SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Status</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Status</SelectLabel>
+                                <SelectItem value="draft">Draft</SelectItem>
+                                <SelectItem value="published">
+                                  Published
+                                </SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="progress"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Progress</FormLabel>
+                        <FormControl>
+                          <Select
+                            {...field}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a progress" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Progress</SelectLabel>
+                                <SelectItem value="ongoing">Ongoing</SelectItem>
+                                <SelectItem value="complete">
+                                  Complete
+                                </SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
 
               <NovelTagManage form={form} />
 
@@ -266,7 +285,7 @@ const NovelEditForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {typeof field.value === "string" ? (
+                      {typeof field.value === "string" && field.value ? (
                         <Image
                           src={field.value}
                           alt="Preview"
