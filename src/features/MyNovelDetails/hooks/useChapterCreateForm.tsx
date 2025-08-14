@@ -37,16 +37,14 @@ export const useChapterCreateForm = ({ novelId }: { novelId: string }) => {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (
-      values.status === "scheduled" &&
-      (!values.scheduledDate ||
-        !values.scheduledTime ||
-        new Date(values.scheduledDate).getTime() <= Date.now())
+      values.status === "scheduled" 
     ) {
       if (!values.scheduledDate) {
         form.setError("scheduledDate", {
           type: "required",
           message: "Scheduled date is required",
         });
+        return;
       }
       if (
         values.scheduledDate &&
@@ -56,14 +54,15 @@ export const useChapterCreateForm = ({ novelId }: { novelId: string }) => {
           type: "required",
           message: "Scheduled date must be in the future",
         });
+        return;
       }
       if (!values.scheduledTime) {
         form.setError("scheduledTime", {
           type: "required",
           message: "Scheduled time is required",
         });
+        return;
       }
-      return;
     }
 
     setChapterData({
@@ -83,6 +82,7 @@ export const useChapterCreateForm = ({ novelId }: { novelId: string }) => {
 
   const { data, isLoading } = useFetchData(`/chapters/draft-count/${novelId}`);
 
+ 
   const status = form.watch("status");
 
   useEffect(() => {

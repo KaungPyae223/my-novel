@@ -29,12 +29,12 @@ export const useChapterEditForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      chapterName: "",
-      status: "draft",
-      summary: "",
-      scheduledDate: new Date(),
-      scheduledTime: "",
-      content: "",
+      chapterName: chapterData.chapterName,
+      status: chapterData.status,
+      summary: chapterData.summary || "",
+      scheduledDate: chapterData.scheduledDate || new Date(),
+      scheduledTime: chapterData.scheduledTime || "",
+      content: chapterData.content,
     },
   });
 
@@ -53,34 +53,31 @@ export const useChapterEditForm = ({
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (
-      values.status === "scheduled"
-    ) {
+    if (values.status === "scheduled") {
       if (!values.scheduledDate) {
         form.setError("scheduledDate", {
           type: "required",
           message: "Scheduled date is required",
         });
-        
-      }
-      if (
-        values.scheduledDate &&
-        new Date(values.scheduledDate).getTime() <= Date.now()
-      ) {
+        return;
+      } else if (new Date(values.scheduledDate).getTime() <= Date.now()) {
         form.setError("scheduledDate", {
           type: "required",
           message: "Scheduled date must be in the future",
         });
-        
+        return;
       }
+
       if (!values.scheduledTime) {
         form.setError("scheduledTime", {
           type: "required",
           message: "Scheduled time is required",
         });
-        
+        return;
       }
     }
+
+   
 
     setChapterData({
       id: chapterID,
@@ -91,7 +88,9 @@ export const useChapterEditForm = ({
       scheduledDate: values.scheduledDate || null,
       scheduledTime: values.scheduledTime || null,
     });
-    router.push(`/my-novels/details/${novelId}/edit-chapter/${chapterID}/confirm`);
+    router.push(
+      `/my-novels/details/${novelId}/edit-chapter/${chapterID}/confirm`
+    );
   }
 
   const [open, setOpen] = useState(false);

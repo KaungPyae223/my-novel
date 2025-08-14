@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -39,7 +37,7 @@ import { useChapterCreateForm } from "../../hooks/useChapterCreateForm";
 
 const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
   
-  const { form, onSubmit, open, setOpen, published, status } = useChapterCreateForm({ novelId });
+  const { form, onSubmit, isLoading, open, setOpen, published, status } = useChapterCreateForm({ novelId });
   
 
 
@@ -175,7 +173,7 @@ const ChapterCreateForm = ({ novelId }: { novelId: string }) => {
               />
             </div>
           </div>
-          <AISuggestion novelId={novelId} />
+          {!isLoading && <AISuggestion novelId={novelId} />}
           <div className="p-6 bg-white shadow border border-gray-200 rounded-lg">
             <p className="font-medium text-2xl">Chapter Content</p>
             <div className="mt-6">
