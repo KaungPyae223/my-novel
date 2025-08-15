@@ -7,6 +7,7 @@ import ChapterEditForm from "../components/ChapterEdit/ChapterEditForm";
 import Loading from "@/features/Components/Loading/Loading";
 import useStoreChapter from "@/store/useChapterStore";
 import useNormalFetcher from "@/services/normalFetcher";
+import useFetchData from "@/services/fetcher";
 
 const ChapterEditPage = ({
   novelId,
@@ -28,14 +29,14 @@ const ChapterEditPage = ({
     `/chapter-status-check?chapter_id=${chapterID}&novel_id=${novelId}`
   );
 
-  const { isLoading, data } = useNormalFetcher(
+  const { isLoading, data } = useFetchData(
     `/chapters/update-chapter-show/${chapterID}`
   );
 
   useEffect(() => {
     if (isLoading) return;
     const fetchedChapterData = data?.data;
-    if (!chapterData?.id) {
+    if (!chapterData?.is_updated) {
       setChapterData({
         id: fetchedChapterData?.id,
         chapterName: fetchedChapterData?.title,
@@ -44,11 +45,12 @@ const ChapterEditPage = ({
         content: fetchedChapterData?.content,
         scheduledDate: new Date(fetchedChapterData?.scheduled_date),
         scheduledTime: fetchedChapterData?.scheduled_time,
+        is_updated: false,
       });
     }
 
    
-  }, [isLoading]);
+  }, [isLoading,data]);
 
   if (chapterStatus.isLoading) {
     return <Loading />;

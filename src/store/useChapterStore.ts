@@ -9,6 +9,7 @@ type ChapterData = {
   content: string;
   scheduledDate: Date | null;
   scheduledTime: string | null;
+  is_updated: boolean;
 };
 
 type Action = {
@@ -29,6 +30,7 @@ const ChapterData: ChapterData = {
   content: "",
   scheduledDate: new Date(),
   scheduledTime: "",
+  is_updated: false,
 };
 
 const useStoreChapter = create<InitialState & Action>()(

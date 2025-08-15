@@ -47,7 +47,7 @@ const ChapterEditForm = ({
     canPublish: boolean;
   };
 }) => {
-  const { form, onSubmit, open, setOpen, published, status } = useChapterEditForm({ novelId, chapterID, chapterStatus });
+  const { form, onSubmit, handleBack, open, setOpen, published, status } = useChapterEditForm({ novelId, chapterID, chapterStatus });
   
 
   return (
@@ -206,7 +206,7 @@ const ChapterEditForm = ({
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <Button type="button" variant="outline" className="">
+          <Button onClick={handleBack} type="button" variant="outline" className="">
             Cancel
           </Button>
           <Button type="submit" className="">

@@ -26,18 +26,18 @@ export const useCreateNovel = () => {
   });
 };
 
-export const useUpdateNovel = () => {
+export const useUpdateNovel = ({id}: {id: string}) => {
   return useMutate({
     mutationFn: updateNovel,
-    queryKey: ["/my-novels"],
+    queryKey: ["/my-novels",`/novels/${id}`],
     successMessage: "Successfully updated novel data",
   });
 };
 
-export const useUpdateNovelCoverImage = () => {
+export const useUpdateNovelCoverImage = ({id}: {id: string}) => {
   return useMutate({
     mutationFn: updateNovelCoverImage,
-    queryKey: ["/my-novels"],
+    queryKey: ["/my-novels",`/novels/${id}`],
     successMessage: "Successfully updated novel cover image",
   });
 };

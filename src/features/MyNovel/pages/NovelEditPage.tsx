@@ -7,6 +7,7 @@ import Middleware from "@/features/Components/Middleware/Middleware";
 import { useRouter } from "next/navigation";
 import useStoreNovel from "@/store/useNovelStore";
 import useNormalFetcher from "@/services/normalFetcher";
+import useFetchData from "@/services/fetcher";
 
 const NovelEditPage = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -16,13 +17,15 @@ const NovelEditPage = ({ id }: { id: string }) => {
     router.push("/my-novels");
   };
 
-  const { isLoading, data, error } = useNormalFetcher(`/novels/${id}`);
+  const { isLoading, data, error } = useFetchData(`/novels/${id}`);
+
+  console.log(data);
 
   useEffect(() => {
     if (isLoading) return;
     const fetchedNovelData = data?.data;
 
-    if (!novelData.id) {
+    if (!novelData.is_updated) {
       setNovelData({
         id: fetchedNovelData?.id,
         progress: fetchedNovelData?.progress,
@@ -36,10 +39,10 @@ const NovelEditPage = ({ id }: { id: string }) => {
         tags: fetchedNovelData?.tags,
         status: fetchedNovelData?.status,
         coverImage: fetchedNovelData?.image,
+        is_updated: false,
       });
     }
-    
-  }, [isLoading]);
+  }, [isLoading, data]);
 
   if (isLoading) return <Loading />;
 
@@ -59,10 +62,12 @@ const NovelEditPage = ({ id }: { id: string }) => {
           </div>
           <div className="mt-6">
             <p className="font-semibold text-3xl">Edit Novel</p>
-            <p className="text-gray-600 mt-3">Edit your novel&apos;s information</p>
+            <p className="text-gray-600 mt-3">
+              Edit your novel&apos;s information
+            </p>
           </div>
 
-           <NovelEditForm />
+          <NovelEditForm />
         </div>
       </div>
     </Middleware>

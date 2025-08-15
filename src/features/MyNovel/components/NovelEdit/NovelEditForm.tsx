@@ -28,8 +28,8 @@ import { Upload } from "lucide-react";
 import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "../NovelCreate/NovelTagManage";
-import useFetchData from "@/services/fetcher";
 import Image from "next/image";
+import useNormalFetcher from "@/services/normalFetcher";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -82,9 +82,6 @@ const NovelEditForm = () => {
 
   useEffect(() => {
     if (!novelData.id) return;
-
-    console.log(novelData);
-
     form.reset({
       title: novelData.title,
       description: novelData.description,
@@ -99,11 +96,11 @@ const NovelEditForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setNovelData({ ...novelData, ...values });
+    setNovelData({ ...novelData, ...values, is_updated: true });
     router.push(`/my-novels/edit/${novelData.id}/confirm`);
   }
 
-  const { data, isLoading } = useFetchData("/genres");
+  const { data, isLoading } = useNormalFetcher("/genres");
 
   return (
     <Form {...form}>

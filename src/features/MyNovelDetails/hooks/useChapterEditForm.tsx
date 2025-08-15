@@ -51,6 +51,10 @@ export const useChapterEditForm = ({
 
   const router = useRouter();
 
+  const handleBack = () => {
+    router.back();
+  };
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.status === "scheduled") {
@@ -87,6 +91,7 @@ export const useChapterEditForm = ({
       content: values.content,
       scheduledDate: values.scheduledDate || null,
       scheduledTime: values.scheduledTime || null,
+      is_updated: true,
     });
     router.push(
       `/my-novels/details/${novelId}/edit-chapter/${chapterID}/confirm`
@@ -129,5 +134,6 @@ export const useChapterEditForm = ({
     published,
     setPublished,
     status,
+    handleBack,
   };
 };

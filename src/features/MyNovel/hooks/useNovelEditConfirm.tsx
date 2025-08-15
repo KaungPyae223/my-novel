@@ -26,8 +26,8 @@ export const useNovelEditConfirm = () => {
     router.push(`/my-novels/edit/${novelData.id}`);
   };
 
-  const updateNovelMutation = useUpdateNovel();
-  const updateNovelCoverImageMutation = useUpdateNovelCoverImage();
+  const updateNovelMutation = useUpdateNovel({id: novelData.id});
+  const updateNovelCoverImageMutation = useUpdateNovelCoverImage({id: novelData.id});
 
   const handleEdit = () => {
     toast.loading("Updating novel...");

@@ -11,6 +11,7 @@ type NovelData = {
   progress: "ongoing" | "complete" | null;
   status: string;
   coverImage: File | string | null;
+  is_updated: boolean;
 };
 
 type Action = {
@@ -33,6 +34,7 @@ const initialState: InitialState = {
     progress: null,
     status: "",
     coverImage: "",
+    is_updated: false,
   },
 };
 
