@@ -24,7 +24,7 @@ const MyNovelDetailsChapterCard = ({
 }) => {
   const router = useRouter();
 
-  const { mutate } = useDeleteChapter({id: data.id});
+  const { mutate } = useDeleteChapter({ id: novelId });
 
   const handleView = () => {
     router.push(`/novel/${novelId}/chapter/${data.id}`);
@@ -37,10 +37,13 @@ const MyNovelDetailsChapterCard = ({
 
   const handleDelete = (e: any) => {
     e.stopPropagation();
-    if (window.confirm(`Are you sure you want to delete this chapter ${data.title}?`)) {
+    if (
+      window.confirm(
+        `Are you sure you want to delete this chapter ${data.title}?`
+      )
+    ) {
       mutate(data.id);
     }
-    router.push(`/my-novels/details/${novelId}`);
   };
 
   return (
@@ -93,7 +96,10 @@ const MyNovelDetailsChapterCard = ({
             >
               <Edit className="size-4" /> Edit Chapter
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleDelete} className="p-2 text-red-800 flex flex-row items-center gap-2">
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="p-2 text-red-800 flex flex-row items-center gap-2"
+            >
               <Trash className="size-4 text-red-800" /> Delete Chapter
             </DropdownMenuItem>
           </DropdownMenuGroup>
