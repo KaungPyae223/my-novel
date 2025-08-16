@@ -24,7 +24,7 @@ const CommunityPostCard = () => {
 
       {/* Content */}
       <div className="mt-4">
-        <p className="text-gray-700 text-sm leading-relaxed line-clamp-5 text-justify">
+        <p className="text-gray-700 leading-relaxed line-clamp-5 text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae,
           earum! Minus, animi. Repudiandae non earum saepe rem ipsa modi magnam
           libero culpa assumenda soluta, maiores obcaecati tempora quo minima?

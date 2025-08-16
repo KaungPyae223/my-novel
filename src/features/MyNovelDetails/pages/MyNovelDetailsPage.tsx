@@ -33,6 +33,7 @@ import { useDeleteNovel } from "@/services/novel";
 import { toast } from "sonner";
 import MyNovelDetailsChapterContainer from "../components/Container/MyNovelDetailsChapterContainer";
 import useStoreChapter from "@/store/useChapterStore";
+import MyNovelDetailsPostContainer from "../components/Container/MyNovelDetailsPostContainer";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -156,6 +157,9 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           </div>
           {activeTab === "Chapters" && (
             <MyNovelDetailsChapterContainer id={id} />
+          )}
+          {activeTab === "Posts" && (
+            <MyNovelDetailsPostContainer id={id} />
           )}
         </div>
         <DialogContent className="sm:max-w-[425px]">
