@@ -12,17 +12,44 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AiLoading from "@/features/Components/Loading/AiLoading";
+import useFetchData from "@/services/fetcher";
+import { notFound, useSearchParams } from "next/navigation";
+import { useAddParams, useGenerateQuery } from "@/utils/searchParams";
 
-const ChapterCard = ({chapter}: {chapter: any}) => {
+const ChapterCard = ({
+  chapterID,
+  chapterData,
+}: {
+  chapterID: string;
+  chapterData: any;
+}) => {
   const [fontSize, setFontSize] = React.useState<number>(16);
 
-  const OriginalText = chapter.content;
-
-  const [translatedText, setTranslatedText] = React.useState<string>("");
+  const [translatedLanguage, setTranslatedLanguage] =
+    React.useState<string>("");
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    setTranslatedText(chapter.content);
-  }, []);
+    const language = searchParams.get("language");
+    if (language && language !== translatedLanguage) {
+      setTranslatedLanguage(language);
+    }
+  }, [searchParams]);
+
+  const addParams = useAddParams();
+
+  useEffect(() => {
+    if (
+      translatedLanguage &&
+      searchParams.get("language") !== translatedLanguage
+    ) {
+      addParams([{ key: "language", value: translatedLanguage }]);
+    }
+  }, [translatedLanguage, addParams]);
+
+  const { data, isLoading, error } = useFetchData(
+    useGenerateQuery(`/chapters/${chapterID}`)
+  );
 
   const handleZoomIn = () => {
     setFontSize((prevFontSize) => prevFontSize + 1);
@@ -36,7 +63,7 @@ const ChapterCard = ({chapter}: {chapter: any}) => {
 
   const playVoice = () => {
     if ("speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(OriginalText);
+      const utterance = new SpeechSynthesisUtterance(data.data.content);
       window.speechSynthesis.speak(utterance);
     } else {
       alert("Sorry, your browser does not support text-to-speech.");
@@ -69,42 +96,24 @@ const ChapterCard = ({chapter}: {chapter: any}) => {
     setIsPlaying("pause");
   };
 
-  const [loading, setLoading] = React.useState<boolean>(false);
-
-  const translateText = async (language: string) => {
-    setLoading(true);
-    const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization:
-            "Bearer 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",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "deepseek/deepseek-r1-0528:free",
-          messages: [
-            {
-              role: "user",
-              content: `Please translate the following text to ${language}: ${OriginalText}. In there Please give only translated text.`,
-            },
-          ],
-        }),
-      }
-    );
-
-    const data = await response.json();
-    setLoading(false);
-    setTranslatedText(data.choices[0].message.content);
-  };
+  if (error) {
+    if (error.status === 404) {
+      return notFound();
+    }
+    throw error;
+  }
 
   return (
     <div className="p-6 bg-white border border-gray-200 rounded-md shadow-sm">
       <div className="flex items-center justify-between">
         <div>
-          <p className="font-medium text-xl">Chapter {chapter.chapter}: {chapter.title}</p>
-          <p className="text-sm text-gray-500 mt-1.5">Chapter {chapter.chapter} of {chapter.novel.total_chapters}</p>
+          <p className="font-medium text-xl">
+            Chapter {chapterData?.chapter}: {chapterData?.title}
+          </p>
+          <p className="text-sm text-gray-500 mt-1.5">
+            Chapter {chapterData?.chapter} of{" "}
+            {chapterData?.novel?.total_chapters}
+          </p>
         </div>
         <div className="flex items-center gap-4">
           <div>
@@ -140,7 +149,10 @@ const ChapterCard = ({chapter}: {chapter: any}) => {
           </div>
           <div>
             <p className="text-xs mb-0.5 text-gray-800">Translation</p>
-            <Select onValueChange={translateText}>
+            <Select
+              value={translatedLanguage}
+              onValueChange={(value) => setTranslatedLanguage(value)}
+            >
               <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                 <SelectValue placeholder="Select a language" />
               </SelectTrigger>
@@ -171,7 +183,11 @@ const ChapterCard = ({chapter}: {chapter: any}) => {
         style={{ fontSize: `${fontSize}px` }}
         className="text-justify text-gray-800 mt-6 leading-relaxed"
       >
-        {loading ? <AiLoading text="Translating content..." /> : OriginalText}
+        {isLoading ? (
+          <AiLoading text="Translating content..." />
+        ) : (
+          data.data.content
+        )}
       </div>
     </div>
   );

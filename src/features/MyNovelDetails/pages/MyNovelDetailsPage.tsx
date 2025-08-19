@@ -34,6 +34,7 @@ import { toast } from "sonner";
 import MyNovelDetailsChapterContainer from "../components/Container/MyNovelDetailsChapterContainer";
 import useStoreChapter from "@/store/useChapterStore";
 import MyNovelDetailsPostContainer from "../components/Container/MyNovelDetailsPostContainer";
+import MyNovelDetailsReviewContainer from "../components/Container/MyNovelDetailsReviewContainer";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -160,6 +161,9 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           )}
           {activeTab === "Posts" && (
             <MyNovelDetailsPostContainer id={id} />
+          )}
+          {activeTab === "Reviews" && (
+            <MyNovelDetailsReviewContainer id={id} />
           )}
         </div>
         <DialogContent className="sm:max-w-[425px]">

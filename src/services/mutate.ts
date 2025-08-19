@@ -35,10 +35,7 @@ export const useMutate = ({
       toast.error(message);
     },
     onSettled: () => {
-
-     
       queryKey.forEach((key: string) => {
-        console.log(key);
         queryClient.invalidateQueries({ queryKey: [key] });
       });
     },
