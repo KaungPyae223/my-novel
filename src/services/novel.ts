@@ -17,6 +17,17 @@ const updateNovelCoverImage = (formData: FormData) => {
   return formApi.post(`/novels/upload-image/${formData.get("id")}`, formData);
 };
 
+const novelLoved = (novelID: string) => {
+  return api.post(`novels/loved/${novelID}`);
+};
+
+export const useNovelLoved = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: novelLoved,
+    queryKey: ["/my-novels", `/user/novels/${novelID}`],
+  });
+};
+
 export const useCreateNovel = () => {
   return useMutate({
     mutationFn: createNovel,
@@ -26,18 +37,18 @@ export const useCreateNovel = () => {
   });
 };
 
-export const useUpdateNovel = ({id}: {id: string}) => {
+export const useUpdateNovel = ({ id }: { id: string }) => {
   return useMutate({
     mutationFn: updateNovel,
-    queryKey: ["/my-novels",`/novels/${id}`],
+    queryKey: ["/my-novels", `/novels/${id}`],
     successMessage: "Successfully updated novel data",
   });
 };
 
-export const useUpdateNovelCoverImage = ({id}: {id: string}) => {
+export const useUpdateNovelCoverImage = ({ id }: { id: string }) => {
   return useMutate({
     mutationFn: updateNovelCoverImage,
-    queryKey: ["/my-novels",`/novels/${id}`],
+    queryKey: ["/my-novels", `/novels/${id}`],
     successMessage: "Successfully updated novel cover image",
   });
 };
@@ -50,6 +61,3 @@ export const useDeleteNovel = () => {
     pushPath: "/my-novels",
   });
 };
-
-
-  

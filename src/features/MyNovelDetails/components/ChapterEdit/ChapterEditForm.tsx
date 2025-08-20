@@ -22,7 +22,6 @@ import {
   Select,
   SelectContent,
   SelectGroup,
-
   SelectLabel,
   SelectTrigger,
   SelectValue,
@@ -32,8 +31,6 @@ import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
 
 import { useChapterEditForm } from "../../hooks/useChapterEditForm";
-
-
 
 const ChapterEditForm = ({
   novelId,
@@ -47,8 +44,8 @@ const ChapterEditForm = ({
     canPublish: boolean;
   };
 }) => {
-  const { form, onSubmit, handleBack, open, setOpen, published, status } = useChapterEditForm({ novelId, chapterID, chapterStatus });
-  
+  const { form, onSubmit, handleBack, open, setOpen, published, status } =
+    useChapterEditForm({ novelId, chapterID, chapterStatus });
 
   return (
     <Form {...form}>
@@ -78,17 +75,22 @@ const ChapterEditForm = ({
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <FormControl>
-                        <Select value={field.value} onValueChange={field.onChange}>
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              <SelectLabel>Status</SelectLabel>
-                              {published.map((item) => item)}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
+                        {published.length > 0 && (
+                          <Select
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Status</SelectLabel>
+                                {published.map((item) => item)}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        )}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -206,7 +208,12 @@ const ChapterEditForm = ({
           </div>
         </div>
         <div className="flex justify-end gap-3">
-          <Button onClick={handleBack} type="button" variant="outline" className="">
+          <Button
+            onClick={handleBack}
+            type="button"
+            variant="outline"
+            className=""
+          >
             Cancel
           </Button>
           <Button type="submit" className="">

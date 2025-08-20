@@ -16,6 +16,7 @@ import {
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import { notFound } from "next/navigation";
+import { Toaster } from "sonner";
 
 const NovelPage = ({novelID}: {novelID: string}) => {
   const [activeTab, setActiveTab] = React.useState<
@@ -62,6 +63,7 @@ const NovelPage = ({novelID}: {novelID: string}) => {
   
   return (
     <div>
+      <Toaster position="top-center" richColors />
       <NovelHeader />
       <Container className="mt-16 py-6">
         <NovelIntro novel={data.data}/>

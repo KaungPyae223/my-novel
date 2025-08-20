@@ -1,8 +1,19 @@
-import { BookHeart, BookOpen, Eye, Heart, Save, Share, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { BookOpen, Eye, Heart, Share, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import { useNovelLoved } from "@/services/novel";
+import { toast } from "sonner";
+import shareLink from "@/utils/shareLink";
 
-const NovelIntro = ({novel}: {novel: any}) => {
+const NovelIntro = ({ novel }: { novel: any }) => {
+  const { mutate } = useNovelLoved({ novelID: novel.id });
+
+  const handleLoved = () => {
+    toast.loading("Loving novel...");
+    mutate(novel.id);
+  };
+
   return (
     <div className="p-6 flex flex-row gap-6 bg-white shadow border border-gray-200 rounded-lg">
       <div>
@@ -23,18 +34,39 @@ const NovelIntro = ({novel}: {novel: any}) => {
             </div>
           </div>
           <div className="flex flex-row gap-8">
-            <ActionButton
-              icon={<Heart className="size-4" />}
-              text="Love"
-            />
-            <ActionButton
-              icon={<Share className="size-4" />}
-              text="Share"
-            />
-            <ActionButton
-              icon={<Star className="size-4" />}
-              text="Favorite"
-            />
+            <motion.div
+              key={novel?.already_loved ? "filled" : "unfilled"} // forces animation when state changes
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={handleLoved}
+              className="cursor-pointer"
+            >
+              {novel.already_loved ? (
+                <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
+                  <Heart className="size-4" fill="currentColor" />
+                  Loved
+                </div>
+              ) : (
+                <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
+                  <Heart className="size-4" />
+                  Love
+                </div>
+              )}
+            </motion.div>
+
+            <div
+              onClick={shareLink}
+              className="flex cursor-pointer text-gray-700 text-sm items-center gap-2 font-medium"
+            >
+              <Share className="size-4" />
+              Share
+            </div>
+            <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
+              <Star className="size-4" />
+              Favorite
+            </div>
           </div>
         </div>
         <p className="text-gray-500 mt-2">by {novel.user_name}</p>
@@ -64,15 +96,11 @@ const NovelIntro = ({novel}: {novel: any}) => {
             {novel.views} Reads
           </div>
         </div>
-        <p className="text-justify text-gray-800 ">
-          {novel.description}
-        </p>
+        <p className="text-justify text-gray-800 ">{novel.description}</p>
         <div className="flex flex-row gap-2 mt-4">
-          {
-            novel.tags.split("/").map((tag: string) => (
-              <GenreCard key={tag} genre={tag} />
-            ))
-          }
+          {novel.tags.split("/").map((tag: string) => (
+            <GenreCard key={tag} genre={tag} />
+          ))}
         </div>
       </div>
     </div>
@@ -85,21 +113,6 @@ const GenreCard = ({ genre }: { genre: string }) => {
   return (
     <div className="text-xs font-semibold px-3 py-1 rounded-full border border-gray-300 text-gray-600">
       {genre}
-    </div>
-  );
-};
-
-const ActionButton = ({
-  icon,
-  text,
-}: {
-  icon: React.ReactNode;
-  text: string;
-}) => {
-  return (
-    <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
-      {icon}
-      {text}
     </div>
   );
 };

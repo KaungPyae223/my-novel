@@ -13,8 +13,12 @@ const deleteChapter = (chapterID: string) => {
   return api.delete(`/chapters/${chapterID}`);
 };
 
-export const useCreateChapter = ({id}: {id: string}) => {
-  return  useMutate({
+const chapterLoved = (chapterID: string) => {
+  return api.post(`/chapters/loved/${chapterID}`);
+};
+
+export const useCreateChapter = ({ id }: { id: string }) => {
+  return useMutate({
     mutationFn: createChapter,
     queryKey: [`/novel-chapters/${id}`],
     successMessage: "Successfully created chapter",
@@ -22,16 +26,25 @@ export const useCreateChapter = ({id}: {id: string}) => {
   });
 };
 
-export const useUpdateChapter = ({id, chapterID}: {id: string, chapterID: string}) => {
+export const useUpdateChapter = ({
+  id,
+  chapterID,
+}: {
+  id: string;
+  chapterID: string;
+}) => {
   return useMutate({
     mutationFn: updateChapter,
-    queryKey: [`/chapters/update-chapter-show/${chapterID}`, `/novel-chapters/${id}`],
+    queryKey: [
+      `/chapters/update-chapter-show/${chapterID}`,
+      `/novel-chapters/${id}`,
+    ],
     successMessage: "Successfully updated chapter",
     pushPath: `/my-novels/details/${id}`,
   });
 };
 
-export const useDeleteChapter = ({id}: {id: string}) => {
+export const useDeleteChapter = ({ id }: { id: string }) => {
   return useMutate({
     mutationFn: deleteChapter,
     queryKey: [`/novel-chapters/${id}`],
@@ -39,3 +52,9 @@ export const useDeleteChapter = ({id}: {id: string}) => {
   });
 };
 
+export const useChapterLoved = ({ chapterID }: { chapterID: string }) => {
+  return useMutate({
+    mutationFn: chapterLoved,
+    queryKey: [`/chapters/${chapterID}`],
+  });
+};

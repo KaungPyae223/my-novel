@@ -1,4 +1,4 @@
-import { Heart, Pause, Play, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
+import { Heart, Pause, Play, Share, Share2, X, ZoomIn, ZoomOut } from "lucide-react";
 import React, { useEffect } from "react";
 import { languagesList } from "@/lib/languageData";
 
@@ -15,6 +15,10 @@ import AiLoading from "@/features/Components/Loading/AiLoading";
 import useFetchData from "@/services/fetcher";
 import { notFound, useSearchParams } from "next/navigation";
 import { useAddParams, useGenerateQuery } from "@/utils/searchParams";
+import { useChapterLoved } from "@/services/chapter";
+import { toast } from "sonner";
+import { motion } from "framer-motion";
+import shareLink from "@/utils/shareLink";
 
 const ChapterCard = ({
   chapterID,
@@ -24,6 +28,8 @@ const ChapterCard = ({
   chapterData: any;
 }) => {
   const [fontSize, setFontSize] = React.useState<number>(16);
+
+  console.log(chapterData);
 
   const [translatedLanguage, setTranslatedLanguage] =
     React.useState<string>("");
@@ -94,6 +100,14 @@ const ChapterCard = ({
       window.speechSynthesis.resume();
     }
     setIsPlaying("pause");
+  };
+
+  const { mutate } = useChapterLoved({ chapterID });
+
+  const handleLoved = () => {
+    toast.loading("Loving chapter...");
+    mutate(chapterID);
+    console.log("Chapter loved");
   };
 
   if (error) {
@@ -171,9 +185,25 @@ const ChapterCard = ({
           <div>
             <p className="text-xs mb-0.5 text-gray-800">{"General"}</p>
             <div className="flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
-              <Heart className="size-4 cursor-pointer" />
+              <motion.div
+                key={chapterData?.already_love ? "filled" : "unfilled"} // forces animation when state changes
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={handleLoved}
+              >
+                {chapterData?.already_love ? (
+                  <Heart
+                    className="size-4 cursor-pointer"
+                    fill="currentColor"
+                  />
+                ) : (
+                  <Heart className="size-4 cursor-pointer" />
+                )}
+              </motion.div>
               <div className="border-l border-gray-300 h-4"></div>
-              <Share2 className="size-4 cursor-pointer" />
+              <Share onClick={shareLink} className="size-4 cursor-pointer" />
             </div>
           </div>
         </div>

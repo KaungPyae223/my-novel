@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 type MutateProps = {
   mutationFn: (data: any) => Promise<any>;
   queryKey: string[];
-  successMessage: string;
+  successMessage?: string;
   pushPath?: string;
 };
 
@@ -21,9 +21,13 @@ export const useMutate = ({
 
   return useMutation({
     mutationFn,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.dismiss();
-      toast.success(successMessage);
+      if (successMessage) {
+        toast.success(successMessage);
+      } else {
+        toast.success(data?.data?.message);
+      }
 
       if (pushPath) {
         router.push(pushPath);

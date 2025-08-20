@@ -8,9 +8,9 @@ import ChapterHeader from "../components/ChapterHeader";
 import Loading from "@/features/Components/Loading/Loading";
 import { notFound } from "next/navigation";
 import useFetchData from "@/services/fetcher";
+import { Toaster } from "sonner";
 
 const ChapterPage = ({ chapterID }: { chapterID: string }) => {
-  
   const { data, isLoading, error } = useFetchData(`/chapters/${chapterID}`);
 
   if (isLoading) {
@@ -26,6 +26,7 @@ const ChapterPage = ({ chapterID }: { chapterID: string }) => {
 
   return (
     <div>
+      <Toaster position="top-center" richColors />
       <ChapterHeader />
       <Container className="mt-16 py-6 space-y-6">
         <ChapterNovelIntro novel={data.data.novel} />

@@ -81,8 +81,6 @@ export const useChapterEditForm = ({
       }
     }
 
-   
-
     setChapterData({
       id: chapterID,
       chapterName: values.chapterName,
@@ -132,7 +130,6 @@ export const useChapterEditForm = ({
     open,
     setOpen,
     published,
-    setPublished,
     status,
     handleBack,
   };
