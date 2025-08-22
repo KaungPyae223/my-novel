@@ -24,7 +24,7 @@ import AiLoading from "@/features/Components/Loading/AiLoading";
 import useFetchData from "@/services/fetcher";
 import { notFound, useSearchParams } from "next/navigation";
 import { useAddParams, useGenerateQuery } from "@/utils/searchParams";
-import { useChapterLoved } from "@/services/chapter";
+import { useChapterLoved, useShareChapter } from "@/services/chapter";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import shareLink from "@/utils/shareLink";
@@ -125,7 +125,13 @@ const ChapterCard = ({
   const handleLoved = () => {
     toast.loading("Loving chapter...");
     mutate(chapterID);
-    console.log("Chapter loved");
+  };
+
+  const { mutate: shareChapter } = useShareChapter({ chapterID });
+
+  const handleShare = () => {
+    shareLink();
+    shareChapter(chapterID);
   };
 
   if (error) {
@@ -151,7 +157,10 @@ const ChapterCard = ({
           <div className="flex items-center gap-4">
             <div>
               <p className="text-xs mb-0.5 text-gray-800">Read Type</p>
-              <Select value={readType} onValueChange={(value) => setReadType(value)}>
+              <Select
+                value={readType}
+                onValueChange={(value) => setReadType(value)}
+              >
                 <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                   <SelectValue placeholder="Select read type" />
                 </SelectTrigger>
@@ -246,7 +255,10 @@ const ChapterCard = ({
                   )}
                 </motion.div>
                 <div className="border-l border-gray-300 h-4"></div>
-                <Share onClick={shareLink} className="size-4 cursor-pointer" />
+                <Share
+                  onClick={handleShare}
+                  className="size-4 cursor-pointer"
+                />
               </div>
             </div>
           </div>

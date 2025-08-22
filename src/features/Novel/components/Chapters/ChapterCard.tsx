@@ -13,7 +13,11 @@ const ChapterCard = ({
   return (
     <Link
       href={`/novel/3/chapter/1`}
-      className={`p-4 group ${data.view_at ? "bg-green-100" : "bg-gray-50"}  hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6 ${data.view_at ? "" : ""}`}
+      className={`p-4 group ${
+        data.view_at ? "bg-green-100" : "bg-gray-50"
+      }  hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6 ${
+        data.view_at ? "" : ""
+      }`}
     >
       <div className="bg-blue-100 text-blue-800 w-12 h-12 font-medium flex items-center justify-center rounded-full">
         {chapterNumber}
@@ -30,14 +34,16 @@ const ChapterCard = ({
           <Dot className="size-5" />
           <div className="flex flex-row items-center gap-1.5   ">
             <Eye className="size-3.5" />
-            12
+            {data.view_count}
           </div>
-          <Dot className="size-5" />
           {data.view_at && (
-            <div className="flex flex-row items-center gap-1.5">
-              <BookOpenCheck className="size-3.5" />
-              {formatDate(data.view_at)}
-            </div>
+            <>
+              <Dot className="size-5" />
+              <div className="flex flex-row items-center gap-1.5">
+                <BookOpenCheck className="size-3.5" />
+                {formatDate(data.view_at)}
+              </div>
+            </>
           )}
         </div>
       </div>

@@ -17,6 +17,19 @@ const chapterLoved = (chapterID: string) => {
   return api.post(`/chapters/loved/${chapterID}`);
 };
 
+const shareChapter = (chapterID: string) => {
+  return api.post(`chapters/share/${chapterID}`);
+};
+
+export const useShareChapter = ({ chapterID }: { chapterID: string }) => {
+  return useMutate({
+    mutationFn: shareChapter,
+    queryKey: [`/chapters/${chapterID}`],
+    successMessage: "Copy the chapter link",
+
+  });
+};
+
 export const useCreateChapter = ({ id }: { id: string }) => {
   return useMutate({
     mutationFn: createChapter,

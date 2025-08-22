@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Eye, Heart, Share, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { useNovelLoved } from "@/services/novel";
+import { useNovelLoved, useShareNovel } from "@/services/novel";
 import { toast } from "sonner";
 import shareLink from "@/utils/shareLink";
 
@@ -12,6 +12,13 @@ const NovelIntro = ({ novel }: { novel: any }) => {
   const handleLoved = () => {
     toast.loading("Loving novel...");
     mutate(novel.id);
+  };
+
+  const { mutate: shareNovel } = useShareNovel({ novelID: novel.id });
+
+  const handleShare = () => {
+    shareLink();
+    shareNovel(novel.id);
   };
 
   return (
@@ -57,7 +64,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
             </motion.div>
 
             <div
-              onClick={shareLink}
+              onClick={handleShare}
               className="flex cursor-pointer text-gray-700 text-sm items-center gap-2 font-medium"
             >
               <Share className="size-4" />

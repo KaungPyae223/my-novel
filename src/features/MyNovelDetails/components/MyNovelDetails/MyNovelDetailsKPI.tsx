@@ -27,7 +27,7 @@ const MyNovelDetailsKPI = ({ novel }: { novel: any }) => {
     {
       icon: <Share className="size-6 text-green-600" />,
       title: "Share",
-      value: "25",
+      value: novel?.share_count,
     },
   ];
 
