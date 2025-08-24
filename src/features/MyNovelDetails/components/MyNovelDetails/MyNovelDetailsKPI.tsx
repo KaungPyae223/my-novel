@@ -17,17 +17,17 @@ const MyNovelDetailsKPI = ({ novel }: { novel: any }) => {
     {
       icon: <Eye className="size-6 text-gray-600" />,
       title: "Views",
-      value: novel?.views,
+      value: novel?.chapter_view_count,
     },
     {
       icon: <Heart className="size-6 text-red-600" />,
-      title: "Love",
-      value: novel?.love_count,
+      title: "Loves",
+      value: novel?.chapter_love_count,
     },
     {
       icon: <Share className="size-6 text-green-600" />,
-      title: "Share",
-      value: novel?.share_count,
+      title: "Shares",
+      value: novel?.chapter_share_count,
     },
   ];
 

@@ -26,7 +26,6 @@ export const useShareChapter = ({ chapterID }: { chapterID: string }) => {
     mutationFn: shareChapter,
     queryKey: [`/chapters/${chapterID}`],
     successMessage: "Copy the chapter link",
-
   });
 };
 
@@ -68,6 +67,6 @@ export const useDeleteChapter = ({ id }: { id: string }) => {
 export const useChapterLoved = ({ chapterID }: { chapterID: string }) => {
   return useMutate({
     mutationFn: chapterLoved,
-    queryKey: [`/chapters/${chapterID}`],
+    queryKey: [`/chapters/${chapterID}`, `/recommend-chapters`],
   });
 };

@@ -36,7 +36,7 @@ export const useShareNovel = ({ novelID }: { novelID: string }) => {
 export const useNovelLoved = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: novelLoved,
-    queryKey: ["/my-novels", `/user/novels/${novelID}`, `/novels/${novelID}`],
+    queryKey: ["/my-novels", `/recommend-novels`, `/user/novels/${novelID}`, `/novels/${novelID}`],
   });
 };
 

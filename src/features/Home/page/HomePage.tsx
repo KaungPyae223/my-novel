@@ -25,7 +25,7 @@ const HomePage = () => {
     <div className="flex flex-row">
       <div
         style={{ height: "calc(100vh - 4rem)" }}
-        className="overflow-y-auto scrollbar-hide p-4 py-6 max-w-2xl mx-auto"
+        className="overflow-y-auto scrollbar-hide p-4 py-6 max-w-2xl w-full mx-auto"
       >
         <div className="grid grid-cols-3 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
           {tabs.map((tab) => (

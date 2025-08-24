@@ -5,15 +5,15 @@ import ChapterCardView from "./ChapterCardView";
 import ChapterPreview from "./ChapterPreview";
 import ChapterLoveShare from "./ChapterLoveShare";
 
-const ChapterCard = () => {
+const ChapterCard = ({ chapter }: { chapter: any }) => {
   return (
     <div className="py-5 px-6 bg-white rounded-lg shadow">
-      <ChapterCardHeader />
-      <ChapterNovelIntro />
-      <ChapterPreview />
-      <ChapterCardView />
+      <ChapterCardHeader user={chapter.user} created_at={chapter.created_at} />
+      <ChapterNovelIntro novel={chapter.novel} />
+      <ChapterPreview chapter={chapter} />
+      <ChapterCardView chapter={chapter}/>
       <hr className="border-gray-200 my-3" />
-      <ChapterLoveShare />
+      <ChapterLoveShare chapter={chapter}/>
     </div>
   );
 };
