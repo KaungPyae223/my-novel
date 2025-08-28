@@ -4,7 +4,7 @@ import { useChapterLoved, useShareChapter } from "@/services/chapter";
 import shareLink from "@/utils/shareLink";
 import { motion } from "framer-motion";
 
-const LoveShare = ({ chapter:{id,already_loved} }: { chapter: any }) => {
+const ChapterLoveShare = ({ chapter:{id,already_loved,}, novelID }: { chapter: {id:string,already_loved:boolean}, novelID: string }) => {
   const { mutate } = useChapterLoved({ chapterID: id });
 
   const handleLoved = () => {
@@ -14,7 +14,7 @@ const LoveShare = ({ chapter:{id,already_loved} }: { chapter: any }) => {
   const { mutate: shareChapter } = useShareChapter({ chapterID: id });
 
   const handleShare = () => {
-    shareLink("Hello World");
+    shareLink(`/novel/${novelID}/chapter/${id}`);
     shareChapter(id);
   };
 
@@ -53,4 +53,4 @@ const LoveShare = ({ chapter:{id,already_loved} }: { chapter: any }) => {
   );
 };
 
-export default LoveShare;
+export default ChapterLoveShare;

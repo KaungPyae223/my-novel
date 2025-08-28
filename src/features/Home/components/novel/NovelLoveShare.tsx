@@ -14,7 +14,7 @@ const NovelLoveShare = ({ novel:{id,already_loved} }: { novel: {id:string,alread
   const { mutate: shareNovel } = useShareNovel({ novelID: id });
 
   const handleShare = () => {
-    shareLink("Hello World");
+    shareLink(`/novel/${id}`);
     shareNovel(id);
   };
 

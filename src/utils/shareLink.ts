@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 const shareLink = async (text?: string) => {
-  const url = text || window.location.href;
+  const url = text? process.env.NEXT_PUBLIC_APP_URL + text : window.location.href;
 
   try {
     await navigator.clipboard.writeText(url);

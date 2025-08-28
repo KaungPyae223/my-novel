@@ -13,7 +13,7 @@ const ChapterCard = ({ chapter }: { chapter: any }) => {
       <ChapterPreview chapter={chapter} novelID={chapter.novel.id}/>
       <ChapterCardView chapter={chapter}/>
       <hr className="border-gray-200 my-3" />
-      <ChapterLoveShare chapter={chapter}/>
+      <ChapterLoveShare chapter={chapter} novelID={chapter.novel.id}/>
     </div>
   );
 };
