@@ -6,9 +6,9 @@ import Loading from "@/features/Components/Loading/Loading";
 import useFetchData from "@/services/fetcher";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
 
-const ChapterContainer = () => {
+const ChapterContainer = ({id}: {id: string}) => {
 
-  const { data, isLoading, error } = useFetchData(`/user/novel-chapters/1`);
+  const { data, isLoading, error } = useFetchData(`/user/novel-chapters/${id}`);
 
   if (isLoading) return <Loading />;
 

@@ -10,7 +10,7 @@ const ChapterCard = ({ chapter }: { chapter: any }) => {
     <div className="py-5 px-6 bg-white rounded-lg shadow">
       <ChapterCardHeader user={chapter.user} created_at={chapter.created_at} />
       <ChapterNovelIntro novel={chapter.novel} />
-      <ChapterPreview chapter={chapter} />
+      <ChapterPreview chapter={chapter} novelID={chapter.novel.id}/>
       <ChapterCardView chapter={chapter}/>
       <hr className="border-gray-200 my-3" />
       <ChapterLoveShare chapter={chapter}/>

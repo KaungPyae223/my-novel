@@ -25,6 +25,10 @@ const shareNovel = (novelID: string) => {
   return api.post(`novels/share/${novelID}`);
 };
 
+const novelFavorite = (novelID: string) => {
+  return api.post(`novels/favorite/${novelID}`);
+};
+
 export const useShareNovel = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: shareNovel,
@@ -36,7 +40,23 @@ export const useShareNovel = ({ novelID }: { novelID: string }) => {
 export const useNovelLoved = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: novelLoved,
-    queryKey: ["/my-novels", `/recommend-novels`, `/user/novels/${novelID}`, `/novels/${novelID}`],
+    queryKey: [
+      "/my-novels",
+      `/recommend-novels`,
+      `/user/novels/${novelID}`,
+      `/novels/${novelID}`,
+    ],
+  });
+};
+
+export const useNovelFavorite = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: novelFavorite,
+    queryKey: [
+      `/recommend-novels`,
+      `/user/novels/${novelID}`,
+      `/novels/${novelID}`,
+    ],
   });
 };
 

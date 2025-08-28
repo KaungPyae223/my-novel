@@ -83,9 +83,9 @@ const NovelPage = ({novelID}: {novelID: string}) => {
             </div>
           ))}
         </div>
-        {activeTab === "Chapters" && <ChapterContainer />}
+        {activeTab === "Chapters" && <ChapterContainer id={novelID} />}
         {activeTab === "Similar" && <SimilarNovelContainer />}
-        {activeTab === "Posts" && <AuthorPostContainer />}
+        {activeTab === "Posts" && <AuthorPostContainer id={novelID} />}
         {activeTab === "Reviews" && <ReviewContainer />}
       </Container>
     </div>

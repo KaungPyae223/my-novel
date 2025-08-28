@@ -102,11 +102,10 @@ const PostCard = ({
             <Button onClick={handleDelete} size="icon" variant="outline">
               <Trash className="size-4" />
             </Button>
-           
-              <Button onClick={handleEdit} size="icon">
-                <Pencil className="size-4" />
-              </Button>
-            
+
+            <Button onClick={handleEdit} size="icon">
+              <Pencil className="size-4" />
+            </Button>
           </div>
         </div>
 
@@ -131,11 +130,11 @@ const PostCard = ({
 
           <div className="grid grid-cols-2  gap-3">
             <div className="flex flex-row items-center gap-2.5 justify-center border-e border-e-gray-300">
-              <Heart className="size-4" /> <span>100</span>
+              <Heart className="size-4" /> <span>{data.love_count}</span>
             </div>
 
             <div className="flex flex-row items-center gap-2.5 justify-center">
-              <Share2 className="size-4" /> <span>100</span>
+              <MessageCircle className="size-4" /> <span>{data.comment_count}</span>
             </div>
           </div>
         </div>
@@ -145,7 +144,7 @@ const PostCard = ({
         className="flex flex-col w-full h-full gap-4"
       >
         <div ref={headerRef}>
-          <p className="font-semibold mb-3 text-xl">Comments (75)</p>
+          <p className="font-semibold mb-3 text-xl">Comments</p>
           <hr />
         </div>
         <ScrollArea ref={scrollerRef} className=" w-full ">

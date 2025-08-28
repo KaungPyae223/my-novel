@@ -16,6 +16,17 @@ const deletePost = (postId: string) => {
   return api.delete(`/posts/${postId}`);
 };
 
+const postLoved = (postId: string) => {
+  return api.post(`/posts/loved/${postId}`);
+};
+
+export const usePostLoved = ({id}: {id: string}) => {
+  return useMutate({
+    mutationFn: postLoved,
+    queryKey: [`/recommend-posts`, `/novels/posts/${id}`],
+  });
+};
+
 export const useCreateNovelPost = ({ novelId }: { novelId: string }) => {
   return useMutate({
     mutationFn: createNovelPost,

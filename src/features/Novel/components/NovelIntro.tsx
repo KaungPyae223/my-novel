@@ -2,7 +2,11 @@ import { motion } from "framer-motion";
 import { BookOpen, Eye, Heart, Share, Star } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { useNovelLoved, useShareNovel } from "@/services/novel";
+import {
+  useNovelFavorite,
+  useNovelLoved,
+  useShareNovel,
+} from "@/services/novel";
 import { toast } from "sonner";
 import shareLink from "@/utils/shareLink";
 
@@ -19,6 +23,12 @@ const NovelIntro = ({ novel }: { novel: any }) => {
   const handleShare = () => {
     shareLink();
     shareNovel(novel.id);
+  };
+
+  const { mutate: favoriteNovel } = useNovelFavorite({ novelID: novel.id });
+
+  const handleFavorite = () => {
+    favoriteNovel(novel.id);
   };
 
   return (
@@ -70,10 +80,27 @@ const NovelIntro = ({ novel }: { novel: any }) => {
               <Share className="size-4" />
               Share
             </div>
-            <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
-              <Star className="size-4" />
-              Favorite
-            </div>
+            <motion.div
+              key={novel?.already_favorited ? "filledStar" : "unfilledStar"} // forces animation when state changes
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={handleFavorite}
+              className="cursor-pointer"
+            >
+              {novel.already_favorited ? (
+                <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
+                  <Star className="size-4" fill="currentColor" />
+                  Favorite
+                </div>
+              ) : (
+                <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
+                  <Star className="size-4" />
+                  Favorite
+                </div>
+              )}
+            </motion.div>
           </div>
         </div>
         <p className="text-gray-500 mt-2">by {novel.user_name}</p>
@@ -95,7 +122,6 @@ const NovelIntro = ({ novel }: { novel: any }) => {
             <Eye className="size-4" />
             {novel.views} Reads
           </div>
-          
         </div>
         <p className="text-justify text-gray-800 ">{novel.description}</p>
         <div className="flex flex-row gap-2 mt-4">
