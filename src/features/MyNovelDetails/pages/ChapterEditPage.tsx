@@ -18,42 +18,22 @@ const ChapterEditPage = ({
 }) => {
   const router = useRouter();
 
- 
   const handleBack = () => {
     router.back();
   };
 
-  const { setChapterData, chapterData } = useStoreChapter();
+  const { chapterData } = useStoreChapter();
 
-  const chapterStatus = useNormalFetcher(
-    `/chapter-status-check?chapter_id=${chapterID}&novel_id=${novelId}`
-  );
-
-  const { isLoading, data } = useFetchData(
+  const { isLoading, data, error } = useFetchData(
     `/chapters/update-chapter-show/${chapterID}`
   );
 
-  useEffect(() => {
-    if (isLoading) return;
-    const fetchedChapterData = data?.data;
-    if (!chapterData?.is_updated) {
-      setChapterData({
-        id: fetchedChapterData?.id,
-        chapterName: fetchedChapterData?.title,
-        status: fetchedChapterData?.status,
-        summary: fetchedChapterData?.summary,
-        content: fetchedChapterData?.content,
-        scheduledDate: new Date(fetchedChapterData?.scheduled_date),
-        scheduledTime: fetchedChapterData?.scheduled_time,
-        is_updated: false,
-      });
-    }
-
-   
-  }, [isLoading,data]);
-
-  if (chapterStatus.isLoading) {
+  if (isLoading && !chapterData?.is_updated) {
     return <Loading />;
+  }
+
+  if (error) {
+    throw error;
   }
 
   return (
@@ -72,7 +52,7 @@ const ChapterEditPage = ({
         <ChapterEditForm
           novelId={novelId}
           chapterID={chapterID}
-          chapterStatus={chapterStatus.data}
+          originalData={data?.data}
         />
       </div>
     </Middleware>

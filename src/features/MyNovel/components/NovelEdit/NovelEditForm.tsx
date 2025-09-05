@@ -29,7 +29,7 @@ import useStoreNovel from "@/store/useNovelStore";
 import { useRouter } from "next/navigation";
 import NovelTagManage from "../NovelCreate/NovelTagManage";
 import Image from "next/image";
-import useNormalFetcher from "@/services/normalFetcher";
+import useFetchData from "@/services/fetcher";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
@@ -70,37 +70,43 @@ const formSchema = z.object({
     ),
 });
 
-const NovelEditForm = () => {
+const NovelEditForm = ({ originalData }: { originalData: any }) => {
   const router = useRouter();
 
   const { novelData, setNovelData }: any = useStoreNovel();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: novelData,
+
+    defaultValues: novelData.is_updated
+      ? novelData
+      : {
+          title: originalData?.title,
+          description: originalData?.description,
+          genre: JSON.stringify({
+            id: originalData?.genre_id,
+            genre: originalData?.genre,
+          }),
+          progress: originalData?.progress,
+          synopsis: originalData?.synopsis,
+          tags: originalData?.tags,
+          status: originalData?.status,
+          coverImage: originalData?.image,
+        },
   });
 
-  useEffect(() => {
-    if (!novelData.id) return;
-    form.reset({
-      title: novelData.title,
-      description: novelData.description,
-      genre: novelData.genre,
-      progress: novelData.progress,
-      synopsis: novelData.synopsis,
-      tags: novelData.tags,
-      status: novelData.status,
-      coverImage: novelData.coverImage,
-    });
-  }, [novelData]);
+  const { data } = useFetchData("/genres");
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setNovelData({ ...novelData, ...values, is_updated: true });
-    router.push(`/my-novels/edit/${novelData.id}/confirm`);
+    setNovelData({
+      ...novelData,
+      ...values,
+      id: originalData?.id,
+      is_updated: true,
+    });
+    router.push(`/my-novels/edit/${originalData?.id}/confirm`);
   }
-
-  const { data, isLoading } = useNormalFetcher("/genres");
 
   return (
     <Form {...form}>
@@ -130,105 +136,101 @@ const NovelEditForm = () => {
                 )}
               />
 
-              {!isLoading && (
-                <div className="grid grid-cols-3 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="genre"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Genre</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Select a genre" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Genres</SelectLabel>
-                                {data?.map((genre: any) => (
-                                  <SelectItem
-                                    key={genre.id}
-                                    value={JSON.stringify(genre)}
-                                  >
-                                    {genre.genre}
-                                  </SelectItem>
-                                ))}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <div className="grid grid-cols-3 gap-6">
+                <FormField
+                  control={form.control}
+                  name="genre"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Genre</FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a genre" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Genres</SelectLabel>
+                              {data?.map((genre: any) => (
+                                <SelectItem
+                                  key={genre.id}
+                                  value={JSON.stringify(genre)}
+                                >
+                                  {genre.genre}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="status"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Status</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Select a status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Status</SelectLabel>
-                                <SelectItem value="draft">Draft</SelectItem>
-                                <SelectItem value="published">
-                                  Published
-                                </SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="progress"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Progress</FormLabel>
-                        <FormControl>
-                          <Select
-                            {...field}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Select a progress" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Progress</SelectLabel>
-                                <SelectItem value="ongoing">Ongoing</SelectItem>
-                                <SelectItem value="complete">
-                                  Complete
-                                </SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              )}
+                <FormField
+                  control={form.control}
+                  name="status"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Status</FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Status</SelectLabel>
+                              <SelectItem value="draft">Draft</SelectItem>
+                              <SelectItem value="published">
+                                Published
+                              </SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="progress"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Progress</FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a progress" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Progress</SelectLabel>
+                              <SelectItem value="ongoing">Ongoing</SelectItem>
+                              <SelectItem value="complete">Complete</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <NovelTagManage form={form} />
 

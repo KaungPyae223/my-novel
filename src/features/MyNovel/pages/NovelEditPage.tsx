@@ -6,12 +6,11 @@ import { ArrowLeft } from "lucide-react";
 import Middleware from "@/features/Components/Middleware/Middleware";
 import { useRouter } from "next/navigation";
 import useStoreNovel from "@/store/useNovelStore";
-import useNormalFetcher from "@/services/normalFetcher";
 import useFetchData from "@/services/fetcher";
 
 const NovelEditPage = ({ id }: { id: string }) => {
   const router = useRouter();
-  const { setNovelData, novelData } = useStoreNovel();
+  const { novelData } = useStoreNovel();
 
   const handleBack = () => {
     router.push("/my-novels");
@@ -19,32 +18,7 @@ const NovelEditPage = ({ id }: { id: string }) => {
 
   const { isLoading, data, error } = useFetchData(`/novels/${id}`);
 
-  console.log(data);
-
-  useEffect(() => {
-    if (isLoading) return;
-    const fetchedNovelData = data?.data;
-
-    if (!novelData.is_updated) {
-      setNovelData({
-        id: fetchedNovelData?.id,
-        progress: fetchedNovelData?.progress,
-        title: fetchedNovelData?.title,
-        description: fetchedNovelData?.description,
-        genre: JSON.stringify({
-          id: fetchedNovelData?.genre_id,
-          genre: fetchedNovelData?.genre,
-        }),
-        synopsis: fetchedNovelData?.synopsis,
-        tags: fetchedNovelData?.tags,
-        status: fetchedNovelData?.status,
-        coverImage: fetchedNovelData?.image,
-        is_updated: false,
-      });
-    }
-  }, [isLoading, data]);
-
-  if (isLoading) return <Loading />;
+  if (isLoading && !novelData.is_updated) return <Loading />;
 
   if (error) {
     throw error;
@@ -67,7 +41,7 @@ const NovelEditPage = ({ id }: { id: string }) => {
             </p>
           </div>
 
-          <NovelEditForm />
+          <NovelEditForm originalData={data?.data} />
         </div>
       </div>
     </Middleware>

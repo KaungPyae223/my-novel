@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ChevronDownIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -35,17 +35,14 @@ import { useChapterEditForm } from "../../hooks/useChapterEditForm";
 const ChapterEditForm = ({
   novelId,
   chapterID,
-  chapterStatus,
+  originalData,
 }: {
   novelId: string;
   chapterID: string;
-  chapterStatus: {
-    canDraft: boolean;
-    canPublish: boolean;
-  };
+  originalData: any;
 }) => {
-  const { form, onSubmit, handleBack, open, setOpen, published, status } =
-    useChapterEditForm({ novelId, chapterID, chapterStatus });
+  const { form, onSubmit, handleBack, open, setOpen, availableStatus, status } =
+    useChapterEditForm({ novelId, chapterID, originalData });
 
   return (
     <Form {...form}>
@@ -75,22 +72,20 @@ const ChapterEditForm = ({
                     <FormItem>
                       <FormLabel>Status</FormLabel>
                       <FormControl>
-                        {published.length > 0 && (
-                          <Select
-                            value={field.value}
-                            onValueChange={field.onChange}
-                          >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Select a status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Status</SelectLabel>
-                                {published.map((item) => item)}
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        )}
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select a status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Status</SelectLabel>
+                              {availableStatus.map((item) => item)}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SelectItem } from "@/components/ui/select";
+import useNormalFetcher from "@/services/normalFetcher";
 
 const formSchema = z.object({
   chapterName: z.string().min(2).max(100),
@@ -18,36 +19,38 @@ const formSchema = z.object({
 export const useChapterEditForm = ({
   novelId,
   chapterID,
-  chapterStatus,
+  originalData,
 }: {
   novelId: string;
   chapterID: string;
-  chapterStatus: { canDraft: boolean; canPublish: boolean };
+  originalData: any;
 }) => {
   const { setChapterData, chapterData } = useStoreChapter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      chapterName: chapterData.chapterName,
-      status: chapterData.status,
-      summary: chapterData.summary || "",
-      scheduledDate: chapterData.scheduledDate || new Date(),
-      scheduledTime: chapterData.scheduledTime || "",
-      content: chapterData.content,
-    },
+    defaultValues: !chapterData?.is_updated
+      ? {
+          chapterName: originalData?.title,
+          status: originalData?.status,
+          summary: originalData?.summary || "",
+          scheduledDate: originalData?.scheduledDate
+            ? new Date(originalData?.scheduledDate)
+            : new Date(),
+          scheduledTime: originalData?.scheduledTime || "",
+          content: originalData?.content,
+        }
+      : {
+          chapterName: chapterData?.chapterName,
+          status: chapterData?.status,
+          summary: chapterData?.summary || "",
+          scheduledDate: chapterData?.scheduledDate
+            ? new Date(chapterData?.scheduledDate)
+            : new Date(),
+          scheduledTime: chapterData?.scheduledTime || "",
+          content: chapterData?.content,
+        },
   });
-
-  useEffect(() => {
-    form.reset({
-      chapterName: chapterData.chapterName,
-      status: chapterData.status,
-      summary: chapterData.summary || "",
-      scheduledDate: chapterData.scheduledDate || new Date(),
-      scheduledTime: chapterData.scheduledTime || "",
-      content: chapterData.content,
-    });
-  }, [chapterData]);
 
   const router = useRouter();
 
@@ -97,12 +100,16 @@ export const useChapterEditForm = ({
   }
 
   const [open, setOpen] = useState(false);
-  const [published, setPublished] = useState<React.ReactNode[]>([]);
+  const [availableStatus, setAvailableStatus] = useState<React.ReactNode[]>([]);
+
+  const { data } = useNormalFetcher(
+    `/chapter-status-check?chapter_id=${chapterID}&novel_id=${novelId}`
+  );
 
   useEffect(() => {
     const items = [];
 
-    if (chapterStatus?.canDraft) {
+    if (data?.canDraft) {
       items.push(
         <SelectItem key="draft" value="draft">
           Draft
@@ -112,15 +119,15 @@ export const useChapterEditForm = ({
         </SelectItem>
       );
     }
-    if (chapterStatus?.canPublish) {
+    if (data?.canPublish) {
       items.push(
         <SelectItem key="published" value="published">
           Published
         </SelectItem>
       );
     }
-    setPublished(items);
-  }, [chapterStatus]);
+    setAvailableStatus(items);
+  }, [data]);
 
   const status = form.watch("status");
 
@@ -129,7 +136,7 @@ export const useChapterEditForm = ({
     onSubmit,
     open,
     setOpen,
-    published,
+    availableStatus,
     status,
     handleBack,
   };
