@@ -13,9 +13,10 @@ const ChapterEditConfirmPage = ({
   novelId: string;
   chapterID: string;
 }) => {
-  
-  const { handleBack, handleEditChapter } = useChapterEditConfirm({ novelId, chapterID });
-
+  const { handleBack, handleEditChapter } = useChapterEditConfirm({
+    novelId,
+    chapterID,
+  });
 
   return (
     <Middleware>

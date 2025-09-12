@@ -14,7 +14,7 @@ const api = axios.create({
 const formApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
-    Accept: "application/json", 
+    Accept: "application/json",
   },
 });
 
@@ -32,6 +32,11 @@ const handleResponseError = (error: any) => {
   if (error.response?.status === 401) {
     if (typeof window !== "undefined") {
       window.location.href = "/login";
+    }
+  }
+  if (error.response?.status === 403) {
+    if (typeof window !== "undefined") {
+      window.location.href = "/send-verification-mail";
     }
   }
   return Promise.reject(error);

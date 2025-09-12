@@ -1,12 +1,11 @@
 "use client";
 import Middleware from "@/features/Components/Middleware/Middleware";
 import { ArrowLeft } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import ChapterEditForm from "../components/ChapterEdit/ChapterEditForm";
 import Loading from "@/features/Components/Loading/Loading";
 import useStoreChapter from "@/store/useChapterStore";
-import useNormalFetcher from "@/services/normalFetcher";
 import useFetchData from "@/services/fetcher";
 
 const ChapterEditPage = ({
@@ -38,7 +37,7 @@ const ChapterEditPage = ({
 
   return (
     <Middleware>
-      <div className="py-9 px-6 mx-auto max-w-4xl">
+       <div className="py-9 px-6 mx-auto max-w-4xl">
         <div className="flex flex-row justify-between items-center py-3">
           <div
             onClick={handleBack}
@@ -55,6 +54,7 @@ const ChapterEditPage = ({
           originalData={data?.data}
         />
       </div>
+      
     </Middleware>
   );
 };
