@@ -7,6 +7,8 @@ import MyNovelSearch from "../components/MyNovel/MyNovelSearch";
 import MyNovelList from "../components/MyNovel/MyNovelList";
 import MyNovelKPIContainer from "../components/MyNovel/MyNovelKPIContainer";
 import { Plus } from "lucide-react";
+import useFetchData from "@/services/fetcher";
+import useNormalFetcher from "@/services/normalFetcher";
 
 const MyNovelPage = () => {
   const { resetNovelData }: any = useStoreNovel();

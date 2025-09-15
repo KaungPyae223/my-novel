@@ -8,8 +8,6 @@ const MyNovelKPIContainer = () => {
 
   const {data} = useFetchData('/my-novels/kpi');
 
-  console.log(data);
-
   return (
     <div className="grid grid-cols-4 gap-3">
       <MyNovelKPICard

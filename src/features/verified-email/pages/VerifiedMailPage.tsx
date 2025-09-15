@@ -33,8 +33,7 @@ const VerifiedMailPage = () => {
               Email Verified Successfully!
             </h1>
             <p className="text-gray-600 mb-6">
-              Your email has been verified. You can now log in and start using
-              your account.
+              Your email has been verified. You can use all the features of My Novel.
             </p>
           </>
         )}
