@@ -2,6 +2,7 @@ import Loading from "@/features/Components/Loading/Loading";
 import PostCard from "../posts/PostCard";
 import useFetchData from "@/services/fetcher";
 import { useGenerateQuery } from "@/utils/searchParams";
+import EmptyState from "../EmptyState";
 
 const PostsContainer = () => {
 
@@ -9,8 +10,10 @@ const PostsContainer = () => {
     useGenerateQuery(`/recommend-posts`)
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return < Loading />;
   if (error) throw error; 
+
+  if (data?.data.length === 0) return <EmptyState title="Posts" />;
 
   return (
     <div className="w-full space-y-6">

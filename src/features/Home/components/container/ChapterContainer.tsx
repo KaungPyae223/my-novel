@@ -3,6 +3,7 @@ import ChapterCard from "../chapter/ChapterCard";
 import useFetchData from "@/services/fetcher";
 import { useGenerateQuery } from "@/utils/searchParams";
 import Loading from "@/features/Components/Loading/Loading";
+import EmptyState from "../EmptyState";
 
 const ChapterContainer = () => {
 
@@ -12,6 +13,8 @@ const ChapterContainer = () => {
 
   if (isLoading) return <Loading />;
   if (error) throw error;
+
+  if (data?.data.length === 0) return <EmptyState title="Chapters" />;
 
   return (
     <div className="w-full space-y-6">

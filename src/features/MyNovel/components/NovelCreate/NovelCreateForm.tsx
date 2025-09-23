@@ -133,11 +133,16 @@ const NovelCreateForm = () => {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Genres</SelectLabel>
-                                {data?.map((genre: any) => (
-                                  <SelectItem key={genre.id} value={JSON.stringify(genre)}>
-                                    {genre.genre}
-                                  </SelectItem>
-                                ))}
+                                {data?.map((genre: any) => {
+                                  return (
+                                    <SelectItem
+                                      key={genre.id}
+                                      value={JSON.stringify(genre)}
+                                    >
+                                      {genre.genre}
+                                    </SelectItem>
+                                  );
+                                })}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -178,6 +183,8 @@ const NovelCreateForm = () => {
                     </FormItem>
                   )}
                 />
+
+                
               </div>
 
               <NovelTagManage form={form} />

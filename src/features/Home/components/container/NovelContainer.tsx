@@ -3,6 +3,7 @@ import NovelCard from "../novel/NovelCard";
 import useFetchData from "@/services/fetcher";
 import { useGenerateQuery } from "@/utils/searchParams";
 import Loading from "@/features/Components/Loading/Loading";
+import EmptyState from "../EmptyState";
 
 const NovelContainer = () => {
   const { data, isLoading, error } = useFetchData(
@@ -11,6 +12,8 @@ const NovelContainer = () => {
 
   if (isLoading) return <Loading />;
   if (error) throw error;
+
+  if (data?.data.length === 0) return <EmptyState title="Novels" />;
 
   return (
     <div className="w-full space-y-6">
