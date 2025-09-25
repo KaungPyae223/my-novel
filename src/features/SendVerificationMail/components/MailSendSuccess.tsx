@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { Router } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const MailSendSuccess = ({ handleSendVerificationMail }: any) => {
+
+  const router = useRouter();
+
   return (
     <div className="flex flex-col items-center justify-center mx-auto mt-10 gap-6">
       {/* Success Illustration */}
@@ -44,7 +49,7 @@ const MailSendSuccess = ({ handleSendVerificationMail }: any) => {
           <p className="text-gray-700 text-sm">Already verified?</p>
           <Button
             variant="ghost"
-            onClick={() => {}}
+            onClick={() => {router.back()}}
             className="text-blue-600 hover:underline px-0"
           >
             Back

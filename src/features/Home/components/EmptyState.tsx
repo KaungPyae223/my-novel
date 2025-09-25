@@ -1,9 +1,8 @@
-import { BookOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const EmptyState = ({title}:{title:string}) => {
+const EmptyState = ({ title }: { title: string }) => {
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-gray-50 px-4">
       <div className="flex flex-col items-center text-center max-w-md">

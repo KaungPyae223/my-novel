@@ -168,7 +168,7 @@ const NovelCreateForm = () => {
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a status" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent >
                             <SelectGroup>
                               <SelectLabel>Status</SelectLabel>
                               <SelectItem value="draft">Draft</SelectItem>
@@ -183,8 +183,6 @@ const NovelCreateForm = () => {
                     </FormItem>
                   )}
                 />
-
-                
               </div>
 
               <NovelTagManage form={form} />
