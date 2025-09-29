@@ -11,6 +11,19 @@ export const useGenerateQuery = (query: string) => {
   return searchQuery;
 };
 
+export const useRemoveParams = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  return (params: string[]) => {
+    const newParams = new URLSearchParams(searchParams.toString());
+    params.forEach((param) => {
+      newParams.delete(param);
+    });
+    router.push(`?${newParams.toString()}`);
+  };
+};
+
 export const useAddParams = () => {
   const router = useRouter();
   const searchParams = useSearchParams();

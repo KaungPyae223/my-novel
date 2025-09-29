@@ -6,7 +6,7 @@ import useStoreNovel from "@/store/useNovelStore";
 import MyNovelSearch from "../components/MyNovel/MyNovelSearch";
 import MyNovelList from "../components/MyNovel/MyNovelList";
 import MyNovelKPIContainer from "../components/MyNovel/MyNovelKPIContainer";
-import { Plus } from "lucide-react";
+import { Plus, RefreshCw } from "lucide-react";
 import useFetchData from "@/services/fetcher";
 import useNormalFetcher from "@/services/normalFetcher";
 
@@ -27,12 +27,20 @@ const MyNovelPage = () => {
               Manage and track your writing projects
             </p>
           </div>
-          <Link
-            href="/my-novels/create"
-            className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm bg-blue-600 text-white"
-          >
-            <Plus className="size-4" /> Create New Novel
-          </Link>
+          <div className="flex flex-row items-center gap-3">
+            <Link
+              href="/my-novels/create"
+              className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm border border-gray-300 bg-white text-gray-800"
+            >
+              <RefreshCw className="size-4" /> Restore Center
+            </Link>
+            <Link
+              href="/my-novels/create"
+              className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm bg-blue-600 text-white"
+            >
+              <Plus className="size-4" /> Create New Novel
+            </Link>
+          </div>
         </div>
 
         <MyNovelSearch />

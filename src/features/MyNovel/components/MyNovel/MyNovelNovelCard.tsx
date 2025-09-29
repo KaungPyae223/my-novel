@@ -80,6 +80,7 @@ const MyNovelNovelCard = ({ novel }: { novel: any }) => {
           >
             <Edit className="size-3.5" /> Edit
           </Link>
+
         </div>
       </div>
     </div>

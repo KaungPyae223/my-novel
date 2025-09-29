@@ -7,7 +7,9 @@ import {
   ChartLine,
   Edit,
   Eye,
+  Logs,
   MessageCircle,
+  RefreshCw,
   Star,
   Trash,
 } from "lucide-react";
@@ -35,11 +37,13 @@ import MyNovelDetailsChapterContainer from "../components/Container/MyNovelDetai
 import useStoreChapter from "@/store/useChapterStore";
 import MyNovelDetailsPostContainer from "../components/Container/MyNovelDetailsPostContainer";
 import MyNovelDetailsReviewContainer from "../components/Container/MyNovelDetailsReviewContainer";
+import { useAddParams } from "@/utils/searchParams";
+import { useSearchParams } from "next/navigation";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
 
-  const [activeTab, setActiveTab] = useState<string>("Chapters");
+  const activeTab = useSearchParams().get("tab") || "Chapters";
 
   const handleBack = () => {
     router.push("/my-novels");
@@ -69,14 +73,6 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
 
   const [deleteNovel, setDeleteNovel] = React.useState<string>("");
 
-  const { data, error, isLoading } = useFetchData(`/novels/${id}`);
-
-  if (isLoading) return <Loading />;
-
-  if (error) {
-    throw error;
-  }
-
   const tabs = [
     {
       label: "Chapters",
@@ -98,11 +94,30 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       value: "Reviews",
       icon: <Star className="size-3.5" />,
     },
+    {
+      label: "Trash",
+      value: "Trash",
+      icon: <Trash className="size-3.5" />,
+    },
   ];
 
+  const addParams = useAddParams();
+
   const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
+    addParams([{ key: "tab", value: tab }]);
   };
+
+  const handleLogs = () => {
+    router.push(`/my-novels/details/${id}/logs`);
+  };
+
+  const { data, error, isLoading } = useFetchData(`/novels/${id}`);
+
+  if (isLoading) return <Loading />;
+
+  if (error) {
+    throw error;
+  }
 
   return (
     <Middleware>
@@ -115,13 +130,19 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
             >
               <ArrowLeft className="size-4" /> Back to My Novels
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-4 gap-3">
               <DialogTrigger asChild>
                 <Button variant="destructive" className="justify-between">
                   <Trash className="size-4" /> Trash Novel
                 </Button>
               </DialogTrigger>
-
+              <Button
+                variant="outline"
+                onClick={handleLogs}
+                className="justify-between bg-amber-300 hover:bg-amber-400"
+              >
+                <Logs className="size-4" /> Novel Logs
+              </Button>
               <Button
                 variant="outline"
                 onClick={handleEdit}
@@ -140,7 +161,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           </div>
           <MyNovelDetailsHeader novel={data?.data} />
           <MyNovelDetailsKPI novel={data?.data} />
-          <div className="grid grid-cols-4 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
+          <div className="grid grid-cols-5 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
             {tabs.map((tab) => (
               <div
                 key={tab.value}
@@ -159,12 +180,8 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           {activeTab === "Chapters" && (
             <MyNovelDetailsChapterContainer id={id} />
           )}
-          {activeTab === "Posts" && (
-            <MyNovelDetailsPostContainer id={id} />
-          )}
-          {activeTab === "Reviews" && (
-            <MyNovelDetailsReviewContainer id={id} />
-          )}
+          {activeTab === "Posts" && <MyNovelDetailsPostContainer id={id} />}
+          {activeTab === "Reviews" && <MyNovelDetailsReviewContainer id={id} />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
