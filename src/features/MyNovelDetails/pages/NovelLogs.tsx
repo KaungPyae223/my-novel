@@ -1,17 +1,41 @@
-
 "use client";
 import Middleware from "@/features/Components/Middleware/Middleware";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Book, BookOpen, MessageCircle } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useAddParams } from "@/utils/searchParams";
+import MyNovelDetailsLogContainer from "../components/Container/MyNovelDetailsLogContainer";
 
 const NovelLogs = ({ id }: { id: string }) => {
+  const activeTab = useSearchParams().get("tab") || "novel";
 
-    const router = useRouter();
+  const router = useRouter();
 
-    const handleBack = () => {
-        router.back();
-    };
+  const handleBack = () => {
+    router.push(`/my-novels/details/${id}`);
+  };
+
+  const tabs = [
+    { value: "novel", label: "Novel", icon: <Book className="size-3.5" /> },
+    {
+      value: "chapters",
+      label: "Chapters",
+      icon: <BookOpen className="size-3.5" />,
+    },
+    {
+      value: "posts",
+      label: "Posts",
+      icon: <MessageCircle className="size-3.5" />,
+    },
+  ];
+
+  const addParams = useAddParams();
+
+  const handleTabChange = (tab: string) => {
+    addParams([{ key: "tab", value: tab }]);
+  };
+
   return (
     <Middleware>
       <div className="py-9 px-6 mx-auto max-w-6xl">
@@ -24,7 +48,23 @@ const NovelLogs = ({ id }: { id: string }) => {
           </div>
         </div>
         <p className="text-2xl mt-6 font-medium">Novel Logs</p>
-        
+        <div className="grid grid-cols-3 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
+          {tabs.map((tab) => (
+            <div
+              key={tab.value}
+              onClick={() => handleTabChange(tab.value)}
+              className={`rounded-md flex flex-row items-center justify-center gap-2 w-full py-1.5 ${
+                activeTab === tab.value
+                  ? "bg-white font-medium shadow"
+                  : "text-gray-600 cursor-pointer"
+              }`}
+            >
+              {tab.icon}
+              {tab.label}
+            </div>
+          ))}
+        </div>
+        <MyNovelDetailsLogContainer />
       </div>
     </Middleware>
   );

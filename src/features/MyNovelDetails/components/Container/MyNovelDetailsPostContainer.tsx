@@ -25,9 +25,11 @@ const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
     <Dialog>
       <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
         <div className="flex flex-row justify-between items-center">
-          <div className="flex flex-row items-center gap-3 text-2xl font-semibold">
-            <MessageCircle className="size-6" />
-            Posts ({data?.data.length})
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-50 rounded-lg">
+              <MessageCircle className="size-5 text-blue-600" />
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900">Posts</h2>
           </div>
 
           <div

@@ -43,7 +43,7 @@ import { useSearchParams } from "next/navigation";
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
 
-  const activeTab = useSearchParams().get("tab") || "Chapters";
+  const activeTab = useSearchParams().get("tab") || "chapters";
 
   const handleBack = () => {
     router.push("/my-novels");
@@ -76,22 +76,22 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const tabs = [
     {
       label: "Chapters",
-      value: "Chapters",
+      value: "chapters",
       icon: <BookOpen className="size-3.5" />,
     },
     {
       label: "Analysis",
-      value: "Analysis",
+      value: "analysis",
       icon: <ChartLine className="size-3.5" />,
     },
     {
       label: "Posts",
-      value: "Posts",
+      value: "posts",
       icon: <MessageCircle className="size-3.5" />,
     },
     {
       label: "Reviews",
-      value: "Reviews",
+      value: "reviews",
       icon: <Star className="size-3.5" />,
     },
     {
@@ -177,11 +177,11 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
               </div>
             ))}
           </div>
-          {activeTab === "Chapters" && (
+          {activeTab === "chapters" && (
             <MyNovelDetailsChapterContainer id={id} />
           )}
-          {activeTab === "Posts" && <MyNovelDetailsPostContainer id={id} />}
-          {activeTab === "Reviews" && <MyNovelDetailsReviewContainer id={id} />}
+          {activeTab === "posts" && <MyNovelDetailsPostContainer id={id} />}
+          {activeTab === "reviews" && <MyNovelDetailsReviewContainer id={id} />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
