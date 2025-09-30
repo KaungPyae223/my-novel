@@ -1,6 +1,18 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, User, ChevronDown, Plus, Edit, Trash } from "lucide-react";
+import {
+  Clock,
+  User,
+  ChevronDown,
+  Plus,
+  Edit,
+  Trash,
+  Computer,
+  Settings,
+  RefreshCw,
+  XCircle,
+  FileMinus,
+} from "lucide-react";
 import Image from "next/image";
 
 interface User {
@@ -36,11 +48,16 @@ const parseDescription = (description: string) => {
 const getActionIcon = (action: string) => {
   switch (action) {
     case "created":
-      return <Plus className="size-4" />;
+      return <Plus className="size-4" />; // Add
     case "updated":
-      return <Edit className="size-4" />;
+      return <Edit className="size-4" />; // Edit
     case "deleted":
-      return <Trash className="size-4" />;
+      return <XCircle className="size-4" />; // Permanent delete
+    case "restored":
+      return <RefreshCw className="size-4" />; // Undo delete
+    case "soft_deleted":
+    case "trashed":
+      return <FileMinus className="size-4" />; // Soft delete
     default:
       return null;
   }
@@ -49,13 +66,18 @@ const getActionIcon = (action: string) => {
 const getActionColor = (action: string) => {
   switch (action) {
     case "created":
-      return "bg-green-100 text-green-800";
+      return "bg-green-100 text-green-700"; // success vibe
     case "updated":
-      return "bg-blue-100 text-blue-800";
+      return "bg-blue-100 text-blue-700"; // info vibe
     case "deleted":
-      return "bg-red-100 text-red-800";
+      return "bg-red-100 text-red-700"; // danger vibe
+    case "restored":
+      return "bg-emerald-100 text-emerald-700"; // softer green
+    case "soft_deleted":
+    case "trashed":
+      return "bg-orange-100 text-orange-700"; // warning vibe
     default:
-      return "bg-gray-100 text-gray-800";
+      return "bg-gray-100 text-gray-700"; // neutral
   }
 };
 
@@ -118,21 +140,29 @@ const LogsCard = ({ log }: { log: LogEntry }) => {
               )}
 
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-gray-500">
-                <span className="flex items-center">
-                  <Image
-                    src={
-                      log.user.profile_image ||
-                      `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                        log.user.full_name
-                      )}`
-                    }
-                    alt=""
-                    className="h-3.5 w-3.5 mr-1 object-cover rounded-full"
-                    width={32}
-                    height={32}
-                  />
-                  {log.user.full_name}
-                </span>
+                {log.ip_address !== "system" ? (
+                  <span className="flex items-center">
+                    <Image
+                      src={
+                        log.user.profile_image ||
+                        `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
+                          log.user.full_name
+                        )}`
+                      }
+                      alt=""
+                      className="h-3.5 w-3.5 mr-1 object-cover rounded-full"
+                      width={32}
+                      height={32}
+                    />
+                    {log.user.full_name}
+                  </span>
+                ) : (
+                  <span className="flex items-center">
+                    <Settings className="h-3.5 w-3.5 mr-1" />
+                    System
+                  </span>
+                )}
+
                 <span className="flex items-center">
                   <Clock className="h-3.5 w-3.5 mr-1" />
                   {formatDate(log.created_at)}
@@ -189,68 +219,75 @@ const LogsCard = ({ log }: { log: LogEntry }) => {
                 </pre>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              {/* Technical Info */}
-              <div className="bg-white p-3 rounded-lg border border-gray-200">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm">
-                  Technical Info
-                </h4>
-                <div className="space-y-2 text-xs">
-                  <div className="flex">
-                    <span className="text-gray-500 min-w-20">IP</span>
-                    <span className="text-gray-700 font-mono">
-                      {log.ip_address}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-500 min-w-20">Entity Type</span>
-                    <span className="text-gray-700">
-                      {log.logable_type.split("\\").pop()}
-                    </span>
-                  </div>
-                  <div className="flex">
-                    <span className="text-gray-500 min-w-20">User Agent</span>
-                    <span className="text-gray-700 font-mono">
-                      {log.user_agent}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* User Info */}
-              <div className="bg-white p-3 rounded-lg border border-gray-200">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm">
-                  User Info
-                </h4>
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center space-x-2">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={
-                          log.user.profile_image ||
-                          `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                            log.user.full_name
-                          )}`
-                        }
-                        alt=""
-                        className="h-8 w-8 rounded-full object-cover"
-                        width={32}
-                        height={32}
-                      />
+            {log.ip_address !== "system" ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {/* Technical Info */}
+                <div className="bg-white p-3 rounded-lg border border-gray-200">
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm">
+                    Technical Info
+                  </h4>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex">
+                      <span className="text-gray-500 min-w-20">IP</span>
+                      <span className="text-gray-700 font-mono">
+                        {log.ip_address}
+                      </span>
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900">
-                        {log.user.full_name}
-                      </p>
-                      <p className="text-gray-500 text-xs truncate max-w-[180px]">
-                        {log.user.email}
-                      </p>
+                    <div className="flex">
+                      <span className="text-gray-500 min-w-20">
+                        Entity Type
+                      </span>
+                      <span className="text-gray-700">
+                        {log.logable_type.split("\\").pop()}
+                      </span>
+                    </div>
+                    <div className="flex">
+                      <span className="text-gray-500 min-w-20">User Agent</span>
+                      <span className="text-gray-700 font-mono">
+                        {log.user_agent}
+                      </span>
                     </div>
                   </div>
                 </div>
+
+                {/* User Info */}
+                <div className="bg-white p-3 rounded-lg border border-gray-200">
+                  <h4 className="font-medium text-gray-900 mb-2 text-sm">
+                    User Info
+                  </h4>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-shrink-0">
+                        <Image
+                          src={
+                            log.user.profile_image ||
+                            `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
+                              log.user.full_name
+                            )}`
+                          }
+                          alt=""
+                          className="h-8 w-8 rounded-full object-cover"
+                          width={32}
+                          height={32}
+                        />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {log.user.full_name}
+                        </p>
+                        <p className="text-gray-500 text-xs truncate max-w-[180px]">
+                          {log.user.email}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <p className="text-gray-500 text-sm mt-2">
+                This action is performed by system
+              </p>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

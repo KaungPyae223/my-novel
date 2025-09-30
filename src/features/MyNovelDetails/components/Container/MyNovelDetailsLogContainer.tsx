@@ -38,8 +38,6 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
 
   const { data, isLoading, error } = useNormalFetcher(url);
 
-  const logs = data?.data;
-
   const { searchQuery, handleSearch } = useHandleSearch();
 
  
@@ -102,6 +100,8 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
                   <SelectItem value="created">Created</SelectItem>
                   <SelectItem value="updated">Updated</SelectItem>
                   <SelectItem value="deleted">Deleted</SelectItem>
+                  <SelectItem value="restored">Restored</SelectItem>
+                  <SelectItem value="trashed">Trashed</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -109,10 +109,10 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
         </div>
 
         <div className="space-y-4">
-          {logs?.data.length > 0 ? (
+          {data?.data.length > 0 ? (
             <div className="space-y-3">
               <div className="space-y-3">
-                {logs?.data.map((log) => (
+                {data?.data.map((log:any) => (
                   <LogsCard key={log.id} log={log} />
                 ))}
               </div>
