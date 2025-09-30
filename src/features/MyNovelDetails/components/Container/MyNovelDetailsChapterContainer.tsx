@@ -8,6 +8,8 @@ import EmptyState from "@/features/Components/EmptyState/EmptyState";
 
 const ChapterContainer = ({ id }: { id: string }) => {
 
+  console.log(id)
+
   const { data, isLoading, error } = useFetchData(`/novel-chapters/${id}`);
 
   if (isLoading) return <Loading />;
@@ -26,7 +28,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
           <h2 className="text-xl font-semibold text-gray-900">Chapters</h2>
         </div>
         <Link
-          href={`/my-novels/details/1/create-chapter`}
+          href={`/my-novels/details/${id}/create-chapter`}
           className="flex bg-gray-800 text-sm text-white px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2"
         >
           <Plus className="size-4" />

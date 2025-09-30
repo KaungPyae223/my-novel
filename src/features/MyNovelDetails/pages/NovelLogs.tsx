@@ -33,7 +33,7 @@ const NovelLogs = ({ id }: { id: string }) => {
   const addParams = useAddParams();
 
   const handleTabChange = (tab: string) => {
-    addParams([{ key: "tab", value: tab }]);
+    addParams([{ key: "tab", value: tab }, { key: "action", value: "" }, { key: "q", value: "" }]);
   };
 
   return (
@@ -64,7 +64,7 @@ const NovelLogs = ({ id }: { id: string }) => {
             </div>
           ))}
         </div>
-        <MyNovelDetailsLogContainer />
+        <MyNovelDetailsLogContainer id={id} />
       </div>
     </Middleware>
   );

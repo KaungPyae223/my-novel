@@ -1,27 +1,11 @@
 import { useAddParams } from "@/utils/searchParams";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
-import { debounce } from "lodash";
-import { useSearchParams } from "next/navigation";
+import { useHandleSearch } from "@/utils/handleSearch";
 
 const MyNovelSearch = () => {
-  const searchParams = useSearchParams();
-
-  const [searchQuery, setSearchQuery] = useState<string>(
-    searchParams.get("q") || ""
-  );
-
-  const addParams = useAddParams();
-
-  const debouncedUpdateParams = debounce((value: string) => {
-    addParams([{ key: "q", value }]);
-  }, 500);
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    debouncedUpdateParams(value);
-  };
+  
+  const { searchQuery, handleSearch } = useHandleSearch();
 
   return (
     <div className="grid grid-cols-3 my-6">
