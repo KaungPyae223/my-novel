@@ -48,16 +48,16 @@ const parseDescription = (description: string) => {
 const getActionIcon = (action: string) => {
   switch (action) {
     case "created":
-      return <Plus className="size-4" />; // Add
+      return <Plus className="size-4" />;
     case "updated":
-      return <Edit className="size-4" />; // Edit
+      return <Edit className="size-4" />;
     case "deleted":
-      return <XCircle className="size-4" />; // Permanent delete
+      return <XCircle className="size-4" />;
     case "restored":
-      return <RefreshCw className="size-4" />; // Undo delete
+      return <RefreshCw className="size-4" />;
     case "soft_deleted":
     case "trashed":
-      return <FileMinus className="size-4" />; // Soft delete
+      return <FileMinus className="size-4" />;
     default:
       return null;
   }
@@ -66,18 +66,18 @@ const getActionIcon = (action: string) => {
 const getActionColor = (action: string) => {
   switch (action) {
     case "created":
-      return "bg-green-100 text-green-700"; // success vibe
+      return "bg-green-100 text-green-700";
     case "updated":
-      return "bg-blue-100 text-blue-700"; // info vibe
+      return "bg-blue-100 text-blue-700";
     case "deleted":
-      return "bg-red-100 text-red-700"; // danger vibe
+      return "bg-red-100 text-red-700";
     case "restored":
-      return "bg-emerald-100 text-emerald-700"; // softer green
+      return "bg-emerald-100 text-emerald-700";
     case "soft_deleted":
     case "trashed":
-      return "bg-orange-100 text-orange-700"; // warning vibe
+      return "bg-orange-100 text-orange-700";
     default:
-      return "bg-gray-100 text-gray-700"; // neutral
+      return "bg-gray-100 text-gray-700";
   }
 };
 
