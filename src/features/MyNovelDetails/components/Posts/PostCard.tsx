@@ -17,6 +17,7 @@ import { useDeletePost } from "@/services/post";
 import { toast } from "sonner";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PostUpdate from "./PostUpdate.";
+import { confirmToast } from "@/utils/customToasts";
 
 const PostCard = ({
   data,
@@ -56,10 +57,17 @@ const PostCard = ({
   const { mutate } = useDeletePost({ novelId: data.relative_id });
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
-      toast.loading("Deleting post...");
-      mutate(data.id);
-    }
+    confirmToast({
+      title: "Delete Post",
+      description: "Are you sure you want to delete this post?",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      confirmColor: "bg-red-600 hover:bg-red-700",
+      onConfirm: () => {
+        toast.loading("Deleting post...");
+        mutate(data.id);
+      },
+    });
   };
 
   return (
@@ -134,7 +142,8 @@ const PostCard = ({
             </div>
 
             <div className="flex flex-row items-center gap-2.5 justify-center">
-              <MessageCircle className="size-4" /> <span>{data.comment_count}</span>
+              <MessageCircle className="size-4" />{" "}
+              <span>{data.comment_count}</span>
             </div>
           </div>
         </div>

@@ -39,6 +39,7 @@ import MyNovelDetailsPostContainer from "../components/Container/MyNovelDetailsP
 import MyNovelDetailsReviewContainer from "../components/Container/MyNovelDetailsReviewContainer";
 import { useAddParams } from "@/utils/searchParams";
 import { useSearchParams } from "next/navigation";
+import MyNovelDetailsTrashContainer from "../components/Container/MyNovelDetailsTrashContainer";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -96,7 +97,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
     },
     {
       label: "Trash",
-      value: "Trash",
+      value: "trash",
       icon: <Trash className="size-3.5" />,
     },
   ];
@@ -182,6 +183,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           )}
           {activeTab === "posts" && <MyNovelDetailsPostContainer id={id} />}
           {activeTab === "reviews" && <MyNovelDetailsReviewContainer id={id} />}
+          {activeTab === "trash" && <MyNovelDetailsTrashContainer id={id} />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

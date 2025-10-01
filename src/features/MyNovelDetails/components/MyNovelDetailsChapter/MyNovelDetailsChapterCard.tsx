@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { formatDate } from "@/utils/formatDate";
 import { useDeleteChapter } from "@/services/chapter";
 import { toast } from "sonner";
+import { confirmToast } from "@/utils/customToasts";
 
 const MyNovelDetailsChapterCard = ({
   chapterNumber,
@@ -37,13 +38,18 @@ const MyNovelDetailsChapterCard = ({
 
   const handleDelete = (e: any) => {
     e.stopPropagation();
-    if (
-      window.confirm(
-        `Are you sure you want to delete this chapter ${data.title}?`
-      )
-    ) {
-      mutate(data.id);
-    }
+    confirmToast({
+      title: "Delete Chapter",
+      description:
+        "Are you sure to delete this chapter ' " + data.title + " ' ?",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      confirmColor: "bg-red-600 hover:bg-red-700",
+      onConfirm: () => {
+        toast.loading("Deleting chapter...");
+        mutate(data.id);
+      },
+    });
   };
 
   return (

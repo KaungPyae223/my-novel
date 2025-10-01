@@ -4,14 +4,15 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const ChapterHeader = () => {
+const ChapterHeader = ({ novelID }: { novelID: string }) => {
+
   const router = useRouter();
 
   return (
     <div className="bg-white h-16 border-b border-b-gray-300 fixed top-0 left-0 w-full z-50">
       <Container className="flex items-center justify-between gap-3 h-full">
         <div
-          onClick={() => router.back()}
+          onClick={() => router.push(`/novel/${novelID}`)}
           className="flex cursor-pointer items-center gap-2 font-medium"
         >
           <ArrowLeft className="size-4" />

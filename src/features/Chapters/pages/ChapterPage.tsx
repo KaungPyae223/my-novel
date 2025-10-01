@@ -27,7 +27,7 @@ const ChapterPage = ({ chapterID }: { chapterID: string }) => {
   return (
     <div>
       <Toaster position="top-center" richColors />
-      <ChapterHeader />
+      <ChapterHeader novelID={data.data.novel.id} />
       <Container className="mt-16 py-6 space-y-6">
         <ChapterNovelIntro novel={data.data.novel} />
         <ChapterCard chapterID={chapterID} chapterData={data.data} />
