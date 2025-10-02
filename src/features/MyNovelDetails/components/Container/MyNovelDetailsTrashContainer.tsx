@@ -37,13 +37,8 @@ const ChapterContainer = ({ id }: { id: string }) => {
         {data?.data.length === 0 ? (
           <EmptyState title="No Chapters" />
         ) : (
-          data?.data.map((chapter: any, idx: number) => (
-            <ChapterTrashedCard
-              key={idx}
-              chapterNumber={idx + 1}
-              novelId={id}
-              data={chapter}
-            />
+          data?.data.map((chapter: any) => (
+            <ChapterTrashedCard key={chapter.id} novelId={id} data={chapter} />
           ))
         )}
       </div>

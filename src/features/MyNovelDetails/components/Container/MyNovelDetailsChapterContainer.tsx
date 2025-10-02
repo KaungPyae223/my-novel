@@ -8,8 +8,7 @@ import EmptyState from "@/features/Components/EmptyState/EmptyState";
 
 const ChapterContainer = ({ id }: { id: string }) => {
 
-  console.log(id)
-
+  
   const { data, isLoading, error } = useFetchData(`/novel-chapters/${id}`);
 
   if (isLoading) return <Loading />;

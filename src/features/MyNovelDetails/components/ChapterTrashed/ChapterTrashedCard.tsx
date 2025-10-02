@@ -2,24 +2,24 @@
 import { Trash, RotateCcw, Eye } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useDeleteChapter } from "@/services/chapter";
+import { useDeleteChapter, useRestoreChapter } from "@/services/chapter";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { confirmToast } from "@/utils/customToasts";
 
 const ChapterTrashedCard = ({
-  chapterNumber,
   novelId,
   data,
 }: {
-  chapterNumber: number;
   novelId: string;
   data: any;
 }) => {
   const router = useRouter();
 
   const { mutate: deleteChapter } = useDeleteChapter({ id: novelId });
+  const { mutate: restoreChapter } = useRestoreChapter({ id: novelId });
 
+ 
   const handleView = () => {
     router.push(`/novel/${novelId}/chapter/${data.id}`);
   };
@@ -30,12 +30,14 @@ const ChapterTrashedCard = ({
     confirmToast({
       title: "Delete Chapter Permanently",
       description:
-        "Are you sure to delete this chapter ' " + data.title + " '  permanently ?",
+        "Are you sure to delete this chapter ' " +
+        data.title +
+        " '  permanently ?",
       confirmText: "Delete",
       cancelText: "Cancel",
       confirmColor: "bg-red-600 hover:bg-red-700",
       onConfirm: () => {
-        console.log("Delete");
+        deleteChapter(data.id);
       },
     });
   };
@@ -46,12 +48,14 @@ const ChapterTrashedCard = ({
     confirmToast({
       title: "Restore Chapter",
       description:
-        "Are you sure you want to restore this chapter ' " + data.title + " ' ?",
+        "Are you sure you want to restore this chapter ' " +
+        data.title +
+        " ' ?",
       confirmText: "Restore",
       cancelText: "Cancel",
       confirmColor: "bg-green-600 hover:bg-green-700",
       onConfirm: () => {
-        console.log("Restore");
+        restoreChapter(data.id);
       },
     });
   };
