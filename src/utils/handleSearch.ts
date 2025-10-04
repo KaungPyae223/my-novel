@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { useAddParams } from "./searchParams";
 import { useSearchParams } from "next/navigation";
+import { debounce } from "lodash";
 
 export const useHandleSearch = () => {
   const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState<string>(
+    searchParams.get("q") || ""
+  );
+
   const addParams = useAddParams();
 
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
-  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+  const debouncedUpdateParams = debounce((value: string) => {
+    addParams([{ key: "q", value }]);
+  }, 1000);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
-    }, 500);
+    debouncedUpdateParams(searchQuery);
 
-    return () => clearTimeout(timer);
+    return () => {
+      debouncedUpdateParams.cancel();
+    };
   }, [searchQuery]);
-
-  useEffect(() => {
-    if (debouncedQuery.trim() !== "") {
-      addParams([{ key: "q", value: debouncedQuery }]);
-    }
-  }, [debouncedQuery]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
