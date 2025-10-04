@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -9,17 +10,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Funnel, Search, X } from "lucide-react";
+import useFetchData from "@/services/fetcher";
+import { useAddParams } from "@/utils/searchParams";
+import { useSearchParams } from "next/navigation";
+import { useHandleSearch } from "@/utils/handleSearch";
 
 const NovelSearch = () => {
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [genre, setGenre] = useState<string>("");
-  const [status, setStatus] = useState<string>("all");
+  const searchParams = useSearchParams();
+
+  const { searchQuery, handleSearch } = useHandleSearch();
+
+  const genre = searchParams.get("genre") || undefined;
+  const status = searchParams.get("status") || "all";
 
   const handleClearAll = () => {
-    setSearchQuery("");
-    setGenre("");
-    setStatus("all");
+    addParams([
+      { key: "q", value: "" },
+      { key: "genre", value: "" },
+      { key: "status", value: "" },
+    ]);
   };
+
+  const addParams = useAddParams();
+
+  const handleFilterChange = (key: string, value: string) => {
+    addParams([{ key, value }]);
+  };
+
+  const { data, isLoading } = useFetchData("/genres");
 
   return (
     <div>
@@ -28,7 +46,7 @@ const NovelSearch = () => {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => handleSearch(e)}
             className="w-full border border-gray-300 rounded-md p-2 px-3 text-sm pr-3 pl-10"
             placeholder="Search novel"
           />
@@ -41,27 +59,32 @@ const NovelSearch = () => {
           Filters:
         </div>
 
-        <Select value={genre} onValueChange={setGenre}>
-          <SelectTrigger className="w-[180px] rounded-md border border-gray-300">
-            <SelectValue placeholder="Select a genre" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Genres</SelectLabel>
-              <SelectItem value="All">All</SelectItem>
-              <SelectItem value="sci-fi">Sci-Fi</SelectItem>
-              <SelectItem value="fantasy">Fantasy</SelectItem>
-              <SelectItem value="romance">Romance</SelectItem>
-              <SelectItem value="mystery">Mystery</SelectItem>
-              <SelectItem value="thriller">Thriller</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        {!isLoading && data && (
+          <Select
+            onValueChange={(value) => handleFilterChange("genre", value)}
+            value={genre}
+          >
+            <SelectTrigger className="w-[180px] rounded-md border border-gray-300">
+              <SelectValue placeholder="Select a genre" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Genres</SelectLabel>
+                <SelectItem value="All">All</SelectItem>
+                {data?.map((g: any) => (
+                  <SelectItem key={g.id} value={g.genre}>
+                    {g.genre}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )}
         <div className="flex flex-row items-center gap-2 text-sm text-gray-800">
           <p className="text-gray-700">Status</p>
           <div className="flex flex-row items-center gap-2">
             <div
-              onClick={() => setStatus("all")}
+              onClick={() => handleFilterChange("status", "all")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
                 status === "all" ? "bg-gray-800 text-white" : ""
               }`}
@@ -69,7 +92,7 @@ const NovelSearch = () => {
               All
             </div>
             <div
-              onClick={() => setStatus("ongoing")}
+              onClick={() => handleFilterChange("status", "ongoing")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
                 status === "ongoing" ? "bg-gray-800 text-white" : ""
               }`}
@@ -77,7 +100,7 @@ const NovelSearch = () => {
               Ongoing
             </div>
             <div
-              onClick={() => setStatus("completed")}
+              onClick={() => handleFilterChange("status", "completed")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
                 status === "completed" ? "bg-gray-800 text-white" : ""
               }`}
@@ -86,7 +109,7 @@ const NovelSearch = () => {
             </div>
           </div>
         </div>
-        {(status !== "all" || genre !== "" || searchQuery !== "") && (
+        {(status !== "all" || genre !== undefined || searchQuery !== "") && (
           <div
             onClick={handleClearAll}
             className="cursor-pointer text-sm font-semibold hover:bg-gray-100 px-2 py-1 rounded-md text-gray-800 flex items-center gap-2"

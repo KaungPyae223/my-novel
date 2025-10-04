@@ -7,7 +7,7 @@ import EmptyState from "../EmptyState";
 const PostsContainer = () => {
 
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/recommend-posts`)
+    useGenerateQuery(`/home/posts`)
   );
 
   if (isLoading) return < Loading />;

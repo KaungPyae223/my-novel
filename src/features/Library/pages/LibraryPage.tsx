@@ -4,20 +4,24 @@ import NovelContainer from "../components/Container/NovelContainer";
 import AuthorContainer from "../components/Container/AuthorContainer";
 import CommunityContainer from "../components/Container/CommunityContainer";
 import { BookOpen, MessageCircle, User } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useAddParams } from "@/utils/searchParams";
 
 const LibraryPage = () => {
-  const [activeTab, setActiveTab] = useState<
-    "Novels" | "Authors" | "Communities"
-  >("Novels");
+  
+  const searchParams = useSearchParams();
+  const activeTab = searchParams.get("tab") || "novels";
 
-  const handleTabChange = (tab: "Novels" | "Authors" | "Communities") => {
-    setActiveTab(tab);
+  const addParams = useAddParams();
+
+  const handleTabChange = (tab: "novels" | "authors" | "communities") => {
+    addParams([{ key: "tab", value: tab }]);
   };
 
   const tabs = [
-    { label: "Novels", value: "Novels", icon: <BookOpen className="size-3.5" /> },
-    { label: "Authors", value: "Authors", icon: <User className="size-3.5" /> },
-    { label: "Communities", value: "Communities", icon: <MessageCircle className="size-3.5" /> },
+    { label: "Novels", value: "novels", icon: <BookOpen className="size-3.5" /> },
+    { label: "Authors", value: "authors", icon: <User className="size-3.5" /> },
+    { label: "Communities", value: "communities", icon: <MessageCircle className="size-3.5" /> },
   ];
 
   return (
@@ -32,7 +36,7 @@ const LibraryPage = () => {
         {tabs.map((tab) => (
           <div
             key={tab.value}
-            onClick={() => handleTabChange(tab.value)}
+            onClick={() => handleTabChange(tab.value as "novels" | "authors" | "communities")}
             className={`rounded-md flex flex-row items-center justify-center gap-2  w-full py-1.5 ${
               activeTab === tab.value
                 ? "bg-white font-medium shadow"
@@ -46,9 +50,9 @@ const LibraryPage = () => {
 
       </div>
 
-      {activeTab === "Novels" && <NovelContainer />}
-      {activeTab === "Authors" && <AuthorContainer />}
-      {activeTab === "Communities" && <CommunityContainer />}
+      {activeTab === "novels" && <NovelContainer />}
+      {activeTab === "authors" && <AuthorContainer />}
+      {activeTab === "communities" && <CommunityContainer />}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import EmptyState from "../EmptyState";
 
 const NovelContainer = () => {
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/recommend-novels`)
+    useGenerateQuery(`/home/novels`)
   );
 
   if (isLoading) return <Loading />;

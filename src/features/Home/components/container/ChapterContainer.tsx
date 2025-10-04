@@ -8,7 +8,7 @@ import EmptyState from "../EmptyState";
 const ChapterContainer = () => {
 
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/recommend-chapters`)
+    useGenerateQuery(`/home/chapters`)
   );
 
   if (isLoading) return <Loading />;
