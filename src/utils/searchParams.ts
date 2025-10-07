@@ -1,15 +1,16 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const useGenerateQuery = (query: string) => {
+export const useGenerateQuery = (query: string, limit?: number) => {
   const searchParams = useSearchParams();
 
   const searchQuery = searchParams.size
-    ? `${query}?${searchParams.toString()}`
-    : query;
+    ? `${query}?${searchParams.toString()}${limit ? "&limit=" + limit : ""}`
+    : query + (limit ? "?limit=" + limit : "");
 
   return searchQuery;
 };
+
 
 export const useRemoveParams = () => {
   const router = useRouter();

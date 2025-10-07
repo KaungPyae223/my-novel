@@ -32,11 +32,11 @@ interface NovelCardProps {
 
 const NovelCard = ({ novel, handleSynopsis }: NovelCardProps) => {
   return (
-    <div className="w-full flex gap-3 overflow-hidden bg-white rounded-md shadow border border-gray-200">
+    <div className="w-full flex overflow-hidden bg-white rounded-md shadow border border-gray-200">
       <div className="basis-2/5 h-full">
         <img src={novel.image} alt="" className="w-full h-full object-cover" />
       </div>
-      <div className="p-3 py-5 flex-1 h-full flex flex-col">
+      <div className="p-5 flex-1 h-full flex flex-col">
         <p className="font-medium text-lg">{novel.title}</p>
 
         <p className="text-sm text-blue-600 font-medium mt-1">

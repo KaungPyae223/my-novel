@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NovelSearch from "../Novel/NovelSearch";
 import NovelCard from "../Novel/NovelCard";
 import useFetchData from "@/services/fetcher";
 import { useGenerateQuery } from "@/utils/searchParams";
 import Loading from "@/features/Components/Loading/Loading";
-import EmptyState from "@/features/Home/components/EmptyState";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +13,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import EmptyState from "@/features/Components/EmptyState/EmptyState";
 
 interface SynopsisProps {
   title: string;
@@ -26,14 +26,29 @@ const NovelContainer = () => {
     title: "",
     synopsis: "",
   });
+  const [limit, setLimit] = React.useState<number>(10);
 
   const handleSynopsis = (title: string, synopsis: string) => {
     setSynopsis({ title, synopsis });
     setSynopsisOpen(true);
   };
 
+  useEffect(() => {
+    const updateLimit = () => {
+      if (window.innerWidth < 640) setLimit(1);
+      else if (window.innerWidth < 1024) setLimit(8);
+      else setLimit(10);
+    };
+
+    updateLimit();
+    window.addEventListener("resize", updateLimit);
+
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
+
+  
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/library/novels`)
+    useGenerateQuery(`/library/novels`,limit) 
   );
 
   if (isLoading) return <Loading />;
@@ -48,13 +63,17 @@ const NovelContainer = () => {
        gap-5"
         >
           {data?.data.length === 0 ? (
-            <EmptyState title="Novels" />
+            <div className="col-span-2">
+              <EmptyState title="Novels Not Found" />
+            </div>
           ) : (
             data?.data.map((novel: any) => (
               <NovelCard
                 key={novel.id}
                 novel={novel}
-                handleSynopsis={() => handleSynopsis(novel.title, novel.synopsis)}
+                handleSynopsis={() =>
+                  handleSynopsis(novel.title, novel.synopsis)
+                }
               />
             ))
           )}

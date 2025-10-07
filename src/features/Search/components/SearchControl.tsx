@@ -9,18 +9,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ArrowUpNarrowWide, ChevronDownIcon, Search } from "lucide-react";
+import NovelQuerySuggestion from "@/features/QuerySuggestions/NovelQuerySuggestion/NovelQuerySuggestion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const SearchControl = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filter, setFilter] = useState<string>("Relevance");
+  const [showQuerySuggestion, setShowQuerySuggestion] =
+    useState<boolean>(false);
 
   return (
     <div className="mt-6">
       <div className="bg-white flex flex-row items-center p-5 rounded-lg shadow border border-gray-200 gap-6">
-        <div className="relative flex-1">
+        <div className="relative flex-1 z-50">
           <input
             type="text"
             value={searchQuery}
+            onFocus={() => setShowQuerySuggestion(true)}
+            onBlur={() => setShowQuerySuggestion(false)}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full border border-gray-300 rounded-md p-2 px-3 text-sm pr-3 pl-10"
             placeholder="Refine your search"
@@ -28,6 +34,17 @@ const SearchControl = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <Search className="size-4 text-gray-400" />
           </div>
+          <AnimatePresence>
+            {showQuerySuggestion && searchQuery.length > 2 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 100, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <NovelQuerySuggestion />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <Select value={filter} onValueChange={setFilter}>

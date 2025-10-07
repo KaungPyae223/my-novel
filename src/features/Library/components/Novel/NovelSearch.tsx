@@ -21,13 +21,13 @@ const NovelSearch = () => {
   const { searchQuery, handleSearch } = useHandleSearch();
 
   const genre = searchParams.get("genre") || undefined;
-  const status = searchParams.get("status") || "all";
+  const progress = searchParams.get("progress") || "";
 
   const handleClearAll = () => {
     addParams([
       { key: "q", value: "" },
       { key: "genre", value: "" },
-      { key: "status", value: "" },
+      { key: "progress", value: "" },
     ]);
   };
 
@@ -53,6 +53,7 @@ const NovelSearch = () => {
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <Search className="size-4 text-gray-400" />
           </div>
+         
         </div>
         <div className="flex flex-row items-center gap-2 text-sm text-gray-800 font-medium">
           <Funnel className="size-4" />
@@ -84,32 +85,32 @@ const NovelSearch = () => {
           <p className="text-gray-700">Status</p>
           <div className="flex flex-row items-center gap-2">
             <div
-              onClick={() => handleFilterChange("status", "all")}
+              onClick={() => handleFilterChange("progress", "")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
-                status === "all" ? "bg-gray-800 text-white" : ""
+                progress === "" ? "bg-gray-800 text-white" : ""
               }`}
             >
               All
             </div>
             <div
-              onClick={() => handleFilterChange("status", "ongoing")}
+              onClick={() => handleFilterChange("progress", "ongoing")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
-                status === "ongoing" ? "bg-gray-800 text-white" : ""
+                progress === "ongoing" ? "bg-gray-800 text-white" : ""
               }`}
             >
               Ongoing
             </div>
             <div
-              onClick={() => handleFilterChange("status", "completed")}
+              onClick={() => handleFilterChange("progress", "complete")}
               className={`px-2 py-1 cursor-pointer rounded-md font-medium text-sm text-gray-700 border border-gray-300 ${
-                status === "completed" ? "bg-gray-800 text-white" : ""
+                progress === "complete" ? "bg-gray-800 text-white" : ""
               }`}
             >
-              Completed
+              Complete
             </div>
           </div>
         </div>
-        {(status !== "all" || genre !== undefined || searchQuery !== "") && (
+        {(progress !== "" || genre !== undefined || searchQuery !== "") && (
           <div
             onClick={handleClearAll}
             className="cursor-pointer text-sm font-semibold hover:bg-gray-100 px-2 py-1 rounded-md text-gray-800 flex items-center gap-2"

@@ -6,7 +6,6 @@
 @plugin "tailwind-scrollbar-hide";
 
 @theme inline {
-
   --radius-sm: calc(var(--radius) - 4px);
 
   --radius-md: calc(var(--radius) - 2px);
@@ -79,7 +78,6 @@
 }
 
 :root {
-
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -146,7 +144,6 @@
 }
 
 .dark {
-
   --background: oklch(0.13 0.028 261.692);
 
   --foreground: oklch(0.985 0.002 247.839);
@@ -216,5 +213,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .highlight {
+    @apply bg-yellow-100 text-yellow-800;
   }
 }
