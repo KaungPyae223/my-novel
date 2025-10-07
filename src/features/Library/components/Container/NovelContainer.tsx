@@ -14,6 +14,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
+import Pagination from "@/features/Components/pagination/Pagination";
 
 interface SynopsisProps {
   title: string;
@@ -46,9 +47,8 @@ const NovelContainer = () => {
     return () => window.removeEventListener("resize", updateLimit);
   }, []);
 
-  
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/library/novels`,limit) 
+    useGenerateQuery(`/library/novels`, limit)
   );
 
   if (isLoading) return <Loading />;
@@ -78,6 +78,11 @@ const NovelContainer = () => {
             ))
           )}
         </div>
+
+        <Pagination
+          currentPage={data?.meta?.current_page}
+          totalPages={data?.meta?.last_page}
+        />
       </div>
       {synopsisOpen && (
         <Dialog open={synopsisOpen} onOpenChange={setSynopsisOpen}>

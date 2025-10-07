@@ -45,6 +45,7 @@ const NovelSearch = () => {
         <div className="relative flex-1">
           <input
             type="text"
+            autoFocus={true}
             value={searchQuery}
             onChange={(e) => handleSearch(e)}
             className="w-full border border-gray-300 rounded-md p-2 px-3 text-sm pr-3 pl-10"

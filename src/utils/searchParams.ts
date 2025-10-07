@@ -31,6 +31,11 @@ export const useAddParams = () => {
 
   return (params: { key: string; value: string }[]) => {
     const newParams = new URLSearchParams(searchParams.toString());
+    
+    if (!params.find((param) => param.key === "page")) {
+      newParams.delete("page");
+    }
+
     params.forEach(({ key, value }) => {
       if (value) {
         newParams.set(key, value);

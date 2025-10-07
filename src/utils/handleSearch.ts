@@ -14,7 +14,7 @@ export const useHandleSearch = () => {
 
   const debouncedUpdateParams = debounce((value: string) => {
     addParams([{ key: "q", value }]);
-  }, 500);
+  }, 1000);
 
   useEffect(() => {
     setSearchQuery(searchParams.get("q") || "");
