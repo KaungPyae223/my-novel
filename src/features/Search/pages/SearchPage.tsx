@@ -6,22 +6,38 @@ import SearchAllContainer from "../components/Container/SearchAllContainer";
 import SearchAuthorContainer from "../components/Container/SearchAuthorContainer";
 import SearchCommunityContainer from "../components/Container/SearchCommunityContainer";
 import SearchNovelContainer from "../components/Container/SearchNovelContainer";
+import { useSearchParams } from "next/navigation";
+import { useAddParams } from "@/utils/searchParams";
 // import SearchNovelContainer from "../components/Container/SearchNovelContainer";
 
 const SearchPage = () => {
+  const searchParams = useSearchParams();
+  const activeTab = searchParams.get("tab") || "";
 
-    const [activeTab, setActiveTab] = useState("All");
-    const tabs = [
-        { value: "All", label: "All (6)", icon: <Search className="size-3.5" /> },
-        { value: "Novels", label: "Novels (6)", icon: <Book className="size-3.5" /> },
-        { value: "Authors", label: "Authors (6)", icon: <User className="size-3.5" /> },
-        { value: "Communities", label: "Communities (6)", icon: <MessageCircle className="size-3.5" /> },
+  const addParams = useAddParams();
 
-      ];
+  const tabs = [
+    { value: "", label: "All", icon: <Search className="size-3.5" /> },
+    {
+      value: "novels",
+      label: "Novels",
+      icon: <Book className="size-3.5" />,
+    },
+    {
+      value: "authors",
+      label: "Authors",
+      icon: <User className="size-3.5" />,
+    },
+    {
+      value: "communities",
+      label: "Communities",
+      icon: <MessageCircle className="size-3.5" />,
+    },
+  ];
 
-      const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-      };
+  const handleTabChange = (tab: string) => {
+    addParams([{ key: "tab", value: tab }]);
+  };
 
   return (
     <div className="py-9 px-6 mx-auto max-w-6xl">
@@ -48,11 +64,10 @@ const SearchPage = () => {
         ))}
       </div>
 
-        {activeTab === "All" && <SearchAllContainer />}
-        {activeTab === "Novels" && <SearchNovelContainer />}
-        {activeTab === "Authors" && <SearchAuthorContainer />}
-        {activeTab === "Communities" && <SearchCommunityContainer />}
-
+      {activeTab === "" && <SearchAllContainer />}
+      {activeTab === "novels" && <SearchNovelContainer />}
+      {activeTab === "authors" && <SearchAuthorContainer />}
+      {activeTab === "communities" && <SearchCommunityContainer />}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,15 +8,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowUpNarrowWide, ChevronDownIcon, Search } from "lucide-react";
+import { ArrowUpNarrowWide, Search } from "lucide-react";
 import NovelQuerySuggestion from "@/features/QuerySuggestions/NovelQuerySuggestion/NovelQuerySuggestion";
 import { AnimatePresence, motion } from "framer-motion";
+import { debounce } from "lodash";
 
 const SearchControl = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [filter, setFilter] = useState<string>("Relevance");
-  const [showQuerySuggestion, setShowQuerySuggestion] =
-    useState<boolean>(false);
+  const [QuerySuggestion, setQuerySuggestion] = useState<string>("");
+  const [showQuerySuggestion, setShowQuerySuggestion] = useState<boolean>(false);
+
+ 
+  useEffect(() => {
+    const debouncedUpdateQuery = debounce(() => {
+      setQuerySuggestion(searchQuery);
+    }, 500);
+
+    debouncedUpdateQuery();
+
+    return () => {
+      debouncedUpdateQuery.cancel();
+    };
+  }, [searchQuery]);
 
   return (
     <div className="mt-6">
@@ -35,13 +49,13 @@ const SearchControl = () => {
             <Search className="size-4 text-gray-400" />
           </div>
           <AnimatePresence>
-            {showQuerySuggestion && searchQuery.length > 2 && (
+            {showQuerySuggestion && QuerySuggestion.length > 2 && (
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 100, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
               >
-                <NovelQuerySuggestion />
+                <NovelQuerySuggestion query={QuerySuggestion} />
               </motion.div>
             )}
           </AnimatePresence>
