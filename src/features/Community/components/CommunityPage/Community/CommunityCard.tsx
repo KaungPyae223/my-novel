@@ -2,18 +2,23 @@ import { Clock, Crown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
-const JoinedCommunityCard = () => {
+const CommunityCard = ({ isCreated }: { isCreated: boolean }) => {
   return (
     <div className="w-full p-4 py-6 bg-white rounded-md shadow border border-gray-200">
       <div className="flex flex-row items-center gap-4">
-        <Image
-          src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
-          alt="My Novel Fans"
-          width={50}
-          height={50}
-          className="rounded-lg size-11"
-        />
+        <Avatar className="w-11 h-11">
+          <AvatarImage
+            src={""}
+            alt="My Novel Fans"
+            className="w-11 h-11 object-cover rounded-md"
+          />
+          <AvatarFallback className="w-11  h-11 flex items-center justify-center bg-green-200 text-gray-700 font-medium rounded-md">
+            {avatarFallback("Fantasy Lovers")}
+          </AvatarFallback>
+        </Avatar>
         <div>
           <p className="font-semibold  text-xl">The King of Fire</p>
           <p className="text-xs font-mono mt-1.5 text-gray-600">
@@ -32,20 +37,28 @@ const JoinedCommunityCard = () => {
         voluptates quibusdam, obcaecati, quis quod saepe itaque corrupti
         distinctio amet illum.
       </p>
-      <div className="bg-pink-50/80 flex flex-row items-center gap-4 p-2 my-3 mt-4 rounded-sm">
-        <img
-          className="w-12 h-12 rounded-full"
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
-          alt=""
-        />
-        <div>
-          <div className="flex text-xs flex-row items-center gap-1">
-            <Crown className="size-3 text-yellow-600" />
-            Community Leader
+      {!isCreated && (
+        <div className="bg-pink-50/80 flex flex-row items-center gap-4 p-2 my-3 mt-4 rounded-sm">
+          <Avatar className="w-12 h-12">
+            <AvatarImage
+              src={""}
+              alt="My Novel Fans"
+              className="w-12 h-12 object-cover rounded-full"
+            />
+            <AvatarFallback className="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+              {avatarFallback("Fantasy Lovers")}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="flex text-xs flex-row items-center gap-1">
+              <Crown className="size-3 text-yellow-600" />
+              Community Leader
+            </div>
+            <p className="font-semibold mt-1">Lourics Chan</p>
           </div>
-          <p className="font-semibold mt-1">Lourics Chan</p>
         </div>
-      </div>
+      )}
+
       <div className="grid grid-cols-2 gap-2 my-6 ">
         <div className="flex flex-col items-center gap-0.5">
           <p className="text-sm font-semibold">100</p>
@@ -70,4 +83,4 @@ const JoinedCommunityCard = () => {
   );
 };
 
-export default JoinedCommunityCard;
+export default CommunityCard;

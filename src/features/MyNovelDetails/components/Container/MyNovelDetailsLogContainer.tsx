@@ -40,11 +40,11 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
 
   const { searchQuery, handleSearch } = useHandleSearch();
 
- 
-
   const searchParams = useSearchParams();
 
   const { changeFilter } = useHandleFilter();
+
+  console.log(data)
 
   if (isLoading) {
     return <Loading />;

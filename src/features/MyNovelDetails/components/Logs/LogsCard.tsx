@@ -14,6 +14,8 @@ import {
   FileMinus,
 } from "lucide-react";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 interface User {
   id: number;
@@ -93,6 +95,8 @@ const formatDate = (dateString: string) => {
 };
 
 const LogsCard = ({ log }: { log: LogEntry }) => {
+  console.log(log);
+
   const [isExpanded, setIsExpanded] = React.useState(false);
   const description = parseDescription(log.description);
   const actionIcon = getActionIcon(log.action);
@@ -140,20 +144,18 @@ const LogsCard = ({ log }: { log: LogEntry }) => {
               )}
 
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-gray-500">
-                {log.ip_address !== "system" ? (
+                {log.ip_address !== "system" && log.user ? (
                   <span className="flex items-center">
-                    <Image
-                      src={
-                        log.user.profile_image ||
-                        `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                          log.user.full_name
-                        )}`
-                      }
-                      alt=""
-                      className="h-3.5 w-3.5 mr-1 object-cover rounded-full"
-                      width={32}
-                      height={32}
-                    />
+                    <Avatar className="w-3.5 h-3.5">
+                      <AvatarImage
+                        src={log.user.profile_image}
+                        alt={log.user.full_name}
+                      />
+                      <AvatarFallback className="w-3.5 h-3.5 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+                        {avatarFallback(log.user.full_name)}
+                      </AvatarFallback>
+                    </Avatar>
+
                     {log.user.full_name}
                   </span>
                 ) : (
@@ -251,37 +253,36 @@ const LogsCard = ({ log }: { log: LogEntry }) => {
                 </div>
 
                 {/* User Info */}
-                <div className="bg-white p-3 rounded-lg border border-gray-200">
-                  <h4 className="font-medium text-gray-900 mb-2 text-sm">
-                    User Info
-                  </h4>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex-shrink-0">
-                        <Image
-                          src={
-                            log.user.profile_image ||
-                            `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                              log.user.full_name
-                            )}`
-                          }
-                          alt=""
-                          className="h-8 w-8 rounded-full object-cover"
-                          width={32}
-                          height={32}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">
-                          {log.user.full_name}
-                        </p>
-                        <p className="text-gray-500 text-xs truncate max-w-[180px]">
-                          {log.user.email}
-                        </p>
+                {log.user && (
+                  <div className="bg-white p-3 rounded-lg border border-gray-200">
+                    <h4 className="font-medium text-gray-900 mb-2 text-sm">
+                      User Info
+                    </h4>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center space-x-2">
+                        <div className="flex-shrink-0">
+                          <Avatar className="w-8 h-8">
+                            <AvatarImage
+                              src={log.user.profile_image}
+                              alt={log.user.full_name}
+                            />
+                            <AvatarFallback className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+                              {avatarFallback(log.user.full_name)}
+                            </AvatarFallback>
+                          </Avatar>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {log.user.full_name}
+                          </p>
+                          <p className="text-gray-500 text-xs truncate max-w-[180px]">
+                            {log.user.email}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             ) : (
               <p className="text-gray-500 text-sm mt-2">

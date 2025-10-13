@@ -1,14 +1,12 @@
+import CommunityCard from "@/features/Community/components/CommunityPage/Community/CommunityCard";
 import React from "react";
-import SearchCommunityCard from "../Community/SearchCommunityCard";
 
 const SearchCommunityContainer = () => {
   return (
     <div className="mt-6 grid grid-cols-3 gap-5">
-      <SearchCommunityCard />
-      <SearchCommunityCard />
-      <SearchCommunityCard />
-     
-
+      <CommunityCard isCreated={false} />
+      <CommunityCard isCreated={false} />
+      <CommunityCard isCreated={false} />
     </div>
   );
 };

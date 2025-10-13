@@ -1,6 +1,6 @@
 import React from "react";
 import { Plus } from "lucide-react";
-import CreatedCommunityCard from "../CreatedCommunity/CreatedCommuntiyCard";
+import CommunityCard from "../Community/CommunityCard";
 
 const CreatedCommunityContainer = () => {
   return (
@@ -18,9 +18,9 @@ const CreatedCommunityContainer = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-5">
-        <CreatedCommunityCard />
-        <CreatedCommunityCard />
-        <CreatedCommunityCard />
+        <CommunityCard isCreated={true} />
+        <CommunityCard isCreated={true} />
+        <CommunityCard isCreated={true} />
       </div>
     </div>
   );

@@ -1,16 +1,19 @@
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 const AuthorCard = () => {
   return (
     <div className="w-full  p-4 py-6 flex flex-col items-center justify-center overflow-hidden bg-white rounded-md shadow border border-gray-200">
       <div>
-        <img
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face"
-          alt=""
-          className="w-24 h-24 object-cover rounded-full"
-        />
+        <Avatar className="w-24 h-24">
+          <AvatarImage src="" alt="" />
+          <AvatarFallback className="w-24 h-24 text-2xl flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+            {avatarFallback("John Doe")}
+          </AvatarFallback>
+        </Avatar>
       </div>
       <p className="text-lg font-medium mt-3">John Doe</p>
       <p className="text-xs font-mono mt-1.5 text-gray-600">@Jhon1234</p>
@@ -32,7 +35,10 @@ const AuthorCard = () => {
         <AuthorProperties label="Followers" value="1.2k" />
         <AuthorProperties label="Views" value="1.2M" />
       </div>
-      <Link href={`/authors/1` } className="w-full rounded-sm border text-sm font-medium text-center py-2 cursor-pointer border-gray-300">
+      <Link
+        href={`/authors/1`}
+        className="w-full rounded-sm border text-sm font-medium text-center py-2 cursor-pointer border-gray-300"
+      >
         View Profile
       </Link>
     </div>

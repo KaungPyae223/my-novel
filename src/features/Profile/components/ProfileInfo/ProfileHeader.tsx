@@ -3,24 +3,27 @@ import { Calendar, Edit, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 const ProfileHeader = ({ data }: { data: {profile_image: string, full_name: string, username: string, about: string, location: string, created_at: string, email: string} }) => {
   return (
     <div className="p-6 bg-white shadow rounded-md">
       <div className="flex flex-row justify-between items-start gap-2">
         <div className="flex flex-row items-center gap-4">
-          <Image
-            src={
-              data?.profile_image ||
-              `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                data?.full_name
-              )}`
-            }
-            alt=""
-            className="size-16 object-cover rounded-full"
-            width={64}
-            height={64}
-          />
+          <Avatar className="w-14 h-14">
+            {data?.profile_image ? (
+              <AvatarImage
+                src={data.profile_image}
+                alt={data.full_name || "User"}
+                className="w-14 h-14 object-cover rounded-full"
+              />
+            ) : (
+              <AvatarFallback className="w-14 h-14 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+                {data?.full_name ? avatarFallback(data.full_name) : "?"}
+              </AvatarFallback>
+            )}
+          </Avatar>
 
           <div>
             <p className="font-semibold text-2xl">{data?.full_name}</p>

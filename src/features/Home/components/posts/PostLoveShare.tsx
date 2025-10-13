@@ -3,9 +3,18 @@ import React from "react";
 import { usePostLoved } from "@/services/post";
 import { motion } from "framer-motion";
 
-const PostLoveShare = ({ id, already_loved,setLoveCount }: { id: string, already_loved: boolean,setLoveCount: React.Dispatch<React.SetStateAction<number>> }) => {
-  const { mutate } = usePostLoved({id});
-
+const PostLoveShare = ({
+  id,
+  already_loved,
+  setLoveCount,
+  setOpenComments,
+}: {
+  id: string;
+  already_loved: boolean;
+  setLoveCount: React.Dispatch<React.SetStateAction<number>>;
+  setOpenComments: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  const { mutate } = usePostLoved({ id });
 
   const [alreadyLoved, setAlreadyLoved] =
     React.useState<boolean>(already_loved);
@@ -44,7 +53,7 @@ const PostLoveShare = ({ id, already_loved,setLoveCount }: { id: string, already
           </div>
         )}
       </motion.div>
-      <div className="flex w-full hover:bg-gray-100 py-2 rounded-lg cursor-pointer gap-3 flex-row items-center justify-center">
+      <div onClick={()=>setOpenComments(id)} className="flex w-full hover:bg-gray-100 py-2 rounded-lg cursor-pointer gap-3 flex-row items-center justify-center">
         <MessageCircle className="size-4" />
         <p>Comment</p>
       </div>

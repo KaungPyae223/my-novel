@@ -1,5 +1,5 @@
 import React from "react";
-import JoinedCommunityCard from "../JoinedCommunity/JoinedCommunityCard";
+import CommunityCard from "../Community/CommunityCard";
 
 const JoinedCommunityContainer = () => {
   return (
@@ -10,9 +10,9 @@ const JoinedCommunityContainer = () => {
 
       </div>
       <div className="grid grid-cols-3 gap-5">
-        <JoinedCommunityCard />
-        <JoinedCommunityCard />
-        <JoinedCommunityCard />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
       </div>
     </div>
   );

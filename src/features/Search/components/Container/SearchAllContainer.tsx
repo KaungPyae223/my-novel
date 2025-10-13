@@ -1,7 +1,8 @@
 import React from "react";
 import SearchNovelCard from "../Novel/SearchNovelCard";
-import SearchAuthorCard from "../Author/SearchAuthorCard";
-import SearchCommunityCard from "../Community/SearchCommunityCard";
+import CommunityCard from "@/features/Community/components/CommunityPage/Community/CommunityCard";
+import AuthorCard from "@/features/Library/components/Author/AuthorCard";
+
 
 const SearchAllContainer = () => {
   return (
@@ -15,16 +16,16 @@ const SearchAllContainer = () => {
 
       <p className="font-semibold text-xl">Authors</p>
       <div className="grid grid-cols-3 gap-5">
-        <SearchAuthorCard />
-        <SearchAuthorCard />
-        <SearchAuthorCard />
+        <AuthorCard />
+        <AuthorCard />
+        <AuthorCard />
       </div>
 
       <p className="font-semibold text-xl">Communities</p>
       <div className="grid grid-cols-3 gap-5">
-        <SearchCommunityCard />
-        <SearchCommunityCard />
-        <SearchCommunityCard />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
       </div>
     </div>
   );

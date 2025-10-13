@@ -18,6 +18,8 @@ import { toast } from "sonner";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import PostUpdate from "./PostUpdate.";
 import { confirmToast } from "@/utils/customToasts";
+import { avatarFallback } from "@/utils/avatarFallBack";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 const PostCard = ({
   data,
@@ -78,19 +80,15 @@ const PostCard = ({
       >
         <div className="flex flex-row justify-between items-center">
           <div className="flex items-center gap-4">
-            <Image
-              src={
-                data.user.profile_image ||
-                `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-                  data?.user?.full_name
-                )}`
-              }
-              alt="User avatar"
-              width={64}
-              height={64}
-              className="w-10 h-10 rounded-full object-cover"
-              onLoad={adjustHeight}
-            />
+            <Avatar className="w-10 h-10">
+              <AvatarImage
+                src={data.user.profile_image}
+                alt={data.user.full_name}
+              />
+              <AvatarFallback className="w-10 h-10 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+                {avatarFallback(data.user.full_name)}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1">
               <p className="text-base font-semibold text-gray-900">
                 {data.user.full_name}

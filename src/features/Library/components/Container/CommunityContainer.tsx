@@ -1,4 +1,4 @@
-import CommunityCard from "../Community/CommunityCard";
+import CommunityCard from "@/features/Community/components/CommunityPage/Community/CommunityCard";
 import CommunitySearch from "../Community/CommunitySearch";
 
 const CommunityContainer = () => {
@@ -6,9 +6,9 @@ const CommunityContainer = () => {
     <div className="mt-6 space-y-6">
       <CommunitySearch />
       <div className="grid grid-cols-3 gap-5">
-        <CommunityCard />
-        <CommunityCard />
-        <CommunityCard />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
+        <CommunityCard isCreated={false} />
       </div>
     </div>
   );

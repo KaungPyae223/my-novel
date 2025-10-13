@@ -3,6 +3,8 @@ import React from "react";
 import { useUpdateProfileImage } from "@/services/profile";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 const ProfileImageEdit = ({
   profileImage,
@@ -28,18 +30,15 @@ const ProfileImageEdit = ({
 
   return (
     <div className=" flex flex-col items-center">
-      <Image
-        src={
-          profileImage ||
-          `https://api.dicebear.com/8.x/initials/png?seed=${encodeURIComponent(
-            fullName
-          )}`
-        }
-        alt=""
-        width={100}
-        height={100}
-        className="size-28 rounded-full"
-      />
+
+      <Avatar className="w-28 h-28">
+        <AvatarImage className="w-28 h-28" src={profileImage} alt={fullName} />
+        <AvatarFallback className="w-28 h-28 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+          {avatarFallback(fullName)}
+        </AvatarFallback>
+      </Avatar>
+
+      
 
       <label htmlFor="profileImageInput">
         <div className="flex mt-4 bg-gray-200 py-2 px-4 w-fit items-center justify-center gap-3 text-sm text-gray-700 font-semibold rounded-sm">

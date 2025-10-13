@@ -1,19 +1,24 @@
 import { MessageCircle, Share2, Users } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 const CommunityDetailsHeader = () => {
   return (
     <div className="p-6 bg-white shadow rounded-md">
       <div className="flex flex-row justify-between items-start gap-2">
         <div className="flex flex-row items-center gap-3">
-          <Image
-            src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
-            alt="My Novel Fans"
-            width={50}
-            height={50}
-            className="rounded-lg size-13"
-          />
+          <Avatar className="w-14 h-14">
+            <AvatarImage
+              src={""}
+              alt="My Novel Fans"
+              className="w-14 h-14 rounded-md object-cover"
+            />
+            <AvatarFallback className="w-14 h-14 flex items-center justify-center bg-green-200 text-gray-700 font-medium rounded-md">
+              {avatarFallback("Fantasy Lovers")}
+            </AvatarFallback>
+          </Avatar>
           <div>
             <p className="font-semibold text-2xl">Fantasy Lovers</p>
             <p className="text-sm font-mono text-gray-500 mt-1">@FantasyLovers</p>

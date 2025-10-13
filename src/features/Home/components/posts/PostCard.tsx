@@ -5,7 +5,7 @@ import PostNovelReference from "./PostNovelReference";
 import PostView from "./PostView";
 import Image from "next/image";
 
-const PostCard = ({ post }: { post: any }) => {
+const PostCard = ({ post, setOpenComments }: { post: any, setOpenComments: React.Dispatch<React.SetStateAction<string>> }) => {
 
   const [loveCount, setLoveCount] = React.useState<number>(post.love_count);
 
@@ -31,6 +31,7 @@ const PostCard = ({ post }: { post: any }) => {
           id={post.id}
           setLoveCount={setLoveCount}
           already_loved={post.already_loved}
+          setOpenComments={setOpenComments}
         />
       </div>
     </div>

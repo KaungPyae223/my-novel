@@ -2,18 +2,19 @@ import { Book, Eye, MessageCircle, Users } from "lucide-react";
 import React from "react";
 import Trending from "../Novels/Trending";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { avatarFallback } from "@/utils/avatarFallBack";
 
 const CommunityCard = () => {
   return (
     <div className="w-full bg-white rounded-lg overflow-hidden shadow border p-4 border-gray-200">
       <div className="flex flex-row items-center gap-4">
-        <Image
-          src={"https://api.dicebear.com/8.x/initials/png?seed=My Novel Fans"}
-          alt="My Novel Fans"
-          width={50}
-          height={50}
-          className="rounded-lg size-11"
-        />
+        <Avatar className="w-11 h-11">
+          <AvatarImage src="" alt="" />
+          <AvatarFallback className="w-11 h-11 flex items-center justify-center bg-green-200 text-gray-700 font-medium rounded-md">
+            {avatarFallback("My Novel Fans")}
+          </AvatarFallback>
+        </Avatar>
         <div>
           <p className="font-semibold  text-xl">The King of Fire</p>
           <p className="text-xs font-mono mt-1.5 text-gray-600">
