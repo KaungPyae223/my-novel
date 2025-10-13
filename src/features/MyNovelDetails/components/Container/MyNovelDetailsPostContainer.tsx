@@ -26,8 +26,8 @@ const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
       <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
         <div className="flex flex-row justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <MessageCircle className="size-5 text-blue-600" />
+            <div className="p-2 bg-green-50 rounded-lg">
+              <MessageCircle className="size-5 text-green-600" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900">Posts</h2>
           </div>
@@ -46,7 +46,11 @@ const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
             <EmptyState title="No Posts" />
           ) : (
             data?.data.map((post: any) => (
-              <PostCard key={post.id} data={post} handleEdit={() => setEditingPost(post)} />
+              <PostCard
+                key={post.id}
+                data={post}
+                handleEdit={() => setEditingPost(post)}
+              />
             ))
           )}
         </div>

@@ -73,7 +73,7 @@ const NovelCard = ({ novel, handleSynopsis }: NovelCardProps) => {
             </div>
           </div>
           <div className="flex flex-wrap items-center mt-4 gap-1.5">
-            {novel.tags.split(",").map((tag: string, index: number) => (
+            {novel.tags.split("/").map((tag: string, index: number) => (
               <p
                 key={index}
                 className="text-xs border border-gray-300 px-2 py-0.5 rounded-full font-medium"

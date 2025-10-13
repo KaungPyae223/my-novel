@@ -10,6 +10,7 @@ const NovelContainer = () => {
     useGenerateQuery(`/home/novels`)
   );
 
+  
   if (isLoading) return <Loading />;
   if (error) throw error;
 

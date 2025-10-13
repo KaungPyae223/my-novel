@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { BookOpen, Eye, Heart, Share, Star } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import {
   useNovelFavorite,
   useNovelLoved,
@@ -11,12 +11,25 @@ import { toast } from "sonner";
 import shareLink from "@/utils/shareLink";
 
 const NovelIntro = ({ novel }: { novel: any }) => {
+
+
+  const [loveCount, setLoveCount] = useState<number>(novel.love_count);
+
+  const [already_loved, setAlready_loved] = useState<boolean>(novel.already_loved);
+  const [already_favorited, setAlready_favorited] = useState<boolean>(novel.already_favorited);
+
   const { mutate } = useNovelLoved({ novelID: novel.id });
 
   const handleLoved = () => {
     toast.loading("Loving novel...");
     mutate(novel.id);
-  };
+    if(already_loved) {
+      setLoveCount(loveCount - 1);
+    } else {
+      setLoveCount(loveCount + 1);
+    }
+    setAlready_loved(!already_loved);
+  };  
 
   const { mutate: shareNovel } = useShareNovel({ novelID: novel.id });
 
@@ -29,6 +42,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
 
   const handleFavorite = () => {
     favoriteNovel(novel.id);
+    setAlready_favorited(!already_favorited);
   };
 
   return (
@@ -52,7 +66,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
           </div>
           <div className="flex flex-row gap-8">
             <motion.div
-              key={novel?.already_loved ? "filled" : "unfilled"} // forces animation when state changes
+              key={already_loved ? "filled" : "unfilled"} // forces animation when state changes
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -60,7 +74,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
               onClick={handleLoved}
               className="cursor-pointer"
             >
-              {novel.already_loved ? (
+              {already_loved ? (
                 <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
                   <Heart className="size-4" fill="currentColor" />
                   Loved
@@ -81,7 +95,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
               Share
             </div>
             <motion.div
-              key={novel?.already_favorited ? "filledStar" : "unfilledStar"} // forces animation when state changes
+              key={already_favorited ? "filledStar" : "unfilledStar"} // forces animation when state changes
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -89,7 +103,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
               onClick={handleFavorite}
               className="cursor-pointer"
             >
-              {novel.already_favorited ? (
+              {already_favorited ? (
                 <div className="flex text-gray-700 text-sm items-center gap-2 font-medium">
                   <Star className="size-4" fill="currentColor" />
                   Favorite
@@ -110,7 +124,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
           </div>
           <div className="text-sm font-medium flex flex-row items-center gap-1.5">
             <Heart className="size-4" fill="red" />
-            {novel.love_count}
+            {loveCount}
           </div>
         </div>
         <div className="flex flex-row my-4 text-sm gap-4 text-gray-600 ">

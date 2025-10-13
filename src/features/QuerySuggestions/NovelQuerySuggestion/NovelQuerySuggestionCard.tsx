@@ -18,7 +18,7 @@ const NovelQuerySuggestionCard = ({ data }: NovelQuerySuggestionCardProps) => {
       <img
         src={data.image}
         alt={data.title}
-        className="w-20 object-cover rounded-md"
+        className="w-20 h-full object-cover rounded-md"
       />
       <div className="flex-1">
         <p

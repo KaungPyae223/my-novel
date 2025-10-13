@@ -1,11 +1,11 @@
 import { ArrowUpRight, Eye, Heart } from "lucide-react";
 import React from "react";
 
-const ChapterCardView = ({ chapter:{love_count,view_count,share_count  } }: { chapter: {love_count:number,view_count:number,share_count:number} }) => {
+const ChapterCardView = ({ chapter:{view_count,share_count  }, loveCount }: { chapter: {view_count:number,share_count:number}, loveCount:number }) => {
   return (
     <div className="flex flex-row items-center justify-between gap-3 text-gray-500 text-sm">
       <div className="flex flex-row items-center gap-1.5">
-        {love_count}
+        {loveCount}
         <Heart className="size-4" />
       </div>
 

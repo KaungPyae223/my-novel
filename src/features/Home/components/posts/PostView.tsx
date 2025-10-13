@@ -2,14 +2,16 @@ import { Heart, MessageCircle } from "lucide-react";
 import React from "react";
 
 const PostView = ({
-  post: { love_count, comment_count },
+  comment_count,
+  loveCount,
 }: {
-  post: { love_count: number; comment_count: number };
+  comment_count: number;
+  loveCount: number;
 }) => {
   return (
     <div className="flex flex-row items-center justify-between gap-3 text-gray-500 text-sm">
       <div className="flex flex-row items-center gap-1.5">
-        {love_count}
+        {loveCount}
         <Heart className="size-4" />
       </div>
 

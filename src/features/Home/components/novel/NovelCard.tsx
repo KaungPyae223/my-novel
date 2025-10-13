@@ -7,7 +7,8 @@ import NovelReadAddButton from "./NovelReadAddButton";
 import NovelView from "./NovelView";
 
 const NovelCard = ({ novel }: { novel: any }) => {
-  console.log(novel);
+  const [loveCount, setLoveCount] = React.useState<number>(novel.love_count);
+
   return (
     <div>
       <div className="py-5 px-6 bg-white rounded-lg shadow">
@@ -15,9 +16,9 @@ const NovelCard = ({ novel }: { novel: any }) => {
         <NovelIntro novel={novel} />
         <NovelSynopsis novel={novel} />
         <NovelReadAddButton novel={novel} />
-        <NovelView novel={novel} />
+        <NovelView novel={novel} loveCount={loveCount} />
         <hr className="border-gray-200 my-3" />
-        <NovelLoveShare novel={novel} />
+        <NovelLoveShare novel={novel} setLoveCount={setLoveCount} />
       </div>
     </div>
   );

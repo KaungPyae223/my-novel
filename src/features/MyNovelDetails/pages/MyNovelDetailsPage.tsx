@@ -8,6 +8,7 @@ import {
   Edit,
   Eye,
   Logs,
+  Mail,
   MessageCircle,
   RefreshCw,
   Star,
@@ -78,27 +79,44 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
     {
       label: "Chapters",
       value: "chapters",
-      icon: <BookOpen className="size-3.5" />,
-    },
-    {
-      label: "Analysis",
-      value: "analysis",
-      icon: <ChartLine className="size-3.5" />,
+      icon: <BookOpen className="size-3.5 " />,
+      bgColor: "bg-blue-500", // calm and readable for books/chapters
+      iconColor: "text-white",
     },
     {
       label: "Posts",
       value: "posts",
-      icon: <MessageCircle className="size-3.5" />,
+      icon: <MessageCircle className="size-3.5 " />,
+      bgColor: "bg-green-100", // friendly, conversational
+      iconColor: "text-green-600",
+    },
+    {
+      label: "Analysis",
+      value: "analysis",
+      icon: <ChartLine className="size-3.5 " />,
+      bgColor: "bg-yellow-100", // highlights insights/analysis
+      iconColor: "text-yellow-600",
+    },
+    {
+      label: "Letters",
+      value: "letters",
+      icon: <Mail className="size-3.5 " />,
+      bgColor: "bg-red-100", // attention-catching for mail
+      iconColor: "text-red-600",
     },
     {
       label: "Reviews",
       value: "reviews",
-      icon: <Star className="size-3.5" />,
+      icon: <Star className="size-3.5 " />,
+      bgColor: "bg-purple-100", // review/ratings feel
+      iconColor: "text-purple-600",
     },
     {
       label: "Trash",
       value: "trash",
       icon: <Trash className="size-3.5" />,
+      bgColor: "bg-gray-100", // muted for deleted items
+      iconColor: "text-gray-600",
     },
   ];
 
@@ -162,7 +180,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           </div>
           <MyNovelDetailsHeader novel={data?.data} />
           <MyNovelDetailsKPI novel={data?.data} />
-          <div className="grid grid-cols-5 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
+          <div className="grid grid-cols-6 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
             {tabs.map((tab) => (
               <div
                 key={tab.value}
