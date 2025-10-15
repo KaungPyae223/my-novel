@@ -37,7 +37,6 @@ export const useShareChapter = ({ chapterID }: { chapterID: string }) => {
   return useMutate({
     mutationFn: shareChapter,
     queryKey: [`/chapters/${chapterID}`],
-    successMessage: "Copy the chapter link",
   });
 };
 

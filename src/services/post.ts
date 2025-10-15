@@ -20,10 +20,11 @@ const postLoved = (postId: string) => {
   return api.post(`/posts/loved/${postId}`);
 };
 
-export const usePostLoved = ({id}: {id: string}) => {
+export const usePostLoved = ({ id }: { id: string }) => {
   return useMutate({
     mutationFn: postLoved,
-    queryKey: [`/recommend-posts`, `/novels/posts/${id}`],
+    queryKey: [],
+    successMessage: "",
   });
 };
 

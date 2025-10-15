@@ -11,6 +11,7 @@ import {
   Mail,
   MessageCircle,
   RefreshCw,
+  Sparkles,
   Star,
   Trash,
 } from "lucide-react";
@@ -79,43 +80,49 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
     {
       label: "Chapters",
       value: "chapters",
+      active: ["chapters", "trash"],
       icon: <BookOpen className="size-3.5 " />,
-      bgColor: "bg-blue-500", // calm and readable for books/chapters
+      bgColor: "bg-blue-500", 
       iconColor: "text-white",
     },
     {
       label: "Posts",
       value: "posts",
+      active: ["posts"],
       icon: <MessageCircle className="size-3.5 " />,
-      bgColor: "bg-green-100", // friendly, conversational
+      bgColor: "bg-green-100",
       iconColor: "text-green-600",
     },
     {
       label: "Analysis",
       value: "analysis",
+      active: ["analysis"],
       icon: <ChartLine className="size-3.5 " />,
-      bgColor: "bg-yellow-100", // highlights insights/analysis
+      bgColor: "bg-yellow-100", 
       iconColor: "text-yellow-600",
     },
     {
       label: "Letters",
       value: "letters",
+      active: ["letters"],
       icon: <Mail className="size-3.5 " />,
-      bgColor: "bg-red-100", // attention-catching for mail
+      bgColor: "bg-red-100", 
       iconColor: "text-red-600",
     },
     {
       label: "Reviews",
       value: "reviews",
+      active: ["reviews"],
       icon: <Star className="size-3.5 " />,
-      bgColor: "bg-purple-100", // review/ratings feel
+      bgColor: "bg-purple-100", 
       iconColor: "text-purple-600",
     },
     {
-      label: "Trash",
-      value: "trash",
-      icon: <Trash className="size-3.5" />,
-      bgColor: "bg-gray-100", // muted for deleted items
+      label: "AI Chat",
+      value: "ai-chat",
+      active: ["ai-chat"],
+      icon: <Sparkles className="size-3.5 " />,
+      bgColor: "bg-gray-100", 
       iconColor: "text-gray-600",
     },
   ];
@@ -158,7 +165,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
               <Button
                 variant="outline"
                 onClick={handleLogs}
-                className="justify-between bg-amber-300 hover:bg-amber-400"
+                className="justify-between bg-yellow-300 hover:bg-yellow-400"
               >
                 <Logs className="size-4" /> Novel Logs
               </Button>
@@ -186,7 +193,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
                 key={tab.value}
                 onClick={() => handleTabChange(tab.value)}
                 className={`rounded-md flex flex-row items-center justify-center gap-2 w-full py-1.5 ${
-                  activeTab === tab.value
+                  tab.active.includes(activeTab)
                     ? "bg-white font-medium shadow"
                     : "text-gray-600 cursor-pointer"
                 }`}

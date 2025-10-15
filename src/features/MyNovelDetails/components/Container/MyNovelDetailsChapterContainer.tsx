@@ -1,15 +1,20 @@
 import React from "react";
-import { BookOpen, Plus } from "lucide-react";
+import { BookOpen, Plus, Trash } from "lucide-react";
 import MyNovelDetailsChapterCard from "../MyNovelDetailsChapter/MyNovelDetailsChapterCard";
 import Link from "next/link";
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
+import { useAddParams } from "@/utils/searchParams";
 
 const ChapterContainer = ({ id }: { id: string }) => {
-
-  
   const { data, isLoading, error } = useFetchData(`/novel-chapters/${id}`);
+
+  const addParams = useAddParams();
+
+  const handleTrash = () => {
+    addParams([{ key: "tab", value: "trash" }]);
+  };
 
   if (isLoading) return <Loading />;
 
@@ -26,13 +31,19 @@ const ChapterContainer = ({ id }: { id: string }) => {
           </div>
           <h2 className="text-xl font-semibold text-gray-900">Chapters</h2>
         </div>
-        <Link
-          href={`/my-novels/details/${id}/create-chapter`}
-          className="flex bg-gray-800 text-sm text-white px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2"
-        >
-          <Plus className="size-4" />
-          Add Chapter
-        </Link>
+        <div className="flex flex-row gap-3">
+          <div onClick={handleTrash} className="flex border border-gray-300  text-sm text-gray-800 px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2">
+            <Trash className="size-4" />
+            Trash
+          </div>
+          <Link
+            href={`/my-novels/details/${id}/create-chapter`}
+            className="flex bg-gray-800 text-sm text-white px-4 py-2 cursor-pointer rounded-md flex-row items-center gap-2"
+          >
+            <Plus className="size-4" />
+            Add Chapter
+          </Link>
+        </div>
       </div>
 
       <div className="mt-6 space-y-3">

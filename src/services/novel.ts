@@ -32,8 +32,8 @@ const novelFavorite = (novelID: string) => {
 export const useShareNovel = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: shareNovel,
-    queryKey: ["/my-novels", `/user/novels/${novelID}`],
-    successMessage: "Copy the novel link",
+    queryKey: [],
+    successMessage: "Copy Novel Link Successfully"
   });
 };
 
@@ -41,6 +41,7 @@ export const useNovelLoved = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: novelLoved,
     queryKey: [],
+    successMessage: ""
   });
 };
 

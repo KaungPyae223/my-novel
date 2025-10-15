@@ -6,11 +6,9 @@ import shareLink from "@/utils/shareLink";
 
 const NovelLoveShare = ({
   novel: { id, already_loved },
- 
   setLoveCount,
 }: {
   novel: { id: string; already_loved: boolean };
- 
   setLoveCount: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const { mutate } = useNovelLoved({ novelID: id });
@@ -32,8 +30,8 @@ const NovelLoveShare = ({
   const { mutate: shareNovel } = useShareNovel({ novelID: id });
 
   const handleShare = () => {
-    shareLink(`/novel/${id}`);
     shareNovel(id);
+    shareLink(`/novel/${id}`);
   };
 
   return (

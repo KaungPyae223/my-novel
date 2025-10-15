@@ -146,16 +146,7 @@ const LogsCard = ({ log }: { log: LogEntry }) => {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-xs text-gray-500">
                 {log.ip_address !== "system" && log.user ? (
                   <span className="flex items-center">
-                    <Avatar className="w-3.5 h-3.5">
-                      <AvatarImage
-                        src={log.user.profile_image}
-                        alt={log.user.full_name}
-                      />
-                      <AvatarFallback className="w-3.5 h-3.5 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
-                        {avatarFallback(log.user.full_name)}
-                      </AvatarFallback>
-                    </Avatar>
-
+                    <User className="h-3.5 w-3.5 mr-1" />
                     {log.user.full_name}
                   </span>
                 ) : (

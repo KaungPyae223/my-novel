@@ -25,7 +25,8 @@ export const useMutate = ({
       toast.dismiss();
       if (successMessage) {
         toast.success(successMessage);
-      } else {
+      } else if (successMessage == "") return;
+      else {
         toast.success(data?.data?.message);
       }
 
