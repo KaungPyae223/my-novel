@@ -33,7 +33,7 @@ const NovelContainer = () => {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 1.0 }
+      { threshold: 0 }
     );
 
     observer.observe(observerRef.current);
@@ -52,15 +52,15 @@ const NovelContainer = () => {
         </div>
       ))}
 
-      {novels.length === 0 && isLoading && <Loading />}
-
       {novels.length === 0 && !isLoading && <EmptyState title="No Novels" />}
 
-      {isLoading && novels.length > 0 && (
-        <ScrollLoading message="Loading more novels..." />
-      )}
+      {isLoading && <ScrollLoading message="Loading more novels..." />}
 
-      {!hasMore && <p className="text-center text-gray-600">MyNovel &copy; {new Date().getFullYear()}</p>}
+      {!hasMore && (
+        <p className="text-center text-gray-600">
+          MyNovel &copy; {new Date().getFullYear()}
+        </p>
+      )}
     </div>
   );
 };
