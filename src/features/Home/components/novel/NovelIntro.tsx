@@ -5,12 +5,13 @@ import React from "react";
 const NovelIntro = ({ novel:{title,description,genre,progress,image,total_chapters,tags} }: { novel: {title:string,description:string,genre:string,progress:string,image:string,total_chapters:string,tags:string} }) => {
   return (
     <div className="my-6 p-5 rounded-lg flex flex-row gap-6 bg-blue-50">
+      
       <Image
         src={image}
         alt={title}
         width={128}
         height={128}
-        className="w-32 h-full object-cover rounded-md"
+        className="w-32 object-cover items-center flex-1 rounded-md"
       />
       <div>
         <div className="flex flex-row gap-3 items-center">

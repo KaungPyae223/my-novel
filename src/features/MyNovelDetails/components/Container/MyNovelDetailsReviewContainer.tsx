@@ -1,13 +1,22 @@
 import React from "react";
-import { BookOpen, Plus, Star } from "lucide-react";
-import MyNovelDetailsChapterCard from "../MyNovelDetailsChapter/MyNovelDetailsChapterCard";
-import Link from "next/link";
+import { Star } from "lucide-react";
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
 import ReviewCard from "@/features/Novel/components/Review/ReviewCard";
 
 const ChapterContainer = ({ id }: { id: string }) => {
+
+  const { data, isLoading, error } = useFetchData(`novels/reviews/${id}`);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    throw error;
+  }
+
   return (
     <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
       <div className="flex flex-row justify-between items-center">
@@ -19,13 +28,13 @@ const ChapterContainer = ({ id }: { id: string }) => {
         </div>
       </div>
       <div className="mt-6 p-6 space-y-6">
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-
+        {data.data.length == 0 ? (
+          <EmptyState title="No Reviews" />
+        ) : (
+          data.data.map((review: any) => (
+            <ReviewCard review={review} />
+          ))
+        )}
       </div>
     </div>
   );

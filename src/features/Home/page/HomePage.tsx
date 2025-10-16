@@ -11,13 +11,13 @@ const HomePage = () => {
     "Novels" | "Chapters" | "Posts"
   >("Novels");
 
-  const handleTabChange = (tab: string) => {
+  const handleTabChange = (tab: "Novels" | "Chapters" | "Posts") => {
     setActiveTab(tab);
   };
 
   const tabs = [
-    { label: "Novels", value: "Novels" },
     { label: "Chapters", value: "Chapters" },
+    { label: "Novels", value: "Novels" },
     { label: "Posts", value: "Posts" },
   ];
 
@@ -28,7 +28,7 @@ const HomePage = () => {
         className="overflow-y-auto scrollbar-hide p-4 py-6 max-w-2xl w-full mx-auto"
       >
         <div className="grid grid-cols-3 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
-          {tabs.map((tab) => (
+          {tabs.map((tab: { label: string; value: string }) => (
             <div
               key={tab.value}
               onClick={() => handleTabChange(tab.value)}

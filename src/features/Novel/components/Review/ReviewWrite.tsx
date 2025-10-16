@@ -1,7 +1,55 @@
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Paperclip } from "lucide-react";
 import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { confirmToast } from "@/utils/customToasts";
+import { useNovelReview } from "@/services/novel";
 
-const ReviewWrite = () => {
+const formSchema = z.object({
+  review: z.string().min(20, {
+    message: "Review must be at least 20 characters.",
+  }),
+});
+
+const ReviewWrite = ({ novelID }: { novelID: string }) => {
+  const { mutate } = useNovelReview();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      review: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    confirmToast({
+      title: "Are you sure?",
+      description: "Are you sure you want to submit this review?",
+      confirmText: "Submit",
+      cancelText: "Cancel",
+      confirmColor: "bg-green-600 hover:bg-green-700",
+      onConfirm: () => {
+        mutate({
+          review: values.review,
+          novel_id: novelID,
+        });
+        form.reset();
+      },
+    });
+  }
+
   return (
     <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
       <div className="flex flex-row items-center gap-3 text-2xl font-semibold">
@@ -9,26 +57,35 @@ const ReviewWrite = () => {
         Write Review
       </div>
       <div className="mt-6">
-        <form action="">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="Review">Review</label>
-            <textarea
-              name="Review"
-              id="Review"
-              className="border rounded-lg border-gray-300 p-2 resize-none"
-              cols={30}
-              rows={5}
-            ></textarea>
-          </div>
-          <div className="w-full flex justify-end mt-3">
-            <button
-              type="submit"
-              className="w-fit px-6 py-3 ms-auto bg-blue-700 text-white rounded-md text-sm font-medium text-center cursor-pointer"
-            >
-              Submit Review
-            </button>
-          </div>
-        </form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="review"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Review</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="border rounded-lg h-40 border-gray-300 p-2 "
+                      placeholder=""
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Write your review for this novel here.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="w-full flex justify-end ">
+              <Button type="submit">
+                <Paperclip className="size-4" /> Submit Review
+              </Button>
+            </div>
+          </form>
+        </Form>
       </div>
     </div>
   );

@@ -29,6 +29,17 @@ const novelFavorite = (novelID: string) => {
   return api.post(`novels/favorite/${novelID}`);
 };
 
+const novelReview = (reviewData: any) => {
+  return api.post(`reviews`, reviewData);
+};
+
+export const useNovelReview = () => {
+  return useMutate({
+    mutationFn: novelReview,
+    queryKey: [],
+  });
+};
+
 export const useShareNovel = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: shareNovel,

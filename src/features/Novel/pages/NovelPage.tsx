@@ -7,66 +7,62 @@ import ChapterContainer from "../components/Container/ChapterContainer";
 import AuthorPostContainer from "../components/Container/AuthorPostContainer";
 import SimilarNovelContainer from "../components/Container/SimilarNovelContainer";
 import ReviewContainer from "../components/Container/ReviewContainer";
-import {
-  BookOpen,
-  GalleryHorizontal,
-  MessageCircle,
-  Star,
-} from "lucide-react";
+import { BookOpen, GalleryHorizontal, MessageCircle, Star } from "lucide-react";
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
+import { useSearchParams } from "next/navigation";
+import { useAddParams } from "@/utils/searchParams";
 
-const NovelPage = ({novelID}: {novelID: string}) => {
-  const [activeTab, setActiveTab] = React.useState<
-    "Chapters" | "Similar" | "Posts" | "Reviews"
-  >("Chapters");
+const NovelPage = ({ novelID }: { novelID: string }) => {
+  const searchParams = useSearchParams();
+  const addParams = useAddParams();
+
+  const activeTab = searchParams.get("tab") || "";
 
   const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
+    addParams([{ key: "tab", value: tab }]);
   };
-
 
   const tabs = [
     {
       label: "Chapters",
-      value: "Chapters",
+      value: "",
       icon: <BookOpen className="size-3.5" />,
     },
     {
       label: "Similar",
-      value: "Similar",
+      value: "similar",
       icon: <GalleryHorizontal className="size-3.5" />,
     },
     {
       label: "Posts",
-      value: "Posts",
+      value: "posts",
       icon: <MessageCircle className="size-3.5" />,
     },
-    { label: "Reviews", value: "Reviews", icon: <Star className="size-3.5" /> },
+    { label: "Reviews", value: "reviews", icon: <Star className="size-3.5" /> },
   ];
 
-  const {data, isLoading, error} = useFetchData(`/user/novels/${novelID}`);
+  const { data, isLoading, error } = useFetchData(`/user/novels/${novelID}`);
 
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    if(error.status === 404) {
+    if (error.status === 404) {
       return notFound();
     }
     throw error;
   }
 
-  
   return (
     <div>
       <Toaster position="top-center" richColors />
       <NovelHeader />
       <Container className="mt-16 py-6">
-        <NovelIntro novel={data.data}/>
+        <NovelIntro novel={data.data} />
         <div className="grid grid-cols-4 my-9 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
           {tabs.map((tab) => (
             <div
@@ -83,10 +79,10 @@ const NovelPage = ({novelID}: {novelID: string}) => {
             </div>
           ))}
         </div>
-        {activeTab === "Chapters" && <ChapterContainer id={novelID} />}
-        {activeTab === "Similar" && <SimilarNovelContainer />}
-        {activeTab === "Posts" && <AuthorPostContainer id={novelID} />}
-        {activeTab === "Reviews" && <ReviewContainer />}
+        {activeTab === "" && <ChapterContainer id={novelID} />}
+        {activeTab === "similar" && <SimilarNovelContainer />}
+        {activeTab === "posts" && <AuthorPostContainer id={novelID} />}
+        {activeTab === "reviews" && <ReviewContainer id={novelID} />}
       </Container>
     </div>
   );
