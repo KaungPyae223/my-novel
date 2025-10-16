@@ -40,7 +40,7 @@ const ChapterContainer = () => {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 0 }
+      { rootMargin: "200px" }
     );
 
     observer.observe(observerRef.current);
@@ -50,18 +50,12 @@ const ChapterContainer = () => {
   return (
     <div className="w-full space-y-6">
       {chapters.map((chapter: any, index: number) => (
-        <div
-          key={chapter.id}
-          ref={chapters.length - 2 === index ? observerRef : null}
-        >
-          <ChapterCard chapter={chapter} />
-        </div>
+        <ChapterCard chapter={chapter} key={chapter.id} />
       ))}
 
+      {hasMore && <div ref={observerRef}></div>}
       {chapters.length === 0 && !isLoading && <EmptyState title="No Novels" />}
-
       {isLoading && <ScrollLoading message="Loading more chapters..." />}
-
       {!hasMore && <ScrollEnd />}
     </div>
   );

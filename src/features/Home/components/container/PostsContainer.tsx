@@ -41,7 +41,7 @@ const PostsContainer = () => {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 0 }
+      { rootMargin: "200px" }
     );
 
     observer.observe(observerRef.current);
@@ -54,20 +54,19 @@ const PostsContainer = () => {
     <>
       <div className="w-full space-y-6">
         {posts.map((post: any, index: number) => (
-          <div
-            ref={index === posts.length - 2 ? observerRef : null}
+          <PostCard
+            openComments={openComments}
+            setOpenComments={setOpenComments}
+            post={post}
             key={post.id}
-          >
-            <PostCard
-              openComments={openComments}
-              setOpenComments={setOpenComments}
-              post={post}
-            />
-          </div>
+          />
         ))}
+        {hasMore && <div ref={observerRef}></div>}
+        {posts.length === 0 && !isLoading && <EmptyState title="No Novels" />}
+        {isLoading && <ScrollLoading message="Loading more posts..." />}
+        {!hasMore && <ScrollEnd />}
       </div>
-      {isLoading && <ScrollLoading message="Loading more posts..." />}
-      {!hasMore && <ScrollEnd />}
+
       <Dialog
         open={openComments !== ""}
         onOpenChange={() => setOpenComments("")}
