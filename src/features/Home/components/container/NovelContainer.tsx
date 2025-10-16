@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
 import { useInView } from "framer-motion";
+import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 
 const NovelContainer = () => {
   const [novels, setNovels] = useState<any>([]);
@@ -19,7 +20,12 @@ const NovelContainer = () => {
 
   useEffect(() => {
     if (data?.data.length) {
-      setNovels((prev: any) => [...prev, ...data.data]);
+      setNovels((prev: any) => [
+        ...prev,
+        ...data.data.filter(
+          (novel: any) => !prev.some((p: any) => p.id === novel.id)
+        ),
+      ]);
     }
     setHasMore(data?.meta?.current_page < data?.meta?.last_page);
   }, [data]);
@@ -47,7 +53,7 @@ const NovelContainer = () => {
   return (
     <div className="w-full space-y-6">
       {novels.map((novel: any, index: number) => (
-        <div key={index} ref={index === novels.length - 2 ? observerRef : null}>
+        <div key={novel.id} ref={index === novels.length - 2 ? observerRef : null}>
           <NovelCard novel={novel} />
         </div>
       ))}
@@ -56,11 +62,7 @@ const NovelContainer = () => {
 
       {isLoading && <ScrollLoading message="Loading more novels..." />}
 
-      {!hasMore && (
-        <p className="text-center text-gray-600">
-          MyNovel &copy; {new Date().getFullYear()}
-        </p>
-      )}
+      {!hasMore && <ScrollEnd />}
     </div>
   );
 };

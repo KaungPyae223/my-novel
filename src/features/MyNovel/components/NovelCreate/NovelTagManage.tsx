@@ -37,7 +37,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
             return;
           }
           if (
-            !availableTags.find((tag) =>
+            !availableTags.some((tag: string) =>
               tag.toLowerCase().includes(newTag.toLowerCase())
             )
           ) {
@@ -53,7 +53,7 @@ const NovelTagManage = ({ form }: { form: any }) => {
           if (newTag && !currentTags.includes(newTag)) {
             
 
-            const availableTag = availableTags.find((tag) =>
+            const availableTag = availableTags.find((tag: string) =>
               tag.toLowerCase().includes(newTag.toLowerCase())
             );
 

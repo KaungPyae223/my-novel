@@ -6,6 +6,7 @@ import Loading from "@/features/Components/Loading/Loading";
 import EmptyState from "../EmptyState";
 import { useRef } from "react";
 import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
+import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 
 const ChapterContainer = () => {
   const [chapters, setChapters] = useState<any>([]);
@@ -20,7 +21,12 @@ const ChapterContainer = () => {
 
   useEffect(() => {
     if (data?.data.length) {
-      setChapters((prev: any) => [...prev, ...data.data]);
+      setChapters((prev: any) => [
+        ...prev,
+        ...data.data.filter(
+          (chapter: any) => !prev.some((p: any) => p.id === chapter.id)
+        ),
+      ]);
     }
     setHasMore(data?.meta?.current_page < data?.meta?.last_page);
   }, [data]);
@@ -45,7 +51,7 @@ const ChapterContainer = () => {
     <div className="w-full space-y-6">
       {chapters.map((chapter: any, index: number) => (
         <div
-          key={index}
+          key={chapter.id}
           ref={chapters.length - 2 === index ? observerRef : null}
         >
           <ChapterCard chapter={chapter} />
@@ -56,11 +62,7 @@ const ChapterContainer = () => {
 
       {isLoading && <ScrollLoading message="Loading more chapters..." />}
 
-      {!hasMore && (
-        <p className="text-center text-gray-600">
-          MyNovel &copy; {new Date().getFullYear()}
-        </p>
-      )}
+      {!hasMore && <ScrollEnd />}
     </div>
   );
 };
