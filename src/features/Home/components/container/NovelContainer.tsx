@@ -6,28 +6,25 @@ import EmptyState from "../EmptyState";
 import { useState } from "react";
 import { useEffect } from "react";
 import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
+import { useInView } from "framer-motion";
 
 const NovelContainer = () => {
   const [novels, setNovels] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
- 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, isLoading, error } = useFetchData("/home/novels?page=" + page);
 
   useEffect(() => {
-    if (data?.data.length > 0) {
+    if (data?.data.length) {
       setNovels((prev: any) => [...prev, ...data.data]);
     }
     setHasMore(data?.meta?.current_page < data?.meta?.last_page);
   }, [data]);
 
   useEffect(() => {
-
-    console.log(observerRef.current);
-
     if (!observerRef.current || !hasMore) return;
 
     const observer = new IntersectionObserver(
@@ -47,28 +44,23 @@ const NovelContainer = () => {
     throw error;
   }
 
-  if (novels.length === 0 && isLoading) {
-    return <Loading />;
-  }
-
-  if (novels.length === 0) {
-    return <EmptyState title="No Novels" />;
-  }
-
   return (
     <div className="w-full space-y-6">
-      {novels.map((novel: any,index:number) => (
-        <NovelCard key={index} novel={novel} />
+      {novels.map((novel: any, index: number) => (
+        <div key={index} ref={index === novels.length - 2 ? observerRef : null}>
+          <NovelCard novel={novel} />
+        </div>
       ))}
 
-      {isLoading && <ScrollLoading message="Loading more novels..." />}
-      {hasMore ? (
-        <div ref={observerRef} className="h-10"></div>
-      ) : (
-        <p className="text-center mt-4 text-sm text-gray-500">
-          MyNovel &copy; {new Date().getFullYear()}
-        </p>
+      {novels.length === 0 && isLoading && <Loading />}
+
+      {novels.length === 0 && !isLoading && <EmptyState title="No Novels" />}
+
+      {isLoading && novels.length > 0 && (
+        <ScrollLoading message="Loading more novels..." />
       )}
+
+      {!hasMore && <p className="text-center text-gray-600">MyNovel &copy; {new Date().getFullYear()}</p>}
     </div>
   );
 };
