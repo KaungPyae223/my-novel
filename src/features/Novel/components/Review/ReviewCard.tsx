@@ -10,7 +10,7 @@ interface ReviewCardProps {
     created_at: string;
     user: {
       name: string;
-      avatar: string;
+      image: string;
     };
   };
 }
@@ -20,7 +20,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
     <div className="flex flex-row gap-4 pb-6 border-b border-gray-200 last:border-b-0">
       <Avatar className="w-12 h-12">
         <AvatarImage
-          src={review.user.avatar}
+          src={review.user.image}
           alt={review.user.name}
           className="w-12 h-12 object-cover rounded-full"
         />

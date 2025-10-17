@@ -7,7 +7,7 @@ import EmptyState from "@/features/Components/EmptyState/EmptyState";
 import ChapterTrashedCard from "../ChapterTrashed/ChapterTrashedCard";
 import { useAddParams } from "@/utils/searchParams";
 
-const ChapterContainer = ({ id }: { id: string }) => {
+const MyNovelDetailsTrashContainer = ({ id }: { id: string }) => {
   console.log(id);
 
   const { data, isLoading, error } = useFetchData(
@@ -64,4 +64,4 @@ const ChapterContainer = ({ id }: { id: string }) => {
   );
 };
 
-export default ChapterContainer;
+export default MyNovelDetailsTrashContainer;

@@ -64,7 +64,7 @@ export default function RootLayout({
         <LeftSideBar />
         <main
           style={{ height: "calc(100vh - 4rem)" }}
-          className="flex-1 scrollbar-hide overflow-y-auto bg-gray-50"
+          className="flex-1 overflow-y-auto bg-gray-50"
         >
           <QueryProvider> {children}</QueryProvider>
         </main>
