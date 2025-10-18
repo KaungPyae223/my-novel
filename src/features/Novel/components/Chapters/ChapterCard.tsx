@@ -3,16 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { formatDate } from "@/utils/formatDate";
 
-const ChapterCard = ({
-  chapterNumber,
-  data,
-}: {
-  chapterNumber: number;
-  data: any;
-}) => {
+const ChapterCard = ({ data }: { data: any }) => {
   return (
     <Link
-      href={`/novel/3/chapter/1`}
+      href={`/novel/3/chapter/${data.id}`}
       className={`p-4 group ${
         data.view_at ? "bg-green-100" : "bg-gray-50"
       }  hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6 ${
@@ -20,7 +14,7 @@ const ChapterCard = ({
       }`}
     >
       <div className="bg-blue-100 text-blue-800 w-12 h-12 font-medium flex items-center justify-center rounded-full">
-        {chapterNumber}
+        {data.chapter_index}
       </div>
       <div>
         <p className="font-medium text-lg group-hover:text-blue-600">

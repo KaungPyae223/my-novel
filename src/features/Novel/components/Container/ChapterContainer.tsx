@@ -2,15 +2,23 @@
 import React from "react";
 import ChapterCard from "../Chapters/ChapterCard";
 import { BookOpen } from "lucide-react";
-import Loading from "@/features/Components/Loading/Loading";
-import useFetchData from "@/services/fetcher";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
+import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
+import { useChapterContainer } from "../../hooks/useChapterContainer";
 
-const ChapterContainer = ({id}: {id: string}) => {
-
-  const { data, isLoading, error } = useFetchData(`/user/novel-chapters/${id}`);
-
-  if (isLoading) return <Loading />;
+const ChapterContainer = ({ id }: { id: string }) => {
+  const {
+    chapterData,
+    hasMore,
+    hasPrev,
+    isLoading,
+    error,
+    chapterContainerRef,
+    nextObserverRef,
+    prevObserverRef,
+  } = useChapterContainer({ id });
 
   if (error) {
     throw error;
@@ -22,18 +30,28 @@ const ChapterContainer = ({id}: {id: string}) => {
         <BookOpen className="size-6" />
         Chapters
       </div>
-      <div className="mt-6 space-y-3">
+      <ScrollArea
+        ref={chapterContainerRef}
+        className="mt-6 h-[calc(100vh-20rem)]"
+      >
+        {hasPrev && <div ref={prevObserverRef}></div>}
+        {isLoading && <ScrollLoading message="Loading more chapters..." />}
 
-        {
-          data?.data.length === 0 ? (
+        <div className="space-y-3">
+          {chapterData.map((chapter: any, index: number) => (
+            <div key={chapter.id} id={chapter.id}>
+              <ChapterCard data={chapter} />
+            </div>
+          ))}
+
+          {hasMore && <div ref={nextObserverRef}></div>}
+          {chapterData.length === 0 && !isLoading && (
             <EmptyState title="No Chapters" />
-          ) : (
-            data?.data.map((chapter: any, idx: number) => (
-              <ChapterCard key={idx} chapterNumber={idx + 1} data={chapter} />
-            ))
-          )
-        }
-      </div>
+          )}
+          {isLoading && <ScrollLoading message="Loading more chapters..." />}
+          {!hasMore && <ScrollEnd />}
+        </div>
+      </ScrollArea>
     </div>
   );
 };

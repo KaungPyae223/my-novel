@@ -8,44 +8,25 @@ import { useChapterLoved, useShareChapter } from "@/services/chapter";
 import shareLink from "@/utils/shareLink";
 
 export const useChapterCard = ({ chapterID }: { chapterID: string }) => {
-  const [fontSize, setFontSize] = React.useState<number>(16);
-  const [readType, setReadType] = React.useState<string>("content");
-
-  const [translatedLanguage, setTranslatedLanguage] =
-    React.useState<string>("");
   const searchParams = useSearchParams();
 
+  const [fontSize, setFontSize] = React.useState<number>(16);
+  const readType = searchParams.get("read_type") || "content";
+  const translatedLanguage = searchParams.get("language") || "";
+
+  const [already_love, setAlready_love] = React.useState<boolean>(false);
+
   const addParams = useAddParams();
-
-  useEffect(() => {
-    const language = searchParams.get("language");
-    const readTypeParam = searchParams.get("read_type");
-    if (language && language !== translatedLanguage) {
-      setTranslatedLanguage(language);
-    }
-    if (readTypeParam && readTypeParam !== readType) {
-      setReadType(readTypeParam);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    const params = [];
-    if (
-      translatedLanguage &&
-      searchParams.get("language") !== translatedLanguage
-    ) {
-      params.push({ key: "language", value: translatedLanguage });
-    }
-    if (readType && searchParams.get("read_type") !== readType) {
-      params.push({ key: "read_type", value: readType });
-    }
-
-    if (params.length) addParams(params);
-  }, [translatedLanguage, readType]);
 
   const { data, isLoading, error } = useFetchData(
     useGenerateQuery(`/chapters/${chapterID}`)
   );
+
+  useEffect(() => {
+    if (data) {
+      setAlready_love(data.data.already_love);
+    }
+  }, [data]);
 
   const handleZoomIn = () => {
     setFontSize((prevFontSize) => prevFontSize + 1);
@@ -96,6 +77,7 @@ export const useChapterCard = ({ chapterID }: { chapterID: string }) => {
 
   const handleLoved = () => {
     mutate(chapterID);
+    setAlready_love((prev) => !prev);
   };
 
   const { mutate: shareChapter } = useShareChapter({ chapterID });
@@ -118,10 +100,10 @@ export const useChapterCard = ({ chapterID }: { chapterID: string }) => {
     resumeVoice,
     handleLoved,
     handleShare,
-    setReadType,
-    setTranslatedLanguage,
+    addParams,
     data,
     isLoading,
+    already_love,
     error,
   };
 };

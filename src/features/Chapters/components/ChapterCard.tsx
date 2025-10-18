@@ -45,10 +45,10 @@ const ChapterCard = ({
     resumeVoice,
     handleLoved,
     handleShare,
-    setReadType,
-    setTranslatedLanguage,
+    addParams,
     data,
     isLoading,
+    already_love,
     error,
   } = useChapterCard({ chapterID });
 
@@ -77,7 +77,14 @@ const ChapterCard = ({
               <p className="text-xs mb-0.5 text-gray-800">Read Type</p>
               <Select
                 value={readType}
-                onValueChange={(value) => setReadType(value)}
+                onValueChange={(value) =>
+                  addParams([
+                    {
+                      key: "read_type",
+                      value: value === "content" ? "" : value,
+                    },
+                  ])
+                }
               >
                 <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                   <SelectValue placeholder="Select read type" />
@@ -95,7 +102,14 @@ const ChapterCard = ({
               <p className="text-xs mb-0.5 text-gray-800">Translation</p>
               <Select
                 value={translatedLanguage}
-                onValueChange={(value) => setTranslatedLanguage(value)}
+                onValueChange={(value) =>
+                  addParams([
+                    {
+                      key: "language",
+                      value: value === "Original Language" ? "" : value,
+                    },
+                  ])
+                }
               >
                 <SelectTrigger className="w-[180px] h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                   <SelectValue placeholder="Select a language" />
@@ -156,17 +170,17 @@ const ChapterCard = ({
               <p className="text-xs mb-0.5 text-gray-800">{"General"}</p>
               <div className="flex h-8 items-center gap-2 rounded-md border border-gray-300 px-2 py-1">
                 <motion.div
-                  key={chapterData?.already_love ? "filled" : "unfilled"} // forces animation when state changes
+                  key={already_love ? "filled" : "unfilled"} // forces animation when state changes
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   onClick={handleLoved}
                 >
-                  {chapterData?.already_love ? (
+                  {already_love ? (
                     <Heart
                       className="size-4 cursor-pointer"
-                      fill="currentColor"
+                      fill="red"
                     />
                   ) : (
                     <Heart className="size-4 cursor-pointer" />
