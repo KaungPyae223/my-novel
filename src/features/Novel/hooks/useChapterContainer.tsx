@@ -1,18 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import useFetchData from "@/services/fetcher";
 import useNormalFetcher from "@/services/normalFetcher";
+import { useSearchParams } from "next/navigation";
 
 export const useChapterContainer = ({ id }: { id: string }) => {
+  const searchParam = useSearchParams();
+  const q = searchParam.get("q") || "";
+
   const [firstUnreadChapter, setFirstUnreadChapter] = useState<any>(null);
   const [chapterData, setChapterData] = useState<any>([]);
   const [hasMore, setHasMore] = useState(true);
   const [hasPrev, setHasPrev] = useState(true);
 
-  const [nextPage, setNextPage] = useState(1);
-  const [prevPage, setPrevPage] = useState(1);
+  const [nextPage, setNextPage] = useState<number>(0);
+  const [prevPage, setPrevPage] = useState<number>(0);
   const [type, setType] = useState<"next" | "prev">("next");
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(0);
 
   const nextObserverRef = useRef<HTMLDivElement | null>(null);
   const prevObserverRef = useRef<HTMLDivElement | null>(null);
@@ -20,7 +24,7 @@ export const useChapterContainer = ({ id }: { id: string }) => {
   const [scrollAnchorId, setScrollAnchorId] = useState<string | null>(null);
 
   const { data, isLoading, error } = useFetchData(
-    `/user/novel-chapters/${id}?page=${page}`
+    `/user/novel-chapters/${id}?page=${page}&q=${q}`
   );
 
   const { data: lastReadChapter } = useNormalFetcher(
@@ -28,12 +32,30 @@ export const useChapterContainer = ({ id }: { id: string }) => {
   );
 
   useEffect(() => {
-    if (lastReadChapter) {
+    if (q) {
+      setChapterData([]);
+      setNextPage(1);
+      setPrevPage(1);
+      setPage(1);
+    } else {
+      if (lastReadChapter) {
+        setChapterData([]);
+        setNextPage(lastReadChapter.last_read_page);
+        setPrevPage(lastReadChapter.last_read_page);
+        setPage(lastReadChapter.last_read_page);
+
+        setFirstUnreadChapter(lastReadChapter.last_read_chapter);
+      }
+    }
+  }, [q]);
+
+  useEffect(() => {
+    if (lastReadChapter && !q) {
+      setChapterData([]);
       setPage(lastReadChapter.last_read_page);
       setPrevPage(lastReadChapter.last_read_page);
       setNextPage(lastReadChapter.last_read_page);
       setFirstUnreadChapter(lastReadChapter.last_read_chapter);
-      setChapterData([]);
     }
   }, [lastReadChapter]);
 
@@ -73,18 +95,6 @@ export const useChapterContainer = ({ id }: { id: string }) => {
     }
   }, [firstUnreadChapter, chapterData]);
 
-  const chapterContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (chapterContainerRef.current) {
-      const element = document.getElementById(firstUnreadChapter);
-
-      if (element) {
-        element.scrollIntoView();
-      }
-    }
-  }, [firstUnreadChapter]);
-
   useEffect(() => {
     if (!nextObserverRef.current || !hasMore) return;
 
@@ -101,7 +111,7 @@ export const useChapterContainer = ({ id }: { id: string }) => {
 
     observer.observe(nextObserverRef.current);
     return () => observer.disconnect();
-  }, [hasMore, isLoading]);
+  }, [hasMore, isLoading, chapterData]);
 
   useEffect(() => {
     if (!prevObserverRef.current || !hasPrev) return;
@@ -130,7 +140,6 @@ export const useChapterContainer = ({ id }: { id: string }) => {
     hasPrev,
     isLoading,
     error,
-    chapterContainerRef,
     nextObserverRef,
     prevObserverRef,
   };
