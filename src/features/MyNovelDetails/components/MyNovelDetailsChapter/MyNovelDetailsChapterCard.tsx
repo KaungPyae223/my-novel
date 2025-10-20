@@ -15,11 +15,9 @@ import { toast } from "sonner";
 import { confirmToast } from "@/utils/customToasts";
 
 const MyNovelDetailsChapterCard = ({
-  chapterNumber,
   novelId,
   data,
 }: {
-  chapterNumber: number;
   novelId: string;
   data: any;
 }) => {
@@ -58,7 +56,7 @@ const MyNovelDetailsChapterCard = ({
       className="p-4 group bg-gray-50 hover:bg-gray-100 cursor-pointer duration-300 rounded-lg flex flex-row items-center gap-6"
     >
       <div className="bg-blue-100 text-blue-800 w-12 h-12 font-medium flex items-center justify-center rounded-full">
-        {chapterNumber}
+        {data.chapter_index}
       </div>
       <div>
         <p className="font-medium text-lg group-hover:text-blue-600">

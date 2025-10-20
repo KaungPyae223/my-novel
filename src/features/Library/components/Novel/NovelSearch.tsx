@@ -20,7 +20,7 @@ const NovelSearch = () => {
 
   const { searchQuery, handleSearch } = useHandleSearch();
 
-  const genre = searchParams.get("genre") || undefined;
+  const genre = searchParams.get("genre") || "";
   const progress = searchParams.get("progress") || "";
 
   const handleClearAll = () => {

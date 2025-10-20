@@ -44,8 +44,7 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
 
   const { changeFilter } = useHandleFilter();
 
-  console.log(data)
-
+  
   if (isLoading) {
     return <Loading />;
   }
@@ -87,7 +86,7 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
             </div>
 
             <Select
-              value={searchParams.get("action") ?? undefined}
+              value={searchParams.get("action") || undefined}
               onValueChange={(e) => changeFilter("action", e)}
             >
               <SelectTrigger className="w-[180px]">
