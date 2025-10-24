@@ -42,6 +42,7 @@ import MyNovelDetailsReviewContainer from "../components/Container/MyNovelDetail
 import { useAddParams } from "@/utils/searchParams";
 import { useSearchParams } from "next/navigation";
 import MyNovelDetailsTrashContainer from "../components/Container/MyNovelDetailsTrashContainer";
+import MyNovelDetailsLetterConatiner from "../components/Container/MyNovelDetailsLetterConatiner";
 
 const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -82,7 +83,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       value: "chapters",
       active: ["chapters", "trash"],
       icon: <BookOpen className="size-3.5 " />,
-      bgColor: "bg-blue-500", 
+      bgColor: "bg-blue-500",
       iconColor: "text-white",
     },
     {
@@ -98,7 +99,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       value: "analysis",
       active: ["analysis"],
       icon: <ChartLine className="size-3.5 " />,
-      bgColor: "bg-yellow-100", 
+      bgColor: "bg-yellow-100",
       iconColor: "text-yellow-600",
     },
     {
@@ -106,15 +107,13 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       value: "letters",
       active: ["letters"],
       icon: <Mail className="size-3.5 " />,
-      bgColor: "bg-red-100", 
-      iconColor: "text-red-600",
     },
     {
       label: "Reviews",
       value: "reviews",
       active: ["reviews"],
       icon: <Star className="size-3.5 " />,
-      bgColor: "bg-purple-100", 
+      bgColor: "bg-purple-100",
       iconColor: "text-purple-600",
     },
     {
@@ -122,7 +121,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       value: "ai-chat",
       active: ["ai-chat"],
       icon: <Sparkles className="size-3.5 " />,
-      bgColor: "bg-gray-100", 
+      bgColor: "bg-gray-100",
       iconColor: "text-gray-600",
     },
   ];
@@ -209,6 +208,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           {activeTab === "posts" && <MyNovelDetailsPostContainer id={id} />}
           {activeTab === "reviews" && <MyNovelDetailsReviewContainer id={id} />}
           {activeTab === "trash" && <MyNovelDetailsTrashContainer id={id} />}
+          {activeTab === "letters" && <MyNovelDetailsLetterConatiner />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

@@ -111,7 +111,7 @@ const NovelSearch = () => {
             </div>
           </div>
         </div>
-        {(progress !== "" || genre !== undefined || searchQuery !== "") && (
+        {(progress !== "" || genre !== "" || searchQuery !== "") && (
           <div
             onClick={handleClearAll}
             className="cursor-pointer text-sm font-semibold hover:bg-gray-100 px-2 py-1 rounded-md text-gray-800 flex items-center gap-2"

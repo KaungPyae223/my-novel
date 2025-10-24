@@ -29,9 +29,11 @@ const ChapterContainer = ({ id }: { id: string }) => {
   return (
     <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
       <div className="flex flex-row justify-between  items-center gap-3 ">
-        <div className="flex flex-row  items-center gap-3 text-2xl font-semibold">
-          <BookOpen className="size-6" />
-          Chapters
+        <div className="flex flex-row items-center gap-3">
+          <div className="p-2 bg-blue-50 rounded-lg">
+            <BookOpen className="size-5 text-blue-600" />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900">Chapters</h2>
         </div>
         <div className="relative">
           <input

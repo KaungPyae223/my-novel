@@ -1,8 +1,4 @@
-import { MessageCircle, Paperclip } from "lucide-react";
-import React from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,22 +10,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { confirmToast } from "@/utils/customToasts";
 import { useNovelReview } from "@/services/novel";
-
+import { confirmToast } from "@/utils/customToasts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Mail, Send } from "lucide-react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 const formSchema = z.object({
   review: z.string().min(20, {
     message: "Review must be at least 20 characters.",
   }),
 });
 
-const ReviewWrite = ({
-  novelID,
-  title,
-}: {
-  novelID: string;
-  title: string;
-}) => {
+const WriteFanLetter = ({ novelID, title }: { novelID: string; title: string }) => {
   const { mutate } = useNovelReview();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,12 +54,14 @@ const ReviewWrite = ({
     <div className="p-7 shadow border bg-white border-gray-200 rounded-lg">
       <div className="flex flex-row items-center gap-3">
         <div className="p-2 bg-blue-50 rounded-lg">
-          <MessageCircle className="size-5 text-blue-600" />
+          <Mail className="size-5 text-blue-600" />
         </div>
-        <h2 className="text-xl font-semibold text-gray-900">Write Review</h2>
+        <h2 className="text-xl font-semibold text-gray-900">
+          Write Fan Letter
+        </h2>
       </div>
       <p className="mt-3 text-gray-700 text-sm">
-        Share your thoughts about {title} novel to other readers.
+        Share your thoughts and appreciation with the author of {title}
       </p>
       <div className="mt-6">
         <Form {...form}>
@@ -75,20 +71,22 @@ const ReviewWrite = ({
               name="review"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Review</FormLabel>
+                  <FormLabel>Your Message</FormLabel>
                   <FormControl>
                     <Textarea
                       className="border rounded-lg h-40 border-gray-300 p-2 "
-                      placeholder="Write your review here... Share your thoughts about the novel to other readers."
+                      placeholder="Write your fan letter here... Share what you love about the novel, your favorite moments, or ask thoughtful questions about the story."
                       {...field}
                     />
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="w-full">
-              <Paperclip className="size-4" /> Submit Review
+              <Send className="size-4 " />
+              Send Letter
             </Button>
           </form>
         </Form>
@@ -97,4 +95,4 @@ const ReviewWrite = ({
   );
 };
 
-export default ReviewWrite;
+export default WriteFanLetter;

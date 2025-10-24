@@ -7,13 +7,20 @@ import ChapterContainer from "../components/Container/ChapterContainer";
 import AuthorPostContainer from "../components/Container/AuthorPostContainer";
 import SimilarNovelContainer from "../components/Container/SimilarNovelContainer";
 import ReviewContainer from "../components/Container/ReviewContainer";
-import { BookOpen, GalleryHorizontal, MessageCircle, Star } from "lucide-react";
+import {
+  BookOpen,
+  GalleryHorizontal,
+  Mail,
+  MessageCircle,
+  Star,
+} from "lucide-react";
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import { useSearchParams } from "next/navigation";
 import { useAddParams } from "@/utils/searchParams";
+import LetterContainer from "../components/Container/LetterContainer";
 
 const NovelPage = ({ novelID }: { novelID: string }) => {
   const searchParams = useSearchParams();
@@ -41,6 +48,11 @@ const NovelPage = ({ novelID }: { novelID: string }) => {
       value: "posts",
       icon: <MessageCircle className="size-3.5" />,
     },
+    {
+      label: "Letters",
+      value: "letters",
+      icon: <Mail className="size-3.5" />,
+    },
     { label: "Reviews", value: "reviews", icon: <Star className="size-3.5" /> },
   ];
 
@@ -63,7 +75,7 @@ const NovelPage = ({ novelID }: { novelID: string }) => {
       <NovelHeader />
       <Container className="mt-16 py-6">
         <NovelIntro novel={data.data} />
-        <div className="grid grid-cols-4 my-9 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
+        <div className="grid grid-cols-5 my-9 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
           {tabs.map((tab) => (
             <div
               key={tab.value}
@@ -82,7 +94,8 @@ const NovelPage = ({ novelID }: { novelID: string }) => {
         {activeTab === "" && <ChapterContainer id={novelID} />}
         {activeTab === "similar" && <SimilarNovelContainer />}
         {activeTab === "posts" && <AuthorPostContainer id={novelID} />}
-        {activeTab === "reviews" && <ReviewContainer id={novelID} />}
+        {activeTab === "reviews" && <ReviewContainer title={data.data.title} id={novelID} />}
+        {activeTab === "letters" && <LetterContainer title={data.data.title} id={novelID} />}
       </Container>
     </div>
   );

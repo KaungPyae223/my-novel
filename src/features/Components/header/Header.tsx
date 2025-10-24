@@ -13,19 +13,20 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       const response = await logout();
-      
+
       setLogOut();
       toast.success("Logout Successfully");
       router.push("/login");
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   return (
     <div className="fixed flex justify-between items-center px-16 top-0 left-0 right-0 h-16 bg-white shadow w-full">
       <div className="flex flex-row items-center gap-9">
-        <div className="flex flex-row items-center gap-3">
+        <div
+          onClick={() => router.push("/")}
+          className="flex flex-row items-center gap-3 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

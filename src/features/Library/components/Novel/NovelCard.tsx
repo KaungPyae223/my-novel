@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { formatDate } from "@/utils/formatDate";
 import { BookOpen, Clock, Eye, Heart } from "lucide-react";
+import Link from "next/link";
 
 interface NovelCardProps {
   novel: {
@@ -87,9 +88,9 @@ const NovelCard = ({ novel, handleSynopsis }: NovelCardProps) => {
               Synopsis
             </div>
 
-            <button className="bg-gray-800 cursor-pointer text-white px-3 py-1.5 rounded-md text-sm font-medium">
+            <Link href={`/novel/${novel.id}`} className="bg-gray-800 text-center cursor-pointer text-white px-3 py-1.5 rounded-md text-sm font-medium">
               Read Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
