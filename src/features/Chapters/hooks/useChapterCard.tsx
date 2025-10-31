@@ -73,14 +73,14 @@ export const useChapterCard = ({ chapterID }: { chapterID: string }) => {
     setIsPlaying("pause");
   };
 
-  const { mutate } = useChapterLoved({ chapterID });
+  const { mutate } = useChapterLoved();
 
   const handleLoved = () => {
     mutate(chapterID);
     setAlready_love((prev) => !prev);
   };
 
-  const { mutate: shareChapter } = useShareChapter({ chapterID });
+  const { mutate: shareChapter } = useShareChapter();
 
   const handleShare = () => {
     shareLink();

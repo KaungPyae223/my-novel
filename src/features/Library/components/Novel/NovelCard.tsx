@@ -57,7 +57,7 @@ const NovelCard = ({ novel, handleSynopsis }: NovelCardProps) => {
           </p>
           <div className="grid grid-cols-2 text-gray-600 text-xs gap-2 my-6">
             <div className="flex items-center gap-1.5">
-              <Heart className="size-3.5" fill="red" />
+              <Heart className="size-3.5" stroke="red" fill="red" />
               {novel.loved_count}
             </div>
             <div className="flex items-center gap-1.5">

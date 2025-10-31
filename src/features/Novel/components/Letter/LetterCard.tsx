@@ -30,7 +30,7 @@ const LetterCard = () => {
       <div className="bg-gray-100 border-l-4 border-gray-400 rounded p-3">
         <p className="text-sm font-semibold text-gray-700 mb-1 flex gap-1 items-center">
           <MessageCircle className="size-4 text-gray-600" />
-          Author's Reply:
+          Author&apos;s Reply:
         </p>
         <p className="text-sm mt-2 text-gray-700">
           Thank you so much for your kind words! Your support motivates me to

@@ -2,11 +2,11 @@ import React from "react";
 import LetterList from "../Letters/LetterList";
 import LetterSetting from "../Letters/LetterSetting";
 
-const MyNovelDetailsLetterConatiner = () => {
+const MyNovelDetailsLetterConatiner = ({id}:{id:string}) => {
   return (
     <div className="space-y-6">
-      <LetterSetting />
-      <LetterList />
+      <LetterSetting novelID={id} />
+      <LetterList novelID={id} />
     </div>
   );
 };

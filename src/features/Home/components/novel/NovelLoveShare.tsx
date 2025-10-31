@@ -11,7 +11,7 @@ const NovelLoveShare = ({
   novel: { id: string; already_loved: boolean };
   setLoveCount: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { mutate } = useNovelLoved({ novelID: id });
+  const { mutate } = useNovelLoved();
 
   const [alreadyLoved, setAlreadyLoved] =
     React.useState<boolean>(already_loved);
@@ -27,7 +27,7 @@ const NovelLoveShare = ({
     setAlreadyLoved(!alreadyLoved);
   };
 
-  const { mutate: shareNovel } = useShareNovel({ novelID: id });
+  const { mutate: shareNovel } = useShareNovel();
 
   const handleShare = () => {
     shareNovel(id);

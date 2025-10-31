@@ -1,25 +1,67 @@
-import { Avatar } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
+import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
+import { useUnbanUser } from "@/services/ban";
+import useFetchData from "@/services/fetcher";
 import { avatarFallback } from "@/utils/avatarFallBack";
 import { useHandleSearch } from "@/utils/handleSearch";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Search, Unlock, UserX } from "lucide-react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const LetterBanUsers = ({
-  bannedUsers,
-  searchQuery,
-  setSearchQuery,
-  unbanUser,
-  filteredBannedUsers,
-}: {
-  bannedUsers: { id: number; name: string; email: string }[];
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-  unbanUser: (userId: number) => void;
-  filteredBannedUsers: { id: number; name: string; email: string }[];
-}) => {
-  const { handleSearch } = useHandleSearch();
+const LetterBanUsers = ({ novelID }: { novelID: string }) => {
+  const [bannedUsers, setBannedUsers] = useState<any>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  const { data, isLoading, error } = useFetchData(
+    "/novels/banned-users/" + novelID + "?page=" + page
+  );
+
+  useEffect(() => {
+    if (data?.data.length) {
+      setBannedUsers((prev: any) => [
+        ...prev,
+        ...data.data.filter(
+          (review: any) => !prev.some((p: any) => p.id === review.id)
+        ),
+      ]);
+    }
+    setHasMore(data?.meta?.current_page < data?.meta?.last_page);
+  }, [data]);
+
+  useEffect(() => {
+    if (!observerRef.current || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, [hasMore, isLoading]);
+
+  const { handleSearch, searchQuery } = useHandleSearch();
+
+  const { mutate: unbanUser } = useUnbanUser();
+
+  const handleUnban = (id: number) => {
+    unbanUser({ id, novelID });
+  };
+
+  if (error) {
+    throw error;
+  }
+
   return (
     <div className="space-y-4">
       <div className="relative flex-1">
@@ -35,36 +77,46 @@ const LetterBanUsers = ({
         </div>
       </div>
 
-      {filteredBannedUsers.length > 0 ? (
+      {bannedUsers.length > 0 ? (
         <ScrollArea className="max-h-[400px]">
           <div className="space-y-4">
-            {filteredBannedUsers.map((user) => (
+            {bannedUsers.map((data: any) => (
               <div
-                key={user.id}
+                key={data.id}
                 className="p-4 flex border border-gray-300 bg-gray-100 rounded-lg items-center justify-between"
               >
                 <div className="flex items-center gap-4">
                   <Avatar className="w-12 h-12">
+                    <AvatarImage
+                      src={data?.profile_image}
+                      alt={data?.name}
+                      className="w-12 h-12 object-cover rounded-full"
+                    />
                     <AvatarFallback className="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
-                      {user?.name ? avatarFallback(user.name) : "?"}
+                      {data?.name ? avatarFallback(data.name) : "?"}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium font-poppins">{user.name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
+                    <p className="font-medium font-poppins">{data.name}</p>
+                    <p className="text-xs text-gray-500">{data.email}</p>
                   </div>
                 </div>
                 <div>
-                  <button
-                    className="flex items-center gap-2 bg-white text-sm px-4 py-2 rounded-lg cursor-pointer"
-                    onClick={() => unbanUser(user.id)}
+                  <Button
+                    variant="outline"
+                    onClick={() => handleUnban(data.id)}
                   >
                     <Unlock className="size-3.5" /> Unban
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
           </div>
+          {hasMore && <div ref={observerRef}></div>}
+          {isLoading && (
+            <ScrollLoading message="Loading more banned users..." />
+          )}
+          {!hasMore && <ScrollEnd />}
         </ScrollArea>
       ) : (
         <div className="text-center py-12 bg-gray-50 rounded-lg">

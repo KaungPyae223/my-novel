@@ -5,12 +5,12 @@ import PostCard from "../Posts/PostCard";
 import useFetchData from "@/services/fetcher";
 import Loading from "@/features/Components/Loading/Loading";
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import PostCreate from "../Posts/PostCreate";
 import PostUpdate from "../Posts/PostUpdate.";
 
 const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
-  const { data, isLoading, error } = useFetchData(`/novels/posts/${id}`);
+  const { data, isLoading, error } = useFetchData(`/novels/posts/${id}?page=1`, `post-${id}`);
 
   const [editingPost, setEditingPost] = useState<any>(null);
   const [creatingPost, setCreatingPost] = useState<boolean>(false);

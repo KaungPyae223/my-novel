@@ -4,7 +4,7 @@ import { usePostLoved } from "@/services/post";
 import { motion } from "framer-motion";
 
 const AuthorPostCardLoveShare = ({ post }: { post: any }) => {
-  const { mutate } = usePostLoved({id: post.id});
+  const { mutate } = usePostLoved();
 
   const handleLoved = () => {
     mutate(post.id);

@@ -3,12 +3,11 @@ import {
   Pause,
   Play,
   Share,
-  Share2,
   X,
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import React, { useEffect } from "react";
+import React from "react";
 import { languagesList } from "@/lib/languageData";
 
 import {
@@ -180,6 +179,7 @@ const ChapterCard = ({
                   {already_love ? (
                     <Heart
                       className="size-4 cursor-pointer"
+                      stroke="red"
                       fill="red"
                     />
                   ) : (

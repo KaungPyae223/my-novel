@@ -27,7 +27,7 @@ const SimilarNovelCard = () => {
       </p>
       <div className="mt-4 flex flex-row items-center justify-between">
         <div className="flex items-center gap-1 text-amber-700 text-sm">
-          <Heart className="size-4" fill="red" />
+          <Heart className="size-4" stroke="red" fill="red" />
           <p>300</p>
         </div>
         <div className="text-xs font-semibold text-gray-700 bg-amber-100 px-2 py-0.5 border border-amber-300 rounded-full">

@@ -1,20 +1,9 @@
 import EmptyState from "@/features/Components/EmptyState/EmptyState";
-import { Clock, Search, Filter } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { Clock, Search } from "lucide-react";
+import React from "react";
 import LogsCard from "../Logs/LogsCard";
 
-interface LogEntry {
-  id: number;
-  logable_type: string;
-  logable_id: number;
-  user_id: number;
-  action: string;
-  ip_address: string;
-  user_agent: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-}
+
 
 import {
   Select,

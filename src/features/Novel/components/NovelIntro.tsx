@@ -18,7 +18,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
   const [already_loved, setAlready_loved] = useState<boolean>(novel.already_loved);
   const [already_favorited, setAlready_favorited] = useState<boolean>(novel.already_favorited);
 
-  const { mutate } = useNovelLoved({ novelID: novel.id });
+  const { mutate } = useNovelLoved();
 
   const handleLoved = () => {
     toast.loading("Loving novel...");
@@ -31,14 +31,14 @@ const NovelIntro = ({ novel }: { novel: any }) => {
     setAlready_loved(!already_loved);
   };  
 
-  const { mutate: shareNovel } = useShareNovel({ novelID: novel.id });
+  const { mutate: shareNovel } = useShareNovel();
 
   const handleShare = () => {
     shareLink();
     shareNovel(novel.id);
   };
 
-  const { mutate: favoriteNovel } = useNovelFavorite({ novelID: novel.id });
+  const { mutate: favoriteNovel } = useNovelFavorite();
 
   const handleFavorite = () => {
     favoriteNovel(novel.id);
@@ -123,7 +123,7 @@ const NovelIntro = ({ novel }: { novel: any }) => {
             {novel.progress}
           </div>
           <div className="text-sm font-medium flex flex-row items-center gap-1.5">
-            <Heart className="size-4" fill="red" />
+            <Heart className="size-4" stroke="red" fill="red" />
             {loveCount}
           </div>
         </div>

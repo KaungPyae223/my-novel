@@ -36,7 +36,7 @@ const MyNovelDetailsHeader = ({ novel }: { novel: any }) => {
           </div>
           <div className="flex h-fit flex-row gap-4 border border-gray-300 rounded-md p-1.5 px-3">
             <div className="text-sm  font-medium flex flex-row items-center gap-1.5">
-              <Heart className="size-3.5 text-red-600" fill="red" />
+              <Heart className="size-3.5" stroke="red" fill="red" />
               {novel?.love_count}
             </div>
             <div className="border-r border-gray-300 h-5"></div>

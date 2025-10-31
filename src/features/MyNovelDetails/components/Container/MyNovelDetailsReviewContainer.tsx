@@ -21,11 +21,12 @@ const MyNovelDetailsReviewContainer = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (data?.data.length) {
+      const newReviews = data.data;
       setReviews((prev: any) => [
-        ...prev,
-        ...data.data.filter(
-          (review: any) => !prev.some((p: any) => p.id === review.id)
+        ...prev.filter(
+          (review: any) => !newReviews.some((r: any) => r.id === review.id)
         ),
+        ...newReviews,
       ]);
     }
     setHasMore(data?.meta?.current_page < data?.meta?.last_page);

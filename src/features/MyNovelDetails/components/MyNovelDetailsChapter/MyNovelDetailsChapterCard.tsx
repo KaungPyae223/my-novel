@@ -17,9 +17,11 @@ import { confirmToast } from "@/utils/customToasts";
 const MyNovelDetailsChapterCard = ({
   novelId,
   data,
+  deleteChapter,
 }: {
   novelId: string;
   data: any;
+  deleteChapter: (id: string) => void;
 }) => {
   const router = useRouter();
 
@@ -46,6 +48,7 @@ const MyNovelDetailsChapterCard = ({
       onConfirm: () => {
         toast.loading("Deleting chapter...");
         mutate(data.id);
+        deleteChapter(data.id);
       },
     });
   };

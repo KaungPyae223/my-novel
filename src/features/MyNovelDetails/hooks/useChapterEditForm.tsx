@@ -52,6 +52,21 @@ export const useChapterEditForm = ({
         },
   });
 
+  useEffect(() => {
+    if (!chapterData?.is_updated) {
+      form.reset({
+        chapterName: originalData?.title,
+        status: originalData?.status,
+        summary: originalData?.summary || "",
+        scheduledDate: originalData?.scheduledDate
+          ? new Date(originalData?.scheduledDate)
+          : new Date(),
+        scheduledTime: originalData?.scheduledTime || "",
+        content: originalData?.content,
+      });
+    }
+  }, [originalData]);
+
   const router = useRouter();
 
   const handleBack = () => {

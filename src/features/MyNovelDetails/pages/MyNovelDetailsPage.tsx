@@ -129,7 +129,10 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
   const addParams = useAddParams();
 
   const handleTabChange = (tab: string) => {
-    addParams([{ key: "tab", value: tab }]);
+    addParams([
+      { key: "tab", value: tab },
+      { key: "q", value: "" },
+    ]);
   };
 
   const handleLogs = () => {
@@ -208,7 +211,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           {activeTab === "posts" && <MyNovelDetailsPostContainer id={id} />}
           {activeTab === "reviews" && <MyNovelDetailsReviewContainer id={id} />}
           {activeTab === "trash" && <MyNovelDetailsTrashContainer id={id} />}
-          {activeTab === "letters" && <MyNovelDetailsLetterConatiner />}
+          {activeTab === "letters" && <MyNovelDetailsLetterConatiner id={id} />}
         </div>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

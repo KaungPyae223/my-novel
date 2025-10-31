@@ -5,7 +5,7 @@ import shareLink from "@/utils/shareLink";
 import { motion } from "framer-motion";
 
 const ChapterLoveShare = ({ chapter:{id,already_loved,}, setLoveCount, novelID }: { chapter: {id:string,already_loved:boolean}, setLoveCount:React.Dispatch<React.SetStateAction<number>>, novelID: string }) => {
-  const { mutate } = useChapterLoved({ chapterID: id });
+  const { mutate } = useChapterLoved();
 
 
   const [alreadyLoved, setAlreadyLoved] = React.useState<boolean>(already_loved);
@@ -21,7 +21,7 @@ const ChapterLoveShare = ({ chapter:{id,already_loved,}, setLoveCount, novelID }
     setAlreadyLoved(!alreadyLoved);
   };
 
-  const { mutate: shareChapter } = useShareChapter({ chapterID: id });
+  const { mutate: shareChapter } = useShareChapter();
 
   const handleShare = () => {
     shareLink(`/novel/${novelID}/chapter/${id}`);

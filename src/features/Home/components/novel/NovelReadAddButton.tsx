@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useNovelFavorite } from "@/services/novel";
 
 const NovelReadAddButton = ({ novel: { id, already_favorited } }: { novel: { id: string, already_favorited: boolean } }) => {
-  const { mutate } = useNovelFavorite({ novelID: id });
+  const { mutate } = useNovelFavorite();
 
   const handleAddFavorite = () => {
     mutate(id);

@@ -33,6 +33,17 @@ const novelReview = (reviewData: any) => {
   return api.post(`reviews`, reviewData);
 };
 
+const toggleFanLetter = (novelID: string) => {
+  return api.post(`novels/toggle-fan-letter/${novelID}`);
+};
+
+export const useToggleFanLetter = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: toggleFanLetter,
+    queryKey: [`novels/fan-letter-status/${novelID}`],
+  });
+};
+
 export const useNovelReview = () => {
   return useMutate({
     mutationFn: novelReview,
@@ -40,23 +51,23 @@ export const useNovelReview = () => {
   });
 };
 
-export const useShareNovel = ({ novelID }: { novelID: string }) => {
+export const useShareNovel = () => {
   return useMutate({
     mutationFn: shareNovel,
     queryKey: [],
-    successMessage: "Copy Novel Link Successfully"
+    successMessage: "Copy Novel Link Successfully",
   });
 };
 
-export const useNovelLoved = ({ novelID }: { novelID: string }) => {
+export const useNovelLoved = () => {
   return useMutate({
     mutationFn: novelLoved,
     queryKey: [],
-    successMessage: ""
+    successMessage: "",
   });
 };
 
-export const useNovelFavorite = ({ novelID }: { novelID: string }) => {
+export const useNovelFavorite = () => {
   return useMutate({
     mutationFn: novelFavorite,
     queryKey: [],

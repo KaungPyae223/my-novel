@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import {
   ArrowUpDown,
   BookOpen,
-  Filter,
   Funnel,
   Plus,
   Search,
@@ -37,6 +36,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
     searchQuery,
     handleSearch,
     handleFilterSortChange,
+    deleteChapter,
   } = useChapterContainer({ id });
 
   if (error) {
@@ -136,6 +136,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
             key={chapter.id}
             novelId={id}
             data={chapter}
+            deleteChapter={deleteChapter}
           />
         ))}
 

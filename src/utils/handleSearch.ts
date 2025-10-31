@@ -13,7 +13,7 @@ export const useHandleSearch = () => {
   const addParams = useAddParams();
 
   const debouncedUpdateParams = debounce((value: string) => {
-    if (value) {
+    if (value && value != searchParams.get("q")) {
       addParams([{ key: "q", value }]);
     }
   }, 1000);

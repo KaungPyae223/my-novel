@@ -20,7 +20,7 @@ const postLoved = (postId: string) => {
   return api.post(`/posts/loved/${postId}`);
 };
 
-export const usePostLoved = ({ id }: { id: string }) => {
+export const usePostLoved = () => {
   return useMutate({
     mutationFn: postLoved,
     queryKey: [],
@@ -31,7 +31,7 @@ export const usePostLoved = ({ id }: { id: string }) => {
 export const useCreateNovelPost = ({ novelId }: { novelId: string }) => {
   return useMutate({
     mutationFn: createNovelPost,
-    queryKey: [`/novels/posts/${novelId}`],
+    queryKey: [`post-${novelId}`],
     successMessage: "Successfully created novel post",
   });
 };
@@ -39,7 +39,7 @@ export const useCreateNovelPost = ({ novelId }: { novelId: string }) => {
 export const useDeletePost = ({ novelId }: { novelId: string }) => {
   return useMutate({
     mutationFn: deletePost,
-    queryKey: [`/novels/posts/${novelId}`],
+    queryKey: [`post-${novelId}`],
     successMessage: "Successfully deleted post",
   });
 };
@@ -47,7 +47,7 @@ export const useDeletePost = ({ novelId }: { novelId: string }) => {
 export const useUpdatePost = ({ novelId }: { novelId: string }) => {
   return useMutate({
     mutationFn: updatePost,
-    queryKey: [`/novels/posts/${novelId}`],
+    queryKey: [`post-${novelId}`],
     successMessage: "Successfully updated post",
   });
 };

@@ -1,8 +1,8 @@
-import useFetchData from "@/services/fetcher";
 import { useHandleSearch } from "@/utils/handleSearch";
 import { useAddParams } from "@/utils/searchParams";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import useFetchData from "@/services/fetcher";
 
 export const useChapterContainer = ({ id }: { id: string }) => {
   const searchParams = useSearchParams();
@@ -28,19 +28,27 @@ export const useChapterContainer = ({ id }: { id: string }) => {
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
+  const deleteChapter = (id: string) => {
+    setChapters((prev: any) =>
+      prev.filter((chapter: any) => chapter.id !== id)
+    );
+  };
+
   const { data, isLoading, error } = useFetchData(
-    `/novel-chapters/${id}?page=${page}${filter ? `&filter=${filter}` : ""}${
+    `/novel-chapters/${id}?page=${page}?${filter ? `&filter=${filter}` : ""}${
       sort ? `&sort=${sort}` : ""
-    }${q ? `&q=${q}` : ""}`
+    }${q ? `&q=${q}` : ""}`,
+    `chapter-${id}`
   );
 
   useEffect(() => {
     if (data?.data.length) {
+      const newChapters = data.data;
       setChapters((prev: any) => [
-        ...prev,
-        ...data.data.filter(
-          (chapter: any) => !prev.some((p: any) => p.id === chapter.id)
+        ...prev.filter(
+          (chapter: any) => !newChapters.some((p: any) => p.id === chapter.id)
         ),
+        ...newChapters,
       ]);
     }
     setHasMore(data?.meta?.current_page < data?.meta?.last_page);
@@ -86,5 +94,6 @@ export const useChapterContainer = ({ id }: { id: string }) => {
     handleTrash,
     filter,
     sort,
+    deleteChapter,
   };
 };

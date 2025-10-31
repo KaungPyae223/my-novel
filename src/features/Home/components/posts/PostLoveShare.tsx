@@ -14,7 +14,7 @@ const PostLoveShare = ({
   setLoveCount: React.Dispatch<React.SetStateAction<number>>;
   setOpenComments: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { mutate } = usePostLoved({ id });
+  const { mutate } = usePostLoved();
 
   const [alreadyLoved, setAlreadyLoved] =
     React.useState<boolean>(already_loved);
