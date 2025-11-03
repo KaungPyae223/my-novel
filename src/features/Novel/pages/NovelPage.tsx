@@ -19,17 +19,18 @@ import Loading from "@/features/Components/Loading/Loading";
 import { notFound } from "next/navigation";
 import { Toaster } from "sonner";
 import { useSearchParams } from "next/navigation";
-import { useAddParams } from "@/utils/searchParams";
+import { useAddParams, useChangeTab } from "@/utils/searchParams";
 import LetterContainer from "../components/Container/LetterContainer";
 
 const NovelPage = ({ novelID }: { novelID: string }) => {
   const searchParams = useSearchParams();
-  const addParams = useAddParams();
 
   const activeTab = searchParams.get("tab") || "";
 
+  const changeTab = useChangeTab();
+
   const handleTabChange = (tab: string) => {
-    addParams([{ key: "tab", value: tab }]);
+    changeTab(tab);
   };
 
   const tabs = [

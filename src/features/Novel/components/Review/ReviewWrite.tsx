@@ -30,7 +30,7 @@ const ReviewWrite = ({
   novelID: string;
   title: string;
 }) => {
-  const { mutate } = useNovelReview();
+  const { mutate } = useNovelReview({ novelID });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

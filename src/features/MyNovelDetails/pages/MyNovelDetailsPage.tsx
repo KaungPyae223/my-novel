@@ -10,12 +10,11 @@ import {
   Logs,
   Mail,
   MessageCircle,
-  RefreshCw,
   Sparkles,
   Star,
   Trash,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import MyNovelDetailsHeader from "../components/MyNovelDetails/MyNovelDetailsHeader";
@@ -39,7 +38,7 @@ import MyNovelDetailsChapterContainer from "../components/Container/MyNovelDetai
 import useStoreChapter from "@/store/useChapterStore";
 import MyNovelDetailsPostContainer from "../components/Container/MyNovelDetailsPostContainer";
 import MyNovelDetailsReviewContainer from "../components/Container/MyNovelDetailsReviewContainer";
-import { useAddParams } from "@/utils/searchParams";
+import { useChangeTab } from "@/utils/searchParams";
 import { useSearchParams } from "next/navigation";
 import MyNovelDetailsTrashContainer from "../components/Container/MyNovelDetailsTrashContainer";
 import MyNovelDetailsLetterConatiner from "../components/Container/MyNovelDetailsLetterConatiner";
@@ -126,13 +125,10 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
     },
   ];
 
-  const addParams = useAddParams();
+  const changeTab = useChangeTab();
 
   const handleTabChange = (tab: string) => {
-    addParams([
-      { key: "tab", value: tab },
-      { key: "q", value: "" },
-    ]);
+    changeTab(tab);
   };
 
   const handleLogs = () => {

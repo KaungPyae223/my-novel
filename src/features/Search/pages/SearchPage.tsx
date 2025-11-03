@@ -7,14 +7,12 @@ import SearchAuthorContainer from "../components/Container/SearchAuthorContainer
 import SearchCommunityContainer from "../components/Container/SearchCommunityContainer";
 import SearchNovelContainer from "../components/Container/SearchNovelContainer";
 import { useSearchParams } from "next/navigation";
-import { useAddParams } from "@/utils/searchParams";
+import { useAddParams, useChangeTab } from "@/utils/searchParams";
 // import SearchNovelContainer from "../components/Container/SearchNovelContainer";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") || "";
-
-  const addParams = useAddParams();
 
   const tabs = [
     { value: "", label: "All", icon: <Search className="size-3.5" /> },
@@ -35,8 +33,10 @@ const SearchPage = () => {
     },
   ];
 
+  const changeTab = useChangeTab();
+
   const handleTabChange = (tab: string) => {
-    addParams([{ key: "tab", value: tab }]);
+    changeTab(tab);
   };
 
   return (

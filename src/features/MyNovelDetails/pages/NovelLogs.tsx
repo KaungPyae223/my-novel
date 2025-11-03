@@ -1,10 +1,10 @@
 "use client";
 import Middleware from "@/features/Components/Middleware/Middleware";
 import { ArrowLeft, Book, BookOpen, MessageCircle } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useAddParams } from "@/utils/searchParams";
+import { useAddParams, useChangeTab } from "@/utils/searchParams";
 import MyNovelDetailsLogContainer from "../components/Container/MyNovelDetailsLogContainer";
 
 const NovelLogs = ({ id }: { id: string }) => {
@@ -30,10 +30,10 @@ const NovelLogs = ({ id }: { id: string }) => {
     },
   ];
 
-  const addParams = useAddParams();
+  const changeTab = useChangeTab();
 
   const handleTabChange = (tab: string) => {
-    addParams([{ key: "tab", value: tab }, { key: "action", value: "" }, { key: "q", value: "" }]);
+    changeTab(tab);
   };
 
   return (

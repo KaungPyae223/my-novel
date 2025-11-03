@@ -7,48 +7,16 @@ import { useUnbanUser } from "@/services/ban";
 import useFetchData from "@/services/fetcher";
 import { avatarFallback } from "@/utils/avatarFallBack";
 import { useHandleSearch } from "@/utils/handleSearch";
+import { useScrollFetch } from "@/utils/useScrollFetch";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Search, Unlock, UserX } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 const LetterBanUsers = ({ novelID }: { novelID: string }) => {
-  const [bannedUsers, setBannedUsers] = useState<any>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  const observerRef = useRef<HTMLDivElement | null>(null);
-
-  const { data, isLoading, error } = useFetchData(
-    "/novels/banned-users/" + novelID + "?page=" + page
-  );
-
-  useEffect(() => {
-    if (data?.data.length) {
-      setBannedUsers((prev: any) => [
-        ...prev,
-        ...data.data.filter(
-          (review: any) => !prev.some((p: any) => p.id === review.id)
-        ),
-      ]);
-    }
-    setHasMore(data?.meta?.current_page < data?.meta?.last_page);
-  }, [data]);
-
-  useEffect(() => {
-    if (!observerRef.current || !hasMore) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          setPage((prev) => prev + 1);
-        }
-      },
-      { rootMargin: "200px" }
-    );
-
-    observer.observe(observerRef.current);
-    return () => observer.disconnect();
-  }, [hasMore, isLoading]);
+  const { data, isLoading, error, hasMore, observerRef } = useScrollFetch({
+    url: `/novels/banned-users/${novelID}`,
+    key: `banned-user-${novelID}`,
+  });
 
   const { handleSearch, searchQuery } = useHandleSearch();
 
@@ -77,10 +45,10 @@ const LetterBanUsers = ({ novelID }: { novelID: string }) => {
         </div>
       </div>
 
-      {bannedUsers.length > 0 ? (
+      {data?.length > 0 ? (
         <ScrollArea className="max-h-[400px]">
           <div className="space-y-4">
-            {bannedUsers.map((data: any) => (
+            {data?.map((data: any) => (
               <div
                 key={data.id}
                 className="p-4 flex border border-gray-300 bg-gray-100 rounded-lg items-center justify-between"

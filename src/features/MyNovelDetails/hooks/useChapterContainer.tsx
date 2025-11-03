@@ -1,15 +1,13 @@
 import { useHandleSearch } from "@/utils/handleSearch";
-import { useAddParams } from "@/utils/searchParams";
-import { useEffect, useRef, useState } from "react";
+import { useAddParams, useChangeTab } from "@/utils/searchParams";
 import { useSearchParams } from "next/navigation";
-import useFetchData from "@/services/fetcher";
+import { useScrollFetch } from "@/utils/useScrollFetch";
 
 export const useChapterContainer = ({ id }: { id: string }) => {
   const searchParams = useSearchParams();
 
   const filter = searchParams.get("filter") || "";
   const sort = searchParams.get("sort") || "";
-  const q = searchParams.get("q") || "";
 
   const { searchQuery, handleSearch } = useHandleSearch();
 
@@ -17,76 +15,29 @@ export const useChapterContainer = ({ id }: { id: string }) => {
     addParams([{ key: key, value: e }]);
   };
 
-  useEffect(() => {
-    setPage(1);
-    setChapters([]);
-  }, [filter, sort, q]);
-
-  const [chapters, setChapters] = useState<any>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-
-  const observerRef = useRef<HTMLDivElement | null>(null);
+  const { data, isLoading, error, hasMore, observerRef, setData } =
+    useScrollFetch({
+      url: `/novel-chapters/${id}`,
+      key: `chapter-${id}`,
+    });
 
   const deleteChapter = (id: string) => {
-    setChapters((prev: any) =>
-      prev.filter((chapter: any) => chapter.id !== id)
-    );
+    setData((prev: any) => prev.filter((chapter: any) => chapter.id !== id));
   };
-
-  const { data, isLoading, error } = useFetchData(
-    `/novel-chapters/${id}?page=${page}?${filter ? `&filter=${filter}` : ""}${
-      sort ? `&sort=${sort}` : ""
-    }${q ? `&q=${q}` : ""}`,
-    `chapter-${id}`
-  );
-
-  useEffect(() => {
-    if (data?.data.length) {
-      const newChapters = data.data;
-      setChapters((prev: any) => [
-        ...prev.filter(
-          (chapter: any) => !newChapters.some((p: any) => p.id === chapter.id)
-        ),
-        ...newChapters,
-      ]);
-    }
-    setHasMore(data?.meta?.current_page < data?.meta?.last_page);
-  }, [data]);
-
-  useEffect(() => {
-    if (!observerRef.current || !hasMore) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          setPage((prev) => prev + 1);
-        }
-      },
-      { rootMargin: "200px" }
-    );
-
-    observer.observe(observerRef.current);
-    return () => observer.disconnect();
-  }, [hasMore, isLoading]);
 
   const addParams = useAddParams();
 
+  const changeTab = useChangeTab();
+
   const handleTrash = () => {
-    addParams([
-      { key: "tab", value: "trash" },
-      { key: "filter", value: "" },
-      { key: "sort", value: "" },
-      { key: "q", value: "" },
-    ]);
+    changeTab("trash");
   };
 
   return {
     searchQuery,
     handleSearch,
     handleFilterSortChange,
-    chapters,
-    page,
+    data,
     hasMore,
     observerRef,
     isLoading,

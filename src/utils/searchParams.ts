@@ -1,16 +1,26 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const useGenerateQuery = (query: string, limit?: number) => {
+export const useGenerateQuery = (
+  query: string,
+  params?: { key: string; value: string }[]
+) => {
   const searchParams = useSearchParams();
 
-  const searchQuery = searchParams.size
-    ? `${query}?${searchParams.toString()}${limit ? "&limit=" + limit : ""}`
-    : query + (limit ? "?limit=" + limit : "");
+  const paramsObject = new URLSearchParams(searchParams.toString());
+
+  params?.forEach(({ key, value }) => {
+    if (key !== "" && value !== "") {
+      paramsObject.set(key, value);
+    }
+  });
+
+  const paramsString = paramsObject.toString();
+
+  const searchQuery = query + (paramsString ? "?" + paramsString : "");
 
   return searchQuery;
 };
-
 
 export const useRemoveParams = () => {
   const router = useRouter();
@@ -31,7 +41,7 @@ export const useAddParams = () => {
 
   return (params: { key: string; value: string }[]) => {
     const newParams = new URLSearchParams(searchParams.toString());
-    
+
     if (!params.some((param) => param.key === "page")) {
       newParams.delete("page");
     }
@@ -44,5 +54,13 @@ export const useAddParams = () => {
       }
     });
     router.push(`?${newParams.toString()}`);
+  };
+};
+
+export const useChangeTab = () => {
+  const router = useRouter();
+
+  return (tab: string) => {
+    router.push(`?tab=${tab}`);
   };
 };

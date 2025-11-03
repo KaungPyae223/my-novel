@@ -25,7 +25,7 @@ import { useChapterContainer } from "../../hooks/useChapterContainer";
 
 const ChapterContainer = ({ id }: { id: string }) => {
   const {
-    chapters,
+    data,
     filter,
     sort,
     hasMore,
@@ -131,7 +131,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
       </div>
 
       <div className="mt-6 space-y-3">
-        {chapters.map((chapter: any) => (
+        {data.map((chapter: any) => (
           <MyNovelDetailsChapterCard
             key={chapter.id}
             novelId={id}
@@ -141,9 +141,7 @@ const ChapterContainer = ({ id }: { id: string }) => {
         ))}
 
         {hasMore && <div ref={observerRef}></div>}
-        {chapters.length === 0 && !isLoading && (
-          <EmptyState title="No Chapters" />
-        )}
+        {data.length === 0 && !isLoading && <EmptyState title="No Chapters" />}
         {isLoading && <ScrollLoading message="Loading more chapters..." />}
         {!hasMore && <ScrollEnd />}
       </div>

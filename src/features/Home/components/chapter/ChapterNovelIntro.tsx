@@ -9,7 +9,7 @@ const ChapterNovelIntro = ({ novel }: { novel: any }) => {
         alt={novel?.title}
         width={158}
         height={158}
-        className="w-32 object-cover items-center flex-1 rounded-md"
+        className="max-w-32 w-full object-cover items-center flex-1 rounded-md"
       />
       <div>
         <div className="flex flex-row gap-3 items-center">

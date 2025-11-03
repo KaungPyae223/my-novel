@@ -44,10 +44,10 @@ export const useToggleFanLetter = ({ novelID }: { novelID: string }) => {
   });
 };
 
-export const useNovelReview = () => {
+export const useNovelReview = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: novelReview,
-    queryKey: [],
+    queryKey: [`review-${novelID}`],
   });
 };
 

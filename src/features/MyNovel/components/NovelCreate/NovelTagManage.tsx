@@ -23,7 +23,10 @@ const NovelTagManage = ({ form }: { form: any }) => {
         const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
 
         // Current tags in the form field, split by '/'
-        const currentTags = field.value?.split("/")?.map((t: string) => t.trim())?.filter((t: string) => t.length > 0);
+        const currentTags = field.value
+          ?.split("/")
+          ?.map((t: string) => t.trim())
+          ?.filter((t: string) => t.length > 0);
 
         const addTag = (tagToAdd: string) => {
           const newTag = tagToAdd.trim();
@@ -46,12 +49,8 @@ const NovelTagManage = ({ form }: { form: any }) => {
             });
             return;
           }
-          
-          
 
           if (newTag && !currentTags.includes(newTag)) {
-            
-
             const availableTag = availableTags.find((tag: string) =>
               tag.toLowerCase().includes(newTag.toLowerCase())
             );

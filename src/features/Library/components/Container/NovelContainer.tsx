@@ -48,7 +48,9 @@ const NovelContainer = () => {
   }, []);
 
   const { data, isLoading, error } = useFetchData(
-    useGenerateQuery(`/library/novels`, limit)
+    useGenerateQuery(`/library/novels`, [
+      { key: "limit", value: limit.toString() },
+    ])
   );
 
   if (isLoading) return <Loading />;

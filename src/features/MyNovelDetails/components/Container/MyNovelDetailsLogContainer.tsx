@@ -1,10 +1,12 @@
-import EmptyState from "@/features/Components/EmptyState/EmptyState";
+import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { Clock, Search } from "lucide-react";
-import React from "react";
+
+// Components
+import EmptyState from "@/features/Components/EmptyState/EmptyState";
 import LogsCard from "../Logs/LogsCard";
-
-
-
+import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
+import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 import {
   Select,
   SelectContent,
@@ -14,30 +16,76 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Loading from "@/features/Components/Loading/Loading";
+
+// Hooks
 import { useHandleSearch } from "@/utils/handleSearch";
 import { useGenerateQuery } from "@/utils/searchParams";
-import { useSearchParams } from "next/navigation";
 import { useHandleFilter } from "@/utils/handleFilter";
 import useNormalFetcher from "@/services/normalFetcher";
 
 const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
- 
-  const url = useGenerateQuery(`/novel-logs/${id}`);
+  // State
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [logs, setLogs] = useState<any[]>([]);
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  const { data, isLoading, error } = useNormalFetcher(url);
-
+  // Hooks
   const { searchQuery, handleSearch } = useHandleSearch();
-
   const searchParams = useSearchParams();
-
   const { changeFilter } = useHandleFilter();
 
-  
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { data, isLoading, error } = useNormalFetcher(
+    useGenerateQuery(`/novel-logs/${id}`, [
+      { key: "page", value: page.toString() },
+    ])
+  );
 
+  // Effects
+  useEffect(() => {
+    if (data?.data.length) {
+      const newLogs = data.data;
+      setLogs((prev) => [
+        ...prev.filter(
+          (log: any) =>
+            log.logable_type === newLogs[0].logable_type &&
+            !newLogs.some((l: any) => l.id === log.id)
+        ),
+        ...newLogs,
+      ]);
+    }
+    setHasMore(data?.meta.current_page < data?.meta.last_page);
+  }, [data]);
+
+  useEffect(() => {
+    if (!observerRef.current || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    const currentRef = observerRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      observer.disconnect();
+    };
+  }, [hasMore, isLoading]);
+
+  useEffect(() => {
+    setPage(1);
+    setLogs([]);
+  }, [searchParams]);
+
+  // Error boundary
   if (error) {
     throw error;
   }
@@ -65,7 +113,7 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => handleSearch(e)}
+                onChange={handleSearch}
                 className="w-[250px] border border-gray-300 rounded-md p-2 px-3 text-sm pr-3 pl-10"
                 placeholder="Search logs..."
               />
@@ -76,7 +124,7 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
 
             <Select
               value={searchParams.get("action") || undefined}
-              onValueChange={(e) => changeFilter("action", e)}
+              onValueChange={(value) => changeFilter("action", value)}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select an action" />
@@ -97,19 +145,21 @@ const MyNovelDetailsLogContainer = ({ id }: { id: string }) => {
         </div>
 
         <div className="space-y-4">
-          {data?.data.length > 0 ? (
+          {logs.length > 0 ? (
             <div className="space-y-3">
-              <div className="space-y-3">
-                {data?.data.map((log:any) => (
-                  <LogsCard key={log.id} log={log} />
-                ))}
-              </div>
+              {logs.map((log) => (
+                <LogsCard key={log.id} log={log} />
+              ))}
             </div>
           ) : (
             <div className="text-center py-12">
               <EmptyState title="No logs found" />
             </div>
           )}
+
+          {hasMore && <div ref={observerRef} aria-hidden="true" />}
+          {isLoading && <ScrollLoading message="Loading more logs..." />}
+          {!hasMore && <ScrollEnd />}
         </div>
       </div>
     </div>

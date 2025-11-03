@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAddParams } from "./searchParams";
 import { useSearchParams } from "next/navigation";
 import { debounce } from "lodash";
@@ -10,13 +10,19 @@ export const useHandleSearch = () => {
     searchParams.get("q") || ""
   );
 
+  const firstRender = useRef(true);
+
   const addParams = useAddParams();
 
   const debouncedUpdateParams = debounce((value: string) => {
-    if (value && value != searchParams.get("q")) {
+    if (value != searchParams.get("q")) {
+      if (firstRender.current) {
+        firstRender.current = false;
+        return;
+      }
       addParams([{ key: "q", value }]);
     }
-  }, 1000);
+  }, 750);
 
   useEffect(() => {
     debouncedUpdateParams(searchQuery);

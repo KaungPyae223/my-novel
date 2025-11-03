@@ -6,14 +6,11 @@ import {
   ChevronDown,
   Plus,
   Edit,
-  Trash,
-  Computer,
   Settings,
   RefreshCw,
   XCircle,
   FileMinus,
 } from "lucide-react";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { avatarFallback } from "@/utils/avatarFallBack";
 
@@ -95,7 +92,6 @@ const formatDate = (dateString: string) => {
 };
 
 const LogsCard = ({ log }: { log: LogEntry }) => {
-  console.log(log);
 
   const [isExpanded, setIsExpanded] = React.useState(false);
   const description = parseDescription(log.description);

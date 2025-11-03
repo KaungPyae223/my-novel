@@ -13,7 +13,7 @@ const NovelReference = ({ novel }: { novel: any }) => {
   return (
     <div className="p-3 h-52 flex flex-row items-start gap-4 mb-6 rounded-lg bg-amber-50 border border-amber-300">
       <Image
-        className="w-32 h-full object-cover rounded-lg items-center"
+        className=" max-w-32 w-full h-full object-cover rounded-lg items-center"
         src={novel.image}
         alt={novel.title}
         width={128}
