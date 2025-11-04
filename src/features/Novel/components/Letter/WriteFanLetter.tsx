@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { useNovelReview } from "@/services/novel";
+import { useWriteFanLetter } from "@/services/novel";
 import { confirmToast } from "@/utils/customToasts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Send } from "lucide-react";
@@ -18,32 +18,38 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 const formSchema = z.object({
-  review: z.string().min(20, {
-    message: "Review must be at least 20 characters.",
+  letter: z.string().min(20, {
+    message: "Letter must be at least 20 characters.",
   }),
 });
 
-const WriteFanLetter = ({ novelID, title }: { novelID: string; title: string }) => {
-  const { mutate } = useNovelReview({ novelID });
+const WriteFanLetter = ({
+  novelID,
+  title,
+}: {
+  novelID: string;
+  title: string;
+}) => {
+  const { mutate } = useWriteFanLetter({ novelID });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      review: "",
+      letter: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     confirmToast({
       title: "Are you sure?",
-      description: "Are you sure you want to submit this review?",
+      description: "Are you sure you want to submit this letter?",
       confirmText: "Submit",
       cancelText: "Cancel",
       confirmColor: "bg-green-600 hover:bg-green-700",
       onConfirm: () => {
         mutate({
-          review: values.review,
-          novel_id: novelID,
+          body: values.letter,
+          novelID,
         });
         form.reset();
       },
@@ -68,7 +74,7 @@ const WriteFanLetter = ({ novelID, title }: { novelID: string; title: string }) 
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
-              name="review"
+              name="letter"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Your Message</FormLabel>

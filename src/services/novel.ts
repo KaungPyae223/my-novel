@@ -34,7 +34,53 @@ const novelReview = (reviewData: any) => {
 };
 
 const toggleFanLetter = (novelID: string) => {
-  return api.post(`novels/toggle-fan-letter/${novelID}`);
+  return api.put(`novels/toggle-fan-letter/${novelID}`);
+};
+
+const replyFanLetter = (replyData: any) => {
+  return api.put(`novels/reply-letter/${replyData.id}`, replyData);
+};
+
+const deleteAuthorFanLetter = (id: string) => {
+  return api.delete(`novels/author/delete-letter/${id}`);
+};
+
+const deleteReaderFanLetter = (id: string) => {
+  return api.delete(`novels/reader/delete-letter/${id}`);
+};
+
+const writeFanLetter = (letterData: any) => {
+  return api.post(`novels/create-letter/${letterData.novelID}`, letterData);
+};
+
+
+
+export const useWriteFanLetter = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: writeFanLetter,
+    queryKey: [`reader-letter-${novelID}`],
+  });
+};
+
+export const useDeleteAuthorFanLetter = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: deleteAuthorFanLetter,
+    queryKey: [`letters-${novelID}`],
+  });
+};
+
+export const useDeleteReaderFanLetter = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: deleteReaderFanLetter,
+    queryKey: [`reader-letter-${novelID}`],
+  });
+};
+
+export const useReplyFanLetter = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: replyFanLetter,
+    queryKey: [`letters-${novelID}`],
+  });
 };
 
 export const useToggleFanLetter = ({ novelID }: { novelID: string }) => {

@@ -1,28 +1,24 @@
 import { api } from "./api";
 import { useMutate } from "./mutate";
 
-const banUser = ({userID, novelID}:{userID: string, novelID: string}) => {
-  return api.post(`/novels/ban-user/${novelID}/${userID}`);
+const banUser = (banData: any) => {
+  return api.post(`novels/ban-user/${banData.novelID}/${banData.user_id}`);
 };
 
-const unbanUser = ({userID, novelID}:{userID: string, novelID: string}) => {
-  return api.post(`/novels/unban-user/${novelID}/${userID}`);
+const unbanUser = (banData: any) => {
+  return api.delete(`novels/unban-user/${banData.novelID}/${banData.user_id}`);
 };
 
+export const useUnbanUser = ({ novelID }: { novelID: string }) => {
+  return useMutate({
+    mutationFn: unbanUser,
+    queryKey: [`banned-user-${novelID}`, `letters-${novelID}`],
+  });
+};
 
-export const useBanUser = () => {
+export const useBanUser = ({ novelID }: { novelID: string }) => {
   return useMutate({
     mutationFn: banUser,
-    queryKey: [],
-    successMessage: "User banned successfully",
+    queryKey: [`banned-user-${novelID}`, `letters-${novelID}`],
   });
 };
-
-export const useUnbanUser = () =>{
-    return useMutate({
-    mutationFn: unbanUser,
-    queryKey: [],
-    successMessage: "User unbanned successfully",
-  });
-}
-  

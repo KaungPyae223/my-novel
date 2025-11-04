@@ -4,17 +4,12 @@ import { useToggleFanLetter } from "@/services/novel";
 import { Lock, LockOpen } from "lucide-react";
 import React from "react";
 
-const LetterEnableDisable = ({
-  novelID,
-}: {
-  novelID: string;
-}) => {
-
+const LetterEnableDisable = ({ novelID }: { novelID: string }) => {
   const { data, isLoading, error } = useFetchData(
     `novels/fan-letter-status/${novelID}`
   );
 
-  const {mutateAsync: toggleFanLetter} = useToggleFanLetter({ novelID });
+  const { mutateAsync: toggleFanLetter } = useToggleFanLetter({ novelID });
 
   const toggleFanLetters = () => {
     toggleFanLetter(novelID);
@@ -34,7 +29,7 @@ const LetterEnableDisable = ({
         <div>
           <h3 className="font-medium text-gray-900">Fan Letters</h3>
           <p className="text-sm text-gray-500">
-            {data.open_letter == "open"
+            {data.open_letter
               ? "Fans can send you letters."
               : "Fans cannot send you letters."}
           </p>
@@ -42,10 +37,10 @@ const LetterEnableDisable = ({
         <div
           onClick={toggleFanLetters}
           className={`flex text-sm items-center gap-2 p-3 text-white rounded-lg cursor-pointer
-              ${data.open_letter == "open" ? "bg-red-500" : "bg-gray-800"}
+              ${data.open_letter ? "bg-red-500" : "bg-gray-800"}
           `}
         >
-          {data.open_letter == "open" ? (
+          {data.open_letter ? (
             <>
               <Lock className="size-4" />
               Close Fan Letters

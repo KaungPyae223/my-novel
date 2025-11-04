@@ -4,27 +4,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 import ScrollLoading from "@/features/Components/Loading/ScrollLoading";
 import { useUnbanUser } from "@/services/ban";
-import useFetchData from "@/services/fetcher";
 import { avatarFallback } from "@/utils/avatarFallBack";
+import { confirmToast } from "@/utils/customToasts";
 import { useHandleSearch } from "@/utils/handleSearch";
 import { useScrollFetch } from "@/utils/useScrollFetch";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Search, Unlock, UserX } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
 const LetterBanUsers = ({ novelID }: { novelID: string }) => {
-  const { data, isLoading, error, hasMore, observerRef } = useScrollFetch({
-    url: `/novels/banned-users/${novelID}`,
-    key: `banned-user-${novelID}`,
-  });
+  const { data, isLoading, error, hasMore, observerRef, setData } =
+    useScrollFetch({
+      url: `/novels/banned-users/${novelID}`,
+      key: `banned-user-${novelID}`,
+    });
 
   const { handleSearch, searchQuery } = useHandleSearch();
-
-  const { mutate: unbanUser } = useUnbanUser();
-
-  const handleUnban = (id: number) => {
-    unbanUser({ id, novelID });
-  };
 
   if (error) {
     throw error;
@@ -46,38 +41,15 @@ const LetterBanUsers = ({ novelID }: { novelID: string }) => {
       </div>
 
       {data?.length > 0 ? (
-        <ScrollArea className="max-h-[400px]">
-          <div className="space-y-4">
+        <div className="max-h-[400px] overflow-y-auto">
+          <div className="space-y-4 mb-4">
             {data?.map((data: any) => (
-              <div
+              <BanUser
+                setData={setData}
                 key={data.id}
-                className="p-4 flex border border-gray-300 bg-gray-100 rounded-lg items-center justify-between"
-              >
-                <div className="flex items-center gap-4">
-                  <Avatar className="w-12 h-12">
-                    <AvatarImage
-                      src={data?.profile_image}
-                      alt={data?.name}
-                      className="w-12 h-12 object-cover rounded-full"
-                    />
-                    <AvatarFallback className="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
-                      {data?.name ? avatarFallback(data.name) : "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium font-poppins">{data.name}</p>
-                    <p className="text-xs text-gray-500">{data.email}</p>
-                  </div>
-                </div>
-                <div>
-                  <Button
-                    variant="outline"
-                    onClick={() => handleUnban(data.id)}
-                  >
-                    <Unlock className="size-3.5" /> Unban
-                  </Button>
-                </div>
-              </div>
+                data={data}
+                novelID={novelID}
+              />
             ))}
           </div>
           {hasMore && <div ref={observerRef}></div>}
@@ -85,7 +57,7 @@ const LetterBanUsers = ({ novelID }: { novelID: string }) => {
             <ScrollLoading message="Loading more banned users..." />
           )}
           {!hasMore && <ScrollEnd />}
-        </ScrollArea>
+        </div>
       ) : (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <UserX className="mx-auto h-12 w-12 text-gray-400" />
@@ -97,6 +69,63 @@ const LetterBanUsers = ({ novelID }: { novelID: string }) => {
           </p>
         </div>
       )}
+    </div>
+  );
+};
+
+const BanUser = ({
+  data,
+  novelID,
+  setData,
+}: {
+  data: any;
+  novelID: string;
+  setData: React.Dispatch<React.SetStateAction<any>>;
+}) => {
+  const { mutate: unbanUser } = useUnbanUser({ novelID });
+
+  const handleUnbanUser = () => {
+    confirmToast({
+      title: "Unban user",
+      description: "Are you sure you want to unban this user?",
+      confirmText: "Unban",
+      confirmColor: "bg-green-600 hover:bg-green-700",
+      onConfirm: () => {
+        unbanUser({
+          novelID: novelID,
+          user_id: data.user_id,
+        });
+        setData((prev: any) => prev.filter((item: any) => item.id !== data.id));
+      },
+    });
+  };
+
+  return (
+    <div
+      key={data.id}
+      className="p-4 flex border border-gray-300 bg-gray-100 rounded-lg items-center justify-between"
+    >
+      <div className="flex items-center gap-4">
+        <Avatar className="w-12 h-12">
+          <AvatarImage
+            src={data?.profile_image}
+            alt={data?.name}
+            className="w-12 h-12 object-cover rounded-full"
+          />
+          <AvatarFallback className="w-12 h-12 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+            {data?.name ? avatarFallback(data.name) : "?"}
+          </AvatarFallback>
+        </Avatar>
+        <div>
+          <p className="font-medium font-poppins">{data.name}</p>
+          <p className="text-xs text-gray-500">{data.email}</p>
+        </div>
+      </div>
+      <div>
+        <Button variant="outline" onClick={() => handleUnbanUser()}>
+          <Unlock className="size-3.5" /> Unban
+        </Button>
+      </div>
     </div>
   );
 };

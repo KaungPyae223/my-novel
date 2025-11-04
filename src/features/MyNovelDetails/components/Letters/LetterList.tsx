@@ -7,10 +7,11 @@ import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 import { useScrollFetch } from "@/utils/useScrollFetch";
 
 const LetterList = ({ novelID }: { novelID: string }) => {
-  const { data, isLoading, error, hasMore, observerRef } = useScrollFetch({
-    url: `/novels/letters/${novelID}`,
-    key: `letters-${novelID}`,
-  });
+  const { data, isLoading, error, hasMore, observerRef, setData } =
+    useScrollFetch({
+      url: `/novels/letters/${novelID}`,
+      key: `letters-${novelID}`,
+    });
 
   if (error) {
     throw error;
@@ -30,7 +31,7 @@ const LetterList = ({ novelID }: { novelID: string }) => {
       </div>
       <div className="mt-6 space-y-6">
         {data?.map((letter: any) => (
-          <LetterCard key={letter.id} letter={letter} />
+          <LetterCard setData={setData} key={letter.id} letter={letter} />
         ))}
         {hasMore && <div ref={observerRef}></div>}
         {data.length === 0 && !isLoading && <EmptyState title="No Reviews" />}
