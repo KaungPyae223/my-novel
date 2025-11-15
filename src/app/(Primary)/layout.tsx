@@ -3,6 +3,7 @@ import Header from "@/features/Components/header/Header";
 import type { Metadata } from "next";
 import LeftSideBar from "@/features/Components/leftSideBar/LeftSideBar";
 import QueryProvider from "@/features/Components/Middleware/QueryProvider";
+import NotificatonListener from "@/features/Components/Middleware/NotificatonListener";
 
 export const metadata: Metadata = {
   title: "My Novel | Read and Explore Captivating Stories",
@@ -66,7 +67,10 @@ export default function RootLayout({
           style={{ height: "calc(100vh - 4rem)" }}
           className="flex-1 overflow-y-auto bg-gray-50"
         >
-          <QueryProvider> {children}</QueryProvider>
+          <QueryProvider>
+            {" "}
+            <NotificatonListener>{children}</NotificatonListener>
+          </QueryProvider>
         </main>
       </section>
     </div>

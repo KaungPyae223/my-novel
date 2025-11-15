@@ -19,8 +19,7 @@ export const useHomePage = () => {
     if (containerRef.current) {
       const scrollPosition = containerRef.current.scrollTop;
 
-      console.log(scrollPosition, prevScrollPosition.current);
-
+     
       if (scrollPosition > prevScrollPosition.current || scrollPosition === 0) {
         setOpen(false);
       } else {

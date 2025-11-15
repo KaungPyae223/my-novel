@@ -33,7 +33,7 @@ const ProfileImageEdit = ({
 
       <Avatar className="w-28 h-28">
         <AvatarImage className="w-28 h-28" src={profileImage} alt={fullName} />
-        <AvatarFallback className="w-28 h-28 flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
+        <AvatarFallback className="w-28 h-28 text-3xl flex items-center justify-center bg-gray-200 text-gray-700 font-medium rounded-full">
           {avatarFallback(fullName)}
         </AvatarFallback>
       </Avatar>
