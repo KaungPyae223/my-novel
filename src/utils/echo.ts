@@ -27,13 +27,12 @@ export const getEchoClient = () => {
         return {
           authorize: (socketId, callback) => {
             const token = useAccountStore.getState().token;
-            console.log(socketId);
             fetch(`${process.env.NEXT_PUBLIC_API_URL}/broadcasting/auth`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                
+
               },
               body: JSON.stringify({
                 channel_name: channel.name,
