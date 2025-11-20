@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 const NotificatonListener = ({ children }: { children: React.ReactNode }) => {
 
   const userId = useAccountStore.getState().account.id;
-  const router = useRouter();
 
   useEffect(() => {
     const echo = getEchoClient();
@@ -23,7 +22,7 @@ const NotificatonListener = ({ children }: { children: React.ReactNode }) => {
         });
 
         notify.onclick = () => {
-          router.push("/notifications");
+          window.open( process.env.NEXT_PUBLIC_APP_URL + "notifications", "_blank");
         };
 
       });
