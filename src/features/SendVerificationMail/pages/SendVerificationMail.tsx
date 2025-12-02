@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import sendVerificationMail from "@/services/sendVerificationMail";
 import SendMail from "../components/SendMail";
 import SendMailLoading from "../components/SendMailLoading";
 import MailSendSuccess from "../components/MailSendSuccess";
+import { api } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 const SendVerificationMail = () => {
   const [sendMail, setSendMail] = useState<boolean>(false);
@@ -22,6 +24,20 @@ const SendVerificationMail = () => {
       console.log(error);
     }
   };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkMailVerified = async () => {
+      const res = await api.get("/check-mail-verified");
+      const user = await res.data;
+
+      if (user.verfified_at) {
+        router.back();
+      }
+    };
+    checkMailVerified();
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -52,11 +68,13 @@ const SendVerificationMail = () => {
         </p>
 
         {!sendMail && !loading ? (
-          <SendMail handleSendVerificationMail={handleSendVerificationMail}/>
+          <SendMail handleSendVerificationMail={handleSendVerificationMail} />
         ) : !loading ? (
-         <MailSendSuccess handleSendVerificationMail={handleSendVerificationMail}/>
+          <MailSendSuccess
+            handleSendVerificationMail={handleSendVerificationMail}
+          />
         ) : (
-          <SendMailLoading/>
+          <SendMailLoading />
         )}
       </div>
     </div>

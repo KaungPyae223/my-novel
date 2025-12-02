@@ -37,10 +37,12 @@ const NotificatonListener = ({ children }: { children: React.ReactNode }) => {
     }
 
     async function setupPush() {
+
       if (!("Notification" in window)) return;
 
       if (Notification.permission === "default") {
         const permission = await Notification.requestPermission();
+
         if (permission === "granted") {
           const registration = await navigator.serviceWorker.ready;
 

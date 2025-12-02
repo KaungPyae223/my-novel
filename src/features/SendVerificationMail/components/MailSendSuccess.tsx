@@ -1,12 +1,27 @@
 import { Button } from "@/components/ui/button";
-import { Router } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { api } from "@/services/api";
 
 const MailSendSuccess = ({ handleSendVerificationMail }: any) => {
-
   const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const res = await api.get("/check-mail-verified");
+      const user = await res.data;
+
+      console.log(user);
+
+      if (user.verfified_at) {
+        router.back();
+      }
+    }, 3000); // check every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center mx-auto mt-10 gap-6">
@@ -31,7 +46,7 @@ const MailSendSuccess = ({ handleSendVerificationMail }: any) => {
       </div>
 
       {/* Resend Section */}
-      <div className="text-center mt-2">
+      <div className="text-center my-2">
         <p className="text-gray-700 text-sm">Didn’t receive the email?</p>
         <Button
           variant="outline"
@@ -40,21 +55,6 @@ const MailSendSuccess = ({ handleSendVerificationMail }: any) => {
         >
           Resend Email
         </Button>
-      </div>
-
-      <div className="w-full flex flex-col items-center justify-center">
-        <div className="w-full border-t my-1"></div>
-
-        <div className="flex items-center gap-2 mt-3">
-          <p className="text-gray-700 text-sm">Already verified?</p>
-          <Button
-            variant="ghost"
-            onClick={() => {router.back()}}
-            className="text-blue-600 hover:underline px-0"
-          >
-            Back
-          </Button>
-        </div>
       </div>
     </div>
   );
