@@ -1,24 +1,10 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import useAccountStore from "@/store/useAccountStore";
-import { logout } from "@/services/auth";
-import { toast, Toaster } from "sonner";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
-  const { setLogOut } = useAccountStore();
   const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      const response = await logout();
-
-      setLogOut();
-      toast.success("Logout Successfully");
-      router.push("/login");
-    } catch (error) {}
-  };
 
   return (
     <div className="fixed flex justify-between items-center px-16 top-0 left-0 right-0 h-16 bg-white shadow w-full">

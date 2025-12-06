@@ -15,10 +15,42 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { logout } from "@/services/auth";
+import useAccountStore from "@/store/useAccountStore";
+import { useRouter } from "next/navigation";
+import { toast, Toaster } from "sonner";
+import { confirmToast } from "@/utils/customToasts";
+
 const SettingPage = () => {
-  const [language, setLanguage] = React.useState('english');
+  const [language, setLanguage] = React.useState("english");
+
+  const { setLogOut } = useAccountStore();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    confirmToast({
+      title: "Logout",
+      description: "Are you sure to logout ?",
+      confirmText: "Logout",
+      cancelText: "Cancel",
+      confirmColor: "bg-red-600 hover:bg-red-700",
+      onConfirm: async () => {
+        try {
+          const response = await logout();
+          setLogOut();
+          toast.success("Logout Successfully");
+          router.push("/login");
+        } catch (error) {
+          toast.error("Logout Failed");
+          console.log(error);
+        }
+      },
+    });
+  };
+
   return (
     <div className="bg-gray-50 min-h-screen">
+      <Toaster position="top-center" richColors className="z-[9999]" />
       <SettingHeader />
       <Container className="mt-16 p-6">
         <div className="max-w-2xl py-6 divide-y space-y-6 divide-gray-200 mx-auto">
@@ -27,11 +59,11 @@ const SettingPage = () => {
             <p className="text-gray-500 mt-1">Manage your account settings</p>
           </div>
 
-          <div className=" space-y-6 pb-6">
+          <div className=" space-y-6 ">
             <Card className="rounded-lg shadow-sm border p-6">
               <CardContent className="p-0">
                 <div className="space-y-2.5">
-                  <h2 className="text-2xl font-semibold flex items-center gap-2">
+                  <h2 className="text-2xl font-semibold mb-1.5 flex items-center gap-2">
                     <Sun className="h-5 w-5" /> Appearance
                   </h2>
                   <p className="text-sm text-muted-foreground">
@@ -58,7 +90,7 @@ const SettingPage = () => {
             <Card className="rounded-lg shadow-sm border p-6">
               <CardContent className="p-0">
                 <div className="space-y-2.5">
-                  <h2 className="text-2xl font-semibold flex items-center gap-2">
+                  <h2 className="text-2xl font-semibold mb-1.5 flex items-center gap-2">
                     <Globe className="h-5 w-5" /> Language & Region
                   </h2>
                   <p className="text-sm text-muted-foreground">
@@ -97,25 +129,35 @@ const SettingPage = () => {
             <Card className="rounded-lg shadow-sm border p-6">
               <CardContent className="p-0">
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Sun className="h-5 w-5" /> Appearance
+                  <h2 className="text-2xl font-semibold mb-1.5 flex items-center gap-2">
+                    Reading Preferences
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Customize how the app looks and feels
+                    Customize your reading experience
                   </p>
 
-                  <div className="flex items-center justify-between pt-4">
+                  <div className="flex border-b border-gray-200 pb-4 items-center justify-between pt-4 ">
                     <div>
-                      <p className="font-medium">Dark Mode</p>
+                      <p className="font-medium text-lg">Reading History</p>
                       <p className="text-sm text-muted-foreground">
-                        Switch between light and dark themes
+                        Save your reading progress
                       </p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Sun className="h-4 w-4 text-muted-foreground" />
                       <Switch />
-                      <Moon className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between ">
+                    <div>
+                      <p className="font-medium text-lg">Push Notifications</p>
+                      <p className="text-sm text-muted-foreground">
+                        Get notified about new chapters
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Switch />
                     </div>
                   </div>
                 </div>
@@ -124,25 +166,35 @@ const SettingPage = () => {
             <Card className="rounded-lg shadow-sm border p-6">
               <CardContent className="p-0">
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Sun className="h-5 w-5" /> Appearance
+                  <h2 className="text-2xl font-semibold mb-1.5 flex items-center gap-2">
+                    Privacy & Data
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Customize how the app looks and feels
+                    Control your privacy and data settings
                   </p>
 
-                  <div className="flex items-center justify-between pt-4">
+                  <div className="flex border-b border-gray-200 pb-4 items-center justify-between pt-4 ">
                     <div>
-                      <p className="font-medium">Dark Mode</p>
+                      <p className="font-medium text-lg">Analytics</p>
                       <p className="text-sm text-muted-foreground">
-                        Switch between light and dark themes
+                        Help improve the app with usage data
                       </p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Sun className="h-4 w-4 text-muted-foreground" />
                       <Switch />
-                      <Moon className="h-4 w-4 text-muted-foreground" />
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between ">
+                    <div>
+                      <p className="font-medium text-lg">Public Profile</p>
+                      <p className="text-sm text-muted-foreground">
+                        Make your profile visible to others
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Switch />
                     </div>
                   </div>
                 </div>
@@ -151,93 +203,23 @@ const SettingPage = () => {
             <Card className="rounded-lg shadow-sm border p-6">
               <CardContent className="p-0">
                 <div className="space-y-4">
-                  <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Sun className="h-5 w-5" /> Appearance
+                  <h2 className="text-2xl font-semibold mb-1.5 flex items-center gap-2">
+                    Account
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Customize how the app looks and feels
+                    Manage your account settings
                   </p>
-
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <p className="font-medium">Dark Mode</p>
-                      <p className="text-sm text-muted-foreground">
-                        Switch between light and dark themes
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Sun className="h-4 w-4 text-muted-foreground" />
-                      <Switch />
-                      <Moon className="h-4 w-4 text-muted-foreground" />
-                    </div>
+                  <div className="mt-6">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full py-2 px-4 border border-red-200 cursor-pointer text-red-600 font-medium rounded-lg hover:bg-red-100 transition-colors text-center"
+                    >
+                      Sign Out
+                    </button>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-lg shadow-sm border p-6">
-              <CardContent className="p-0">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Sun className="h-5 w-5" /> Appearance
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Customize how the app looks and feels
-                  </p>
-
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <p className="font-medium">Dark Mode</p>
-                      <p className="text-sm text-muted-foreground">
-                        Switch between light and dark themes
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Sun className="h-4 w-4 text-muted-foreground" />
-                      <Switch />
-                      <Moon className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="rounded-lg shadow-sm border p-6">
-              <CardContent className="p-0">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold flex items-center gap-2">
-                    <Sun className="h-5 w-5" /> Appearance
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    Customize how the app looks and feels
-                  </p>
-
-                  <div className="flex items-center justify-between pt-4">
-                    <div>
-                      <p className="font-medium">Dark Mode</p>
-                      <p className="text-sm text-muted-foreground">
-                        Switch between light and dark themes
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Sun className="h-4 w-4 text-muted-foreground" />
-                      <Switch />
-                      <Moon className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="">
-            <button
-              onClick={() => {}}
-              className="w-full py-3 px-4 bg-red-100 cursor-pointer text-red-600 font-medium rounded-lg hover:bg-red-100 transition-colors text-center"
-            >
-              Sign Out
-            </button>
           </div>
         </div>
       </Container>
