@@ -64,22 +64,14 @@ export const useRegister = () => {
         password: values.password,
         password_confirmation: values.confirmPassword,
       });
-      const json = await response.json();
 
-      if (!response.ok) {
-        throw new Error(json.message || "Registration failed");
-      }
-
-      setToken(json.token);
-      setAccount(json.user);
+      setAccount(response.data.user);
 
       toast.success("Register Successfully");
       form.reset();
       router.push("/");
     } catch (error: any) {
-      toast.error(
-        error.message || "An unexpected error occurred during registration"
-      );
+      toast.error(error.message || "An unexpected error occurred");
     }
   };
 

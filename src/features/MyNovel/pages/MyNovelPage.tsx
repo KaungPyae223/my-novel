@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import Middleware from "@/features/Components/Middleware/Middleware";
 import useStoreNovel from "@/store/useNovelStore";
 import MyNovelSearch from "../components/MyNovel/MyNovelSearch";
 import MyNovelList from "../components/MyNovel/MyNovelList";
@@ -18,36 +17,34 @@ const MyNovelPage = () => {
   }, []);
 
   return (
-    <Middleware>
-      <div className="py-9 px-6 mx-auto max-w-6xl">
-        <div className="flex flex-row justify-between items-center">
-          <div>
-            <p className="font-semibold text-3xl">My Novels</p>
-            <p className="text-gray-600 mt-3">
-              Manage and track your writing projects
-            </p>
-          </div>
-          <div className="flex flex-row items-center gap-3">
-            <Link
-              href="/my-novels/create"
-              className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm border border-gray-300 bg-white text-gray-800"
-            >
-              <RefreshCw className="size-4" /> Restore Center
-            </Link>
-            <Link
-              href="/my-novels/create"
-              className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm bg-blue-600 text-white"
-            >
-              <Plus className="size-4" /> Create New Novel
-            </Link>
-          </div>
+    <div className="py-9 px-6 mx-auto max-w-6xl">
+      <div className="flex flex-row justify-between items-center">
+        <div>
+          <p className="font-semibold text-3xl">My Novels</p>
+          <p className="text-gray-600 mt-3">
+            Manage and track your writing projects
+          </p>
         </div>
-
-        <MyNovelSearch />
-        <MyNovelKPIContainer />
-        <MyNovelList />
+        <div className="flex flex-row items-center gap-3">
+          <Link
+            href="/my-novels/create"
+            className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm border border-gray-300 bg-white text-gray-800"
+          >
+            <RefreshCw className="size-4" /> Restore Center
+          </Link>
+          <Link
+            href="/my-novels/create"
+            className="flex flex-row cursor-pointer items-center gap-3 px-5 py-3 font-medium rounded-md text-sm bg-blue-600 text-white"
+          >
+            <Plus className="size-4" /> Create New Novel
+          </Link>
+        </div>
       </div>
-    </Middleware>
+
+      <MyNovelSearch />
+      <MyNovelKPIContainer />
+      <MyNovelList />
+    </div>
   );
 };
 

@@ -14,7 +14,7 @@ const formSchema = z.object({
 });
 
 export const useLogIn = () => {
-  const { setAccount, setToken } = useAccountStore();
+  const { setAccount } = useAccountStore();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,14 +33,10 @@ export const useLogIn = () => {
         email: values.email,
         password: values.password,
       });
-      const json = await response.json();
 
-      if (!response.ok) {
-        throw new Error(json.message || "Login failed");
-      }
+      console.log(response);
 
-      setToken(json.token);
-      setAccount(json.user);
+      setAccount(response.data.user);
 
       toast.success("Login Successfully");
       form.reset();

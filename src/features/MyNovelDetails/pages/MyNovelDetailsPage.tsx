@@ -1,6 +1,5 @@
 "use client";
 
-import Middleware from "@/features/Components/Middleware/Middleware";
 import {
   ArrowLeft,
   BookOpen,
@@ -144,7 +143,6 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
   }
 
   return (
-    <Middleware>
       <Dialog>
         <div className="py-9 px-6 mx-auto max-w-6xl">
           <div className="flex flex-row justify-between items-center py-3">
@@ -242,7 +240,6 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </Middleware>
   );
 };
 

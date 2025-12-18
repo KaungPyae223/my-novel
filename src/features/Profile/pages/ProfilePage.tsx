@@ -7,14 +7,8 @@ import { BookOpen, MessageCircle, Text } from "lucide-react";
 import ProfileNovelsContainer from "../components/ProfileInfo/Container/ProfileNovelsContainer";
 import ProfileCommunityContainer from "../components/ProfileInfo/Container/ProfileCommunityContainer";
 import ProfileInfoContainer from "../components/ProfileInfo/Container/ProfileInfoContainer";
-import Middleware from "@/features/Components/Middleware/Middleware";
 
 import useFetchData from "@/services/fetcher";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
 import Image from "next/image";
 import Loading from "@/features/Components/Loading/Loading";
 
@@ -52,7 +46,6 @@ const ProfilePage = () => {
   }
 
   return (
-    <Middleware>
       <div className="bg-gray-50">
         {/* Header image and floating card */}
         <div className="relative">
@@ -104,7 +97,6 @@ const ProfilePage = () => {
           {activeTab === "Info" && <ProfileInfoContainer data={data?.user} />}
         </div>
       </div>
-    </Middleware>
   );
 };
 

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import LeftSideBar from "@/features/Components/leftSideBar/LeftSideBar";
 import QueryProvider from "@/features/Components/Middleware/QueryProvider";
 import NotificatonListener from "@/features/Components/Middleware/NotificatonListener";
+import AuthGuard from "@/features/Components/Middleware/AuthGuard";
 
 export const metadata: Metadata = {
   title: "My Novel | Read and Explore Captivating Stories",
@@ -68,8 +69,9 @@ export default function RootLayout({
           className="flex-1 overflow-y-auto bg-gray-50"
         >
           <QueryProvider>
-            {" "}
-            <NotificatonListener>{children}</NotificatonListener>
+            <NotificatonListener>
+              <AuthGuard>{children}</AuthGuard>
+            </NotificatonListener>
           </QueryProvider>
         </main>
       </section>

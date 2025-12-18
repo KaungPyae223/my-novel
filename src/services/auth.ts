@@ -1,31 +1,25 @@
-import {api} from "./api";
+import { api } from "./api";
+import axios from "axios";
 
-export const login = (data: { email: string; password: string }) => {
-  return fetch(process.env.NEXT_PUBLIC_API_URL + "/login", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
+export const getCsrfCookie = () =>
+  axios.get(process.env.NEXT_PUBLIC_API_URL + "/sanctum/csrf-cookie", {
+    withCredentials: true,
   });
+
+export const login = async (data: { email: string; password: string }) => {
+  await getCsrfCookie();
+  return await api.post("/login", data);
 };
 
-export const register = (data: {
+export const register = async (data: {
   full_name: string;
   username: string;
   email: string;
   password: string;
   password_confirmation: string;
 }) => {
-  return fetch(process.env.NEXT_PUBLIC_API_URL + "/register", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
+  await getCsrfCookie();
+  return await api.post("/register", data);
 };
 
 export const logout = () => {

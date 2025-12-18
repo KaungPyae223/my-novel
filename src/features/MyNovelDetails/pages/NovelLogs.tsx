@@ -1,10 +1,9 @@
 "use client";
-import Middleware from "@/features/Components/Middleware/Middleware";
 import { ArrowLeft, Book, BookOpen, MessageCircle } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { useAddParams, useChangeTab } from "@/utils/searchParams";
+import { useChangeTab } from "@/utils/searchParams";
 import MyNovelDetailsLogContainer from "../components/Container/MyNovelDetailsLogContainer";
 
 const NovelLogs = ({ id }: { id: string }) => {
@@ -37,7 +36,6 @@ const NovelLogs = ({ id }: { id: string }) => {
   };
 
   return (
-    <Middleware>
       <div className="py-9 px-6 mx-auto max-w-6xl">
         <div className="flex flex-row justify-between items-center py-3">
           <div
@@ -66,7 +64,6 @@ const NovelLogs = ({ id }: { id: string }) => {
         </div>
         <MyNovelDetailsLogContainer id={id} />
       </div>
-    </Middleware>
   );
 };
 

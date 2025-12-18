@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
 
 const Header = () => {
   const router = useRouter();

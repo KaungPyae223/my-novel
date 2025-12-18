@@ -1,5 +1,4 @@
 "use client";
-import Middleware from "@/features/Components/Middleware/Middleware";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
 import ChapterPreview from "../components/ChapterCreateConfirm/ChapterPreview";
@@ -19,7 +18,6 @@ const ChapterEditConfirmPage = ({
   });
 
   return (
-    <Middleware>
       <div className="py-9 px-6 mx-auto max-w-6xl">
         <div className="flex flex-row justify-between items-center py-3">
           <div
@@ -44,7 +42,6 @@ const ChapterEditConfirmPage = ({
           </Button>
         </div>
       </div>
-    </Middleware>
   );
 };
 

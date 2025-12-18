@@ -13,12 +13,10 @@ type AccountData = {
 
 type InitialState = {
   account: AccountData;
-  token: string | null;
 };
 
 type Action = {
   setAccount: (account: AccountData) => void;
-  setToken: (token: string) => void;
   setLogOut: () => void;
 };
 
@@ -30,7 +28,6 @@ const initialState: InitialState = {
     email: null,
     profile_image: null,
   },
-  token: null,
 };
 
 const useAccountStore = create<InitialState & Action>()(
@@ -38,7 +35,6 @@ const useAccountStore = create<InitialState & Action>()(
     immer((set) => ({
       ...initialState,
       setAccount: (account) => set({ account }),
-      setToken: (token) => set({ token }),
       setLogOut: () => set({ ...initialState }),
     })),
     {
