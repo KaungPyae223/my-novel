@@ -1,22 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Dot,
-  Heart,
-  MessageCircle,
-  Pencil,
-  Send,
-  Share2,
-  Trash,
-} from "lucide-react";
+import { Dot, Heart, MessageCircle, Pencil, Send, Trash } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 import MyNovelDetailsPostCommentContainer from "../Container/MyNovelDetailsPostCommentContainer";
 import Image from "next/image";
 import { useDeletePost } from "@/services/post";
 import { toast } from "sonner";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import PostUpdate from "./PostUpdate.";
 import { confirmToast } from "@/utils/customToasts";
 import { avatarFallback } from "@/utils/avatarFallBack";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -24,9 +14,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 const PostCard = ({
   data,
   handleEdit,
+  setData,
 }: {
   data: any;
   handleEdit: () => void;
+  setData: React.Dispatch<React.SetStateAction<any>>;
 }) => {
   const postRef = useRef<HTMLDivElement>(null);
   const commentContainerRef = useRef<HTMLDivElement>(null);
@@ -67,6 +59,11 @@ const PostCard = ({
       confirmColor: "bg-red-600 hover:bg-red-700",
       onConfirm: () => {
         toast.loading("Deleting post...");
+
+        setData((prev: any) =>
+          prev.filter((item: any) => item.id !== data.id)
+        );
+
         mutate(data.id);
       },
     });

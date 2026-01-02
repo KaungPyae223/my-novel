@@ -114,14 +114,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
       bgColor: "bg-purple-100",
       iconColor: "text-purple-600",
     },
-    {
-      label: "AI Chat",
-      value: "ai-chat",
-      active: ["ai-chat"],
-      icon: <Sparkles className="size-3.5 " />,
-      bgColor: "bg-gray-100",
-      iconColor: "text-gray-600",
-    },
+   
   ];
 
   const changeTab = useChangeTab();
@@ -183,7 +176,7 @@ const MyNovelDetailsPage = ({ id }: { id: string }) => {
           </div>
           <MyNovelDetailsHeader novel={data?.data} />
           <MyNovelDetailsKPI novel={data?.data} />
-          <div className="grid grid-cols-6 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
+          <div className="grid grid-cols-5 my-7 text-sm gap-3 p-1.5 bg-gray-100 rounded-md">
             {tabs.map((tab) => (
               <div
                 key={tab.value}

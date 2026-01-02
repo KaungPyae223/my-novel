@@ -40,8 +40,7 @@ const formSchema = z.object({
 
 const PostUpdate = ({ data }: { data: any }) => {
   
-    console.log(data);
-  
+   
     const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

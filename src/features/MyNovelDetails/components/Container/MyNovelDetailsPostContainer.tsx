@@ -11,7 +11,7 @@ import ScrollEnd from "@/features/Components/Loading/ScrollEnd";
 import { useScrollFetch } from "@/utils/useScrollFetch";
 
 const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
-  const { data, isLoading, error, hasMore, observerRef } = useScrollFetch({
+  const { data, isLoading, error, hasMore, observerRef, setData } = useScrollFetch({
     url: `/novels/posts/${id}`,
     key: `post-${id}`,
   });
@@ -44,17 +44,14 @@ const MyNovelDetailsPostContainer = ({ id }: { id: string }) => {
         </div>
 
         <div className="mt-9 space-y-6">
-          {data.length === 0 ? (
-            <EmptyState title="No Posts" />
-          ) : (
-            data.map((post: any) => (
-              <PostCard
-                key={post.id}
-                data={post}
-                handleEdit={() => setEditingPost(post)}
-              />
-            ))
-          )}
+          {data?.map((post: any) => (
+            <PostCard
+              key={post.id}
+              data={post}
+              setData={setData}
+              handleEdit={() => setEditingPost(post)}
+            />
+          ))}
           {hasMore && <div ref={observerRef}></div>}
           {data.length === 0 && !isLoading && <EmptyState title="No Posts" />}
           {isLoading && <ScrollLoading message="Loading more posts..." />}
